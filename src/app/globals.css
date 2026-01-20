@@ -52,12 +52,17 @@ body {
   .print-table {
     border: none;
     box-shadow: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
   }
 
   .print-table table {
     width: 100%;
-    table-layout: fixed;
-    font-size: 10px;
+    max-width: 100%;
+    table-layout: auto;
+    font-size: 9px;
   }
 
   .print-table th,
