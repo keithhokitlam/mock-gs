@@ -306,7 +306,7 @@ export default function AdminTable({
             </tr>
           ) : (
             displayRows.map((row, rowIndex) => (
-              <tr key={`row-${rowIndex}`} className="hover:bg-[#6DA733]/20">
+              <tr key={`row-${rowIndex}`} className="hover:bg-[#6DA733]/30">
                 {row.map((cell, cellIndex) => (
                   <td key={`cell-${rowIndex}-${cellIndex}`} className="px-4 py-3">
                     {cell}
