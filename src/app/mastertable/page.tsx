@@ -67,11 +67,14 @@ async function getSheetRows() {
   return parseCsv(csv);
 }
 
+type SearchParams = Record<string, string | string[] | undefined>;
+
 type AdminPageProps = {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams?: SearchParams | Promise<SearchParams>;
 };
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
+  const resolvedSearchParams = await Promise.resolve(searchParams);
   const rows = await getSheetRows();
   const headers = rows[0] || [];
   const dataRows = rows.slice(1);
@@ -89,7 +92,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       : dataRows;
 
   const columnFilters: Record<number, string> = {};
-  Object.entries(searchParams || {}).forEach(([key, value]) => {
+  Object.entries(resolvedSearchParams || {}).forEach(([key, value]) => {
     if (!key.startsWith("f_")) return;
     const index = Number(key.replace("f_", ""));
     if (Number.isNaN(index)) return;
@@ -106,11 +109,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     })
   );
 
-  const sortIndexRaw = searchParams?.sort;
+  const sortIndexRaw = resolvedSearchParams?.sort;
   const sortIndex = Number(
     Array.isArray(sortIndexRaw) ? sortIndexRaw[0] : sortIndexRaw
   );
-  const sortDirectionRaw = searchParams?.dir;
+  const sortDirectionRaw = resolvedSearchParams?.dir;
   const sortDirection = Array.isArray(sortDirectionRaw)
     ? sortDirectionRaw[0]
     : sortDirectionRaw;
