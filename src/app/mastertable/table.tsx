@@ -230,11 +230,6 @@ export default function AdminTable({
   };
 
   const clearFilter = (index: number) => {
-    setDraftFilters((prev) => {
-      const next = { ...prev };
-      delete next[index];
-      return next;
-    });
     setSelectedValues((prev) => {
       const next = { ...prev };
       delete next[index];
