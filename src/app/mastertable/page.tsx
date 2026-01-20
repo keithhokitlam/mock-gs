@@ -98,6 +98,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     if (Number.isNaN(index)) return;
     if (index === statusIndex) return;
     if (Array.isArray(value)) return;
+    if (typeof value !== "string") return;
     columnFilters[index] = value;
   });
 
