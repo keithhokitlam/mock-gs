@@ -70,7 +70,7 @@ async function getSheetRows() {
 type SearchParams = Record<string, string | string[] | undefined>;
 
 type AdminPageProps = {
-  searchParams?: SearchParams | Promise<SearchParams>;
+  searchParams?: Promise<SearchParams>;
 };
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
