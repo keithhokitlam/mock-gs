@@ -64,9 +64,6 @@ export default function AdminTable({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [draftFilters, setDraftFilters] = useState<Record<number, string>>(
-    activeFilters
-  );
   const [openMenu, setOpenMenu] = useState<number | null>(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -74,10 +71,6 @@ export default function AdminTable({
     {}
   );
   const [listSearch, setListSearch] = useState<Record<number, string>>({});
-
-  useEffect(() => {
-    setDraftFilters(activeFilters);
-  }, [activeFilters]);
 
   useEffect(() => {
     const next: Record<number, string[]> = {};
