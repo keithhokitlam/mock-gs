@@ -156,7 +156,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
         </div>
       </nav>
-      <div className="mx-auto w-full max-w-6xl px-6 pt-4 pb-10">
+      <div className="w-full px-0 pt-4 pb-10 overflow-x-visible">
         <ActionsBar
           columns={columns.map((column) => column.label)}
           rows={visibleRows}
