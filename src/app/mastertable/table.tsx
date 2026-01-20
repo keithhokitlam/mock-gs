@@ -11,10 +11,13 @@ export type AdminColumn = {
 type AdminTableProps = {
   columns: AdminColumn[];
   rows: string[][];
-  activeFilters: Record<number, string>;
+  filterRows: string[][];
+  activeFilters: Record<number, string | string[]>;
   sortIndex: number | null;
   sortDirection: "asc" | "desc";
 };
+
+type FilterValue = string | string[];
 
 const nowrapHeaders = new Set([
   "Product Name (English)",
@@ -36,9 +39,23 @@ function normalizeText(value: string) {
     .trim();
 }
 
+function parseFilterParam(value: string | null): FilterValue | null {
+  if (!value) return null;
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item) => typeof item === "string");
+    }
+  } catch {
+    // fall through
+  }
+  return value;
+}
+
 export default function AdminTable({
   columns,
   rows,
+  filterRows,
   activeFilters,
   sortIndex,
   sortDirection,
@@ -53,9 +70,25 @@ export default function AdminTable({
   const [openMenu, setOpenMenu] = useState<number | null>(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const [selectedValues, setSelectedValues] = useState<Record<number, string[]>>(
+    {}
+  );
+  const [listSearch, setListSearch] = useState<Record<number, string>>({});
 
   useEffect(() => {
     setDraftFilters(activeFilters);
+  }, [activeFilters]);
+
+  useEffect(() => {
+    const next: Record<number, string[]> = {};
+    Object.entries(activeFilters).forEach(([key, value]) => {
+      const index = Number(key);
+      if (Number.isNaN(index)) return;
+      if (Array.isArray(value)) {
+        next[index] = value;
+      }
+    });
+    setSelectedValues(next);
   }, [activeFilters]);
 
   useEffect(() => {
@@ -71,15 +104,39 @@ export default function AdminTable({
 
   const columnFilterValues = useMemo(() => {
     const params = new URLSearchParams(searchParams.toString());
-    const current: Record<number, string> = {};
+    const current: Record<number, FilterValue> = {};
     columns.forEach((column) => {
-      const value = params.get(buildKey(column.index)) || "";
+      const value = parseFilterParam(params.get(buildKey(column.index)));
       if (value) {
         current[column.index] = value;
       }
     });
     return current;
   }, [columns, searchParams]);
+
+  const uniqueValues = useMemo(() => {
+    const map = new Map<number, string[]>();
+    const sets = new Map<number, Set<string>>();
+    columns.forEach((column) => {
+      sets.set(column.index, new Set());
+    });
+
+    filterRows.forEach((row) => {
+      columns.forEach((column, position) => {
+        const value = (row[position] || "").toString();
+        sets.get(column.index)?.add(value);
+      });
+    });
+
+    sets.forEach((set, index) => {
+      const values = Array.from(set).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: "base" })
+      );
+      map.set(index, values);
+    });
+
+    return map;
+  }, [columns, filterRows]);
 
   const clientSortIndex = useMemo(() => {
     const raw = searchParams.get("sort");
@@ -106,7 +163,7 @@ export default function AdminTable({
   const displayRows = useMemo(() => {
     let nextRows = rows;
     const filterEntries = Object.entries(columnFilterValues).filter(
-      ([, value]) => value.trim() !== ""
+      ([, value]) => (Array.isArray(value) ? value.length > 0 : value.trim() !== "")
     );
 
     if (filterEntries.length) {
@@ -116,6 +173,11 @@ export default function AdminTable({
           const position = positionByIndex.get(originalIndex);
           if (position === undefined) return true;
           const cell = normalizeText((row[position] || "").toString());
+          if (Array.isArray(filterValue)) {
+            return filterValue
+              .map((value) => normalizeText(value))
+              .includes(cell);
+          }
           const needle = normalizeText(filterValue);
           return needle ? cell.includes(needle) : true;
         })
@@ -166,12 +228,21 @@ export default function AdminTable({
   };
 
   const applyFilter = (index: number) => {
-    const value = draftFilters[index]?.trim() || "";
-    updateSearch({ [buildKey(index)]: value || null });
+    const values = selectedValues[index] || [];
+    if (!values.length) {
+      updateSearch({ [buildKey(index)]: null });
+      return;
+    }
+    updateSearch({ [buildKey(index)]: JSON.stringify(values) });
   };
 
   const clearFilter = (index: number) => {
     setDraftFilters((prev) => {
+      const next = { ...prev };
+      delete next[index];
+      return next;
+    });
+    setSelectedValues((prev) => {
       const next = { ...prev };
       delete next[index];
       return next;
@@ -266,13 +337,13 @@ export default function AdminTable({
         >
           <div className="space-y-2">
             <label className="block text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
-              Filter
+              Search values
             </label>
             <input
               type="text"
-              value={draftFilters[openMenu] ?? columnFilterValues[openMenu] ?? ""}
+              value={listSearch[openMenu] ?? ""}
               onChange={(event) =>
-                setDraftFilters((prev) => ({
+                setListSearch((prev) => ({
                   ...prev,
                   [openMenu]: event.target.value,
                 }))
@@ -282,7 +353,64 @@ export default function AdminTable({
               }`}
               className="w-full rounded-md border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
             />
+            <div className="max-h-40 space-y-1 overflow-y-auto rounded-md border border-zinc-200 p-2 text-[11px]">
+              {(() => {
+                const values = uniqueValues.get(openMenu) || [];
+                const searchValue = normalizeText(listSearch[openMenu] ?? "");
+                const filteredValues = searchValue
+                  ? values.filter((value) =>
+                      normalizeText(value).includes(searchValue)
+                    )
+                  : values;
+                const selected = new Set(selectedValues[openMenu] || []);
+
+                if (filteredValues.length === 0) {
+                  return (
+                    <p className="text-zinc-500">No matches</p>
+                  );
+                }
+
+                return filteredValues.map((value) => (
+                  <label
+                    key={`${openMenu}-${value}`}
+                    className="flex cursor-pointer items-center gap-2"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selected.has(value)}
+                      onChange={() =>
+                        setSelectedValues((prev) => {
+                          const next = { ...prev };
+                          const current = new Set(next[openMenu] || []);
+                          if (current.has(value)) {
+                            current.delete(value);
+                          } else {
+                            current.add(value);
+                          }
+                          next[openMenu] = Array.from(current);
+                          return next;
+                        })
+                      }
+                    />
+                    <span className="truncate">{value || "(blank)"}</span>
+                  </label>
+                ));
+              })()}
+            </div>
             <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const values = uniqueValues.get(openMenu) || [];
+                  setSelectedValues((prev) => ({
+                    ...prev,
+                    [openMenu]: values,
+                  }));
+                }}
+                className="rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-zinc-700"
+              >
+                Select all
+              </button>
               <button
                 type="button"
                 onClick={() => applyFilter(openMenu)}

@@ -68,10 +68,33 @@ async function getSheetRows() {
 }
 
 type SearchParams = Record<string, string | string[] | undefined>;
+type FilterValue = string | string[];
 
 type AdminPageProps = {
   searchParams?: Promise<SearchParams>;
 };
+
+function normalizeText(value: string) {
+  return value
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseFilterValue(value: string): FilterValue {
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item) => typeof item === "string");
+    }
+  } catch {
+    // fall through to raw string
+  }
+  return value;
+}
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
   const resolvedSearchParams = await Promise.resolve(searchParams);
@@ -91,7 +114,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       ? dataRows.filter((row) => (row[statusIndex] || "").trim() === "Active")
       : dataRows;
 
-  const columnFilters: Record<number, string> = {};
+  const columnFilters: Record<number, FilterValue> = {};
   Object.entries(resolvedSearchParams || {}).forEach(([key, value]) => {
     if (!key.startsWith("f_")) return;
     const index = Number(key.replace("f_", ""));
@@ -99,14 +122,19 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     if (index === statusIndex) return;
     if (Array.isArray(value)) return;
     if (typeof value !== "string") return;
-    columnFilters[index] = value;
+    columnFilters[index] = parseFilterValue(value);
   });
 
   const filteredRows = activeRows.filter((row) =>
     Object.entries(columnFilters).every(([indexValue, filterValue]) => {
       const index = Number(indexValue);
-      const cell = (row[index] || "").toString().toLowerCase();
-      return cell.includes(filterValue.toLowerCase());
+      const cell = normalizeText((row[index] || "").toString());
+      if (Array.isArray(filterValue)) {
+        return filterValue
+          .map((value) => normalizeText(value))
+          .includes(cell);
+      }
+      return cell.includes(normalizeText(filterValue));
     })
   );
 
@@ -132,6 +160,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   }
 
   const visibleRows = rowsToSort.map((row) =>
+    row.filter((_, index) => index !== statusIndex)
+  );
+  const filterRows = activeRows.map((row) =>
     row.filter((_, index) => index !== statusIndex)
   );
 
@@ -164,6 +195,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <AdminTable
           columns={columns}
           rows={visibleRows}
+          filterRows={filterRows}
           activeFilters={columnFilters}
           sortIndex={Number.isNaN(sortIndex) ? null : sortIndex}
           sortDirection={sortDirection === "desc" ? "desc" : "asc"}

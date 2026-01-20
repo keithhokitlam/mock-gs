@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type ActionsBarProps = {
   columns: string[];
@@ -55,6 +55,7 @@ function downloadFile(contents: string, filename: string, mimeType: string) {
 
 export default function ActionsBar({ columns, rows }: ActionsBarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const exportMenuRef = useRef<HTMLDivElement | null>(null);
   const safeColumns = useMemo(
     () => columns.map((column) => column ?? ""),
     [columns]
@@ -89,9 +90,23 @@ export default function ActionsBar({ columns, rows }: ActionsBarProps) {
     );
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!exportMenuRef.current) return;
+      if (!exportMenuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
   return (
     <div className="flex items-center justify-end gap-3 pb-3">
-      <div className="relative">
+      <div className="relative" ref={exportMenuRef}>
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
