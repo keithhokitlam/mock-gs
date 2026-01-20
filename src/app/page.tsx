@@ -48,7 +48,7 @@ export default function Home() {
       <main className="mx-auto w-full max-w-md px-4 pt-1 pb-10">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
         <div className="-mt-16 mb-8 space-y-0 text-center">
-          <div className="mx-auto w-[25rem] -mb-10 translate-x-[-12px]">
+          <div className="mx-auto w-[25rem] -mb-10 translate-x-[-32px]">
             <Image
               src="/logos/GroceryShare_logo_stacked_1024.png"
               alt="GroceryShare"
