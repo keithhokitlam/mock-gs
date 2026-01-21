@@ -180,7 +180,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               priority
             />
           </Link>
-          <div className="flex items-center gap-8 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+          <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
             <span className="font-beckman">About</span>
             <span className="font-beckman">Support</span>
             <span className="font-beckman">FAQ</span>
