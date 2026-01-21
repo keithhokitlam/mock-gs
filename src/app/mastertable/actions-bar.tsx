@@ -110,7 +110,7 @@ export default function ActionsBar({ columns, rows }: ActionsBarProps) {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="rounded-md bg-zinc-500 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
+          className="rounded-md bg-zinc-400 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
           aria-haspopup="menu"
           aria-expanded={isOpen}
         >
@@ -145,13 +145,13 @@ export default function ActionsBar({ columns, rows }: ActionsBarProps) {
       <button
         type="button"
         onClick={() => window.print()}
-        className="rounded-md bg-zinc-500 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
+        className="rounded-md bg-zinc-400 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
       >
         Print
       </button>
       <Link
         href="/mastertable"
-        className="rounded-md bg-zinc-500 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
+        className="rounded-md bg-zinc-400 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
       >
         Clear All Filters
       </Link>
