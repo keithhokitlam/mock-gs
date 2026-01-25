@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function SupportPage() {
+export default function ContactPage() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
@@ -34,18 +34,18 @@ export default function SupportPage() {
             className="mb-6 text-3xl font-semibold text-zinc-900"
             style={{ fontFamily: '"Beckman Free", Arial, Helvetica, sans-serif' }}
           >
-            Support
+            Contact
           </h1>
           <p
             className="text-base leading-relaxed text-zinc-700"
             style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
           >
-            If you are experiencing any issues please contact{" "}
+            For general inquiries, please contact{" "}
             <a
-              href="mailto:support@grocery-share.com"
+              href="mailto:info@grocery-share.com"
               className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
             >
-              support@grocery-share.com
+              info@grocery-share.com
             </a>
           </p>
         </div>

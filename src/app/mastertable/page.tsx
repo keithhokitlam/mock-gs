@@ -185,6 +185,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <Link href="/support" className="font-beckman hover:opacity-80">
               Support
             </Link>
+            <Link href="/contact" className="font-beckman hover:opacity-80">
+              Contact
+            </Link>
             <span className="font-beckman">FAQ</span>
           </div>
         </div>

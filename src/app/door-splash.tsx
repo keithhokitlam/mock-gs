@@ -40,62 +40,47 @@ export default function DoorSplash() {
   if (isHidden) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-white"
-      aria-hidden
-    >
-      {/* Container: flexbox ensures both halves are side-by-side */}
+    <>
+      {/* Left door — 50vw, white, logo half; slides off-screen left. No overlay — page shows through gap. */}
       <div
-        className="flex"
-        style={{ width: LOGO_WIDTH, height: LOGO_HEIGHT }}
+        className="fixed left-0 top-0 z-50 flex h-screen w-1/2 items-center justify-end bg-white transition-transform ease-out"
+        style={{
+          transform: isOpen ? "translateX(-100vw)" : "translateX(0)",
+          transitionDuration: `${ANIMATION_MS}ms`,
+        }}
+        aria-hidden
       >
-        {/* Left half — shows left 300px of logo; slides fully off-screen left */}
         <div
-          className="overflow-hidden transition-transform ease-out"
+          className="relative shrink-0 overflow-hidden bg-no-repeat"
           style={{
             width: `${HALF}px`,
             height: `${LOGO_HEIGHT}px`,
-            flexShrink: 0,
-            transform: isOpen ? "translateX(-100vw)" : "translateX(0)",
-            transitionDuration: `${ANIMATION_MS}ms`,
+            backgroundImage: `url(${LOGO_SRC})`,
+            backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
+            backgroundPosition: "0 0",
           }}
-        >
-          <div
-            style={{
-              width: `${LOGO_WIDTH}px`,
-              height: `${LOGO_HEIGHT}px`,
-              backgroundImage: `url(${LOGO_SRC})`,
-              backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
-              backgroundPosition: "0 0",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-        </div>
-        {/* Right half — shows right 300px of logo; slides fully off-screen right */}
-        <div
-          className="relative overflow-hidden transition-transform ease-out"
-          style={{
-            width: `${HALF}px`,
-            height: `${LOGO_HEIGHT}px`,
-            flexShrink: 0,
-            transform: isOpen ? "translateX(100vw)" : "translateX(0)",
-            transitionDuration: `${ANIMATION_MS}ms`,
-          }}
-        >
-          <div
-            className="absolute"
-            style={{
-              left: `-${HALF}px`,
-              width: `${LOGO_WIDTH}px`,
-              height: `${LOGO_HEIGHT}px`,
-              backgroundImage: `url(${LOGO_SRC})`,
-              backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
-              backgroundPosition: `right center`,
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-        </div>
+        />
       </div>
-    </div>
+      {/* Right door — 50vw, white, logo half; slides off-screen right */}
+      <div
+        className="fixed right-0 top-0 z-50 flex h-screen w-1/2 items-center justify-start bg-white transition-transform ease-out"
+        style={{
+          transform: isOpen ? "translateX(100vw)" : "translateX(0)",
+          transitionDuration: `${ANIMATION_MS}ms`,
+        }}
+        aria-hidden
+      >
+        <div
+          className="relative shrink-0 overflow-hidden bg-no-repeat"
+          style={{
+            width: `${HALF}px`,
+            height: `${LOGO_HEIGHT}px`,
+            backgroundImage: `url(${LOGO_SRC})`,
+            backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
+            backgroundPosition: `${-HALF}px 0`,
+          }}
+        />
+      </div>
+    </>
   );
 }
