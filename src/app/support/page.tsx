@@ -27,7 +27,7 @@ export default function SupportPage() {
       </nav>
       <main className="mx-auto w-full max-w-2xl px-4 py-12">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
-          <h1 className="mb-6 text-3xl font-semibold text-zinc-900">Support</h1>
+          <h1 className="mb-6 font-beckman text-3xl font-semibold text-zinc-900">Support</h1>
           <p
             className="text-base leading-relaxed text-zinc-700"
             style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
