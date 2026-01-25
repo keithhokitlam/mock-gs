@@ -8,7 +8,7 @@
 
 2. **Go to your project folder:**
    ```
-   cd "/Users/keithlam/Documents/mock-gs"
+   cd "/Users/keithlam/Documents/grocery-share.com"
    ```
 
 3. **See what files you changed:**
@@ -152,7 +152,7 @@ If you haven't connected Vercel yet:
 
 2. **Import your project:**
    - Click "Add New..." → "Project"
-   - Find your repository: `keithhokitlam/mock-gs`
+   - Find your repository: `keithhokitlam/grocery-share.com`
    - Click "Import"
 
 3. **Configure your project:**
@@ -169,7 +169,7 @@ If you haven't connected Vercel yet:
 5. **Deploy:**
    - Click "Deploy"
    - Wait 1-3 minutes
-   - When it's done, you'll get a URL like: `https://mock-gs.vercel.app`
+   - When it's done, you'll get a URL like: `https://grocery-share.com`
 
 6. **Automatic deployments:**
    - From now on, every time you push to GitHub, Vercel will automatically deploy
@@ -187,7 +187,7 @@ Here's the complete process from making a change to seeing it live:
 
 ### 2. Test locally
 ```
-cd "/Users/keithlam/Documents/mock-gs"
+cd "/Users/keithlam/Documents/grocery-share.com"
 npm run dev
 ```
 - Go to `http://localhost:3000` to see your changes
@@ -195,7 +195,7 @@ npm run dev
 
 ### 3. Push to GitHub
 ```
-cd "/Users/keithlam/Documents/mock-gs"
+cd "/Users/keithlam/Documents/grocery-share.com"
 git add .
 git commit -m "Description of your changes"
 git push origin main
@@ -218,7 +218,7 @@ git push origin main
 
 ### "Repository not found":
 - Make sure you're logged into the correct GitHub account
-- Check that the repository exists at: https://github.com/keithhokitlam/mock-gs
+- Check that the repository exists at: https://github.com/keithhokitlam/grocery-share.com
 
 ### Vercel deployment fails:
 - Check the deployment logs in Vercel dashboard
@@ -245,7 +245,7 @@ git push origin main
 
 ```bash
 # Go to project folder
-cd "/Users/keithlam/Documents/mock-gs"
+cd "/Users/keithlam/Documents/grocery-share.com"
 
 # Check what changed
 git status

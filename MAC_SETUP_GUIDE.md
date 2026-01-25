@@ -132,7 +132,7 @@ You need to tell Terminal where your project is located on your computer.
 2. **Go to Your Project Folder**:
    - Type this command exactly:
      ```
-     cd "/Users/keithlam/Documents/mock-gs"
+     cd "/Users/keithlam/Documents/grocery-share.com"
      ```
    - Press Enter
    - The `cd` command means "change directory" (go to a folder)
@@ -141,15 +141,15 @@ You need to tell Terminal where your project is located on your computer.
 3. **Verify You're in the Right Place**:
    - Type: `pwd`
    - Press Enter
-   - It should show: `/Users/keithlam/Documents/mock-gs`
+   - It should show: `/Users/keithlam/Documents/grocery-share.com`
    - If it does, you're in the right place! ✅
 
 **Alternative: Drag and Drop Method (Easier!)**
 1. Type `cd ` (with a space after "cd")
 2. Open Finder
 3. Go to Documents folder
-4. Find the "mock-gs" folder
-5. Drag the "mock-gs" folder into the Terminal window
+4. Find the "grocery-share.com" folder
+5. Drag the "grocery-share.com" folder into the Terminal window
 6. Press Enter
 
 ---
@@ -193,8 +193,8 @@ This checks if your computer can talk to GitHub and see your code.
    - Press Enter
    - You should see:
      ```
-     origin  https://github.com/keithhokitlam/mock-gs.git (fetch)
-     origin  https://github.com/keithhokitlam/mock-gs.git (push)
+     origin  https://github.com/keithhokitlam/grocery-share.com.git (fetch)
+     origin  https://github.com/keithhokitlam/grocery-share.com.git (push)
      ```
    - This means your project knows where to find GitHub! ✅
 
@@ -248,7 +248,7 @@ This starts your project so you can see it in your web browser.
 Here are the commands you'll use most often:
 
 ### To Work on Your Project:
-- `cd "/Users/keithlam/Documents/mock-gs"` - Go to your project folder
+- `cd "/Users/keithlam/Documents/grocery-share.com"` - Go to your project folder
 - `npm run dev` - Start your project
 - `Control + C` - Stop your project
 
@@ -290,7 +290,7 @@ git push
 ### Can't Find Your Project:
 - Open Finder (the blue face icon in your dock)
 - Go to Documents folder
-- Look for "mock-gs" folder
+- Look for "grocery-share.com" folder
 
 ---
 

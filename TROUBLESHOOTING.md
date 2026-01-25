@@ -19,7 +19,7 @@ When you run `npm run dev`, you should see something like this in Terminal:
 ### What to Do:
 1. **Make sure you're in the right folder:**
    - Type: `pwd`
-   - Should show: `/Users/keithlam/Documents/mock-gs`
+   - Should show: `/Users/keithlam/Documents/grocery-share.com`
 
 2. **Try starting the server again:**
    - Type: `npm run dev`
@@ -139,7 +139,7 @@ If nothing else works, try this complete reset:
 
 2. **Go to your project folder:**
    ```
-   cd "/Users/keithlam/Documents/mock-gs"
+   cd "/Users/keithlam/Documents/grocery-share.com"
    ```
 
 3. **Clean everything:**
@@ -190,7 +190,7 @@ If nothing else works, try this complete reset:
 Before asking for help, check:
 
 - [ ] Did you run `npm install` first?
-- [ ] Are you in the correct folder (`/Users/keithlam/Documents/mock-gs`)?
+- [ ] Are you in the correct folder (`/Users/keithlam/Documents/grocery-share.com`)?
 - [ ] Is the server showing "Ready" in Terminal?
 - [ ] Are you using `http://localhost:3000` (not https)?
 - [ ] Did you wait 10-20 seconds after starting the server?

@@ -3,7 +3,7 @@
 ## Step 1: Open Terminal and go to your project
 
 ```bash
-cd "/Users/keithlam/Documents/mock-gs"
+cd "/Users/keithlam/Documents/grocery-share.com"
 ```
 
 ---
@@ -59,7 +59,7 @@ If Vercel is connected to your GitHub repo:
 
 1. **Vercel deploys automatically** when you push to `main`
 2. Go to **https://vercel.com/dashboard**
-3. Open your **mock-gs** project
+3. Open your **grocery-share.com** project
 4. Check **Deployments** — a new deployment should appear within 1–2 minutes
 5. When it says **Ready**, your live site is updated
 
@@ -68,7 +68,7 @@ If Vercel is connected to your GitHub repo:
 ## All commands in one block (copy & paste)
 
 ```bash
-cd "/Users/keithlam/Documents/mock-gs"
+cd "/Users/keithlam/Documents/grocery-share.com"
 git add .
 git commit -m "Change nav bar to blue"
 git push origin main
@@ -95,7 +95,7 @@ You need a **GitHub Personal Access Token**:
 
 | Step | Command |
 |------|---------|
-| 1. Go to project | `cd "/Users/keithlam/Documents/mock-gs"` |
+| 1. Go to project | `cd "/Users/keithlam/Documents/grocery-share.com"` |
 | 2. Add changes | `git add .` |
 | 3. Commit | `git commit -m "Change nav bar to blue"` |
 | 4. Push to GitHub | `git push origin main` |

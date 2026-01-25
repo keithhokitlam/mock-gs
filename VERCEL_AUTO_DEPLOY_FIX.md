@@ -10,7 +10,7 @@ Your project uses **`main`** as the main branch. Vercel must be set to deploy fr
 
 ### In Vercel:
 1. Go to **https://vercel.com/dashboard**
-2. Click your **mock-gs** project
+2. Click your **grocery-share.com** project
 3. Go to **Settings** (top tab)
 4. Click **Git** in the left sidebar
 5. Under **Production Branch**, make sure it says **`main`**
@@ -24,7 +24,7 @@ Your project uses **`main`** as the main branch. Vercel must be set to deploy fr
 GitHub tells Vercel about new commits via a **webhook**. If it's missing, no deployments run.
 
 ### In GitHub:
-1. Go to **https://github.com/keithhokitlam/mock-gs**
+1. Go to **https://github.com/keithhokitlam/grocery-share.com**
 2. Click **Settings** (repository settings, not your profile)
 3. In the left sidebar, click **Webhooks**
 4. Look for a webhook whose URL contains **`vercel.com`**
@@ -42,7 +42,7 @@ GitHub tells Vercel about new commits via a **webhook**. If it's missing, no dep
 
 ## Step 3: Check Vercel GitHub App Permissions
 
-Vercel uses a GitHub App to access your repos. It needs access to **mock-gs**.
+Vercel uses a GitHub App to access your repos. It needs access to **grocery-share.com**.
 
 ### In GitHub:
 1. Go to **https://github.com/settings/installations**
@@ -50,8 +50,8 @@ Vercel uses a GitHub App to access your repos. It needs access to **mock-gs**.
 3. Click **Configure**
 4. Under **Repository access**:
    - Either **All repositories** is selected, or
-   - **Only select repositories** is selected **and** **mock-gs** is in the list
-5. If **mock-gs** is not included, add it
+   - **Only select repositories** is selected **and** **grocery-share.com** is in the list
+5. If **grocery-share.com** is not included, add it
 6. Click **Save**
 
 ---
@@ -62,16 +62,16 @@ Reconnecting often fixes webhook and permission issues.
 
 ### In Vercel:
 1. Go to **https://vercel.com/dashboard**
-2. Click your **mock-gs** project
+2. Click your **grocery-share.com** project
 3. Go to **Settings** → **Git**
 4. Under **Connected Git Repository**:
-   - Note which repo is connected (should be `keithhokitlam/mock-gs`)
+   - Note which repo is connected (should be `keithhokitlam/grocery-share.com`)
 5. Click **Disconnect** (or **Disconnect Repository**)
 6. Confirm
 7. Click **Connect Git Repository**
 8. Choose **GitHub**
 9. If asked, authorize Vercel
-10. Select **keithhokitlam/mock-gs**
+10. Select **keithhokitlam/grocery-share.com**
 11. Leave **Root Directory** blank (or `./`) unless you use a subfolder
 12. **Production Branch:** set to **`main`**
 13. Click **Connect**
@@ -82,7 +82,7 @@ This creates a new webhook in GitHub and re-establishes the link.
 1. Make a small change (e.g. add a comment in `src/app/page.tsx`)
 2. Commit and push:
    ```bash
-   cd "/Users/keithlam/Documents/mock-gs"
+   cd "/Users/keithlam/Documents/grocery-share.com"
    git add .
    git commit -m "Test: trigger Vercel deploy"
    git push origin main
@@ -97,7 +97,7 @@ Auto-deploy only runs for the branch Vercel uses as Production (usually `main`).
 
 ### In Terminal:
 ```bash
-cd "/Users/keithlam/Documents/mock-gs"
+cd "/Users/keithlam/Documents/grocery-share.com"
 git branch
 ```
 
@@ -114,11 +114,11 @@ Always push to **`main`** if that's your production branch in Vercel.
 
 ## Step 6: Check Vercel Project ↔ Repo Link
 
-1. In Vercel dashboard, open your **mock-gs** project
+1. In Vercel dashboard, open your **grocery-share.com** project
 2. **Settings** → **Git**
 3. Confirm:
    - **GitHub** is connected
-   - Repository: **keithhokitlam/mock-gs**
+   - Repository: **keithhokitlam/grocery-share.com**
    - Production Branch: **main**
 
 If the repo or branch is wrong, fix it there or reconnect (Step 4).
@@ -129,7 +129,7 @@ If the repo or branch is wrong, fix it there or reconnect (Step 4).
 
 - [ ] Vercel **Production Branch** = **`main`**
 - [ ] GitHub repo **Settings → Webhooks** has a Vercel webhook
-- [ ] **GitHub → Settings → Applications → Vercel** has access to **mock-gs**
+- [ ] **GitHub → Settings → Applications → Vercel** has access to **grocery-share.com**
 - [ ] You push with `git push origin main`
 - [ ] You’ve tried **disconnecting and reconnecting** the Git repo in Vercel
 
@@ -151,7 +151,7 @@ If the repo or branch is wrong, fix it there or reconnect (Step 4).
 
 4. **Create a new Vercel project** (last resort):
    - **Add New** → **Project**
-   - Import **keithhokitlam/mock-gs** again
+   - Import **keithhokitlam/grocery-share.com** again
    - Set Production Branch to **main**
    - Deploy once, then push a commit and see if auto-deploy works
 
@@ -163,7 +163,7 @@ Most “no auto-deploy” issues are fixed by:
 
 1. Setting **Production Branch** to **`main`** in Vercel  
 2. **Disconnecting and reconnecting** the Git repository in Vercel  
-3. Ensuring the **Vercel** GitHub App has access to **mock-gs**  
+3. Ensuring the **Vercel** GitHub App has access to **grocery-share.com**  
 4. Pushing to **`main`** with `git push origin main`
 
 Start with **Step 4 (Reconnect Git)** and **Step 1 (Production Branch)**, then push a test commit.
