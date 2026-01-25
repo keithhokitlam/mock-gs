@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 const LOGO_HEIGHT = 400;
 const LOGO_WIDTH = 600;
 const HALF = LOGO_WIDTH / 2;
-const ANIMATION_MS = 600;
+const ANIMATION_MS = 3000;
 const AUTO_PLAY_DELAY_MS = 800;
 
 const LOGO_SRC = "/logos/GroceryShare_logo_stacked_1024.png";
@@ -49,14 +49,14 @@ export default function DoorSplash() {
         className="flex"
         style={{ width: LOGO_WIDTH, height: LOGO_HEIGHT }}
       >
-        {/* Left half — shows left 300px of logo */}
+        {/* Left half — shows left 300px of logo; slides fully off-screen left */}
         <div
           className="overflow-hidden transition-transform ease-out"
           style={{
             width: `${HALF}px`,
             height: `${LOGO_HEIGHT}px`,
             flexShrink: 0,
-            transform: isOpen ? "translateX(-100%)" : "translateX(0)",
+            transform: isOpen ? "translateX(-100vw)" : "translateX(0)",
             transitionDuration: `${ANIMATION_MS}ms`,
           }}
         >
@@ -71,14 +71,14 @@ export default function DoorSplash() {
             }}
           />
         </div>
-        {/* Right half — shows right 300px of logo */}
+        {/* Right half — shows right 300px of logo; slides fully off-screen right */}
         <div
           className="relative overflow-hidden transition-transform ease-out"
           style={{
             width: `${HALF}px`,
             height: `${LOGO_HEIGHT}px`,
             flexShrink: 0,
-            transform: isOpen ? "translateX(100%)" : "translateX(0)",
+            transform: isOpen ? "translateX(100vw)" : "translateX(0)",
             transitionDuration: `${ANIMATION_MS}ms`,
           }}
         >
