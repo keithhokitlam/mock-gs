@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#EC4899] via-[20%] to-[#EC4899]">
+      <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
         <div className="flex w-full items-center gap-4 px-2 py-0">
           <Link href="/" aria-label="Go to home">
             <Image
