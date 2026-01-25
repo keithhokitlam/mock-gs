@@ -42,7 +42,9 @@ export default function Home() {
           </Link>
           <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
             <span className="font-beckman">About</span>
-            <span className="font-beckman">Support</span>
+            <Link href="/support" className="font-beckman hover:opacity-80">
+              Support
+            </Link>
             <span className="font-beckman">FAQ</span>
           </div>
         </div>
