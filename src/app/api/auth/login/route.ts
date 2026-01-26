@@ -106,10 +106,6 @@ export async function POST(request: NextRequest) {
         success: true,
         message: "Login successful",
       });
-    } catch (dbError: any) {
-      console.error("Database operation error:", dbError);
-      throw dbError; // Re-throw to be caught by outer catch
-    }
   } catch (error: any) {
     console.error("Login error:", error);
     console.error("Error message:", error?.message);
