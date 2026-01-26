@@ -192,6 +192,15 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
         </div>
       </nav>
+      {/* Watermark */}
+      <div className="fixed inset-0 pointer-events-none z-10 flex items-center justify-center">
+        <span
+          className="text-8xl font-bold text-red-500/20"
+          style={{ transform: "rotate(-45deg)" }}
+        >
+          TEST DATA ONLY
+        </span>
+      </div>
       <div className="w-full px-0 pt-4 pb-10 overflow-x-visible">
         <ActionsBar
           columns={columns.map((column) => column.label)}
