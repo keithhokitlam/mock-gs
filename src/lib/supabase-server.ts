@@ -9,6 +9,7 @@ let supabaseServerInstance: SupabaseClient;
 
 if (!supabaseUrl || !supabaseServiceKey) {
   // Build-time fallback (shouldn't happen in Vercel with proper env vars)
+  console.warn("⚠️ Supabase env vars missing - using placeholder client");
   supabaseServerInstance = createClient(
     "https://placeholder.supabase.co",
     "placeholder-key",
@@ -21,6 +22,7 @@ if (!supabaseUrl || !supabaseServiceKey) {
   ) as SupabaseClient;
 } else {
   // Normal runtime/production - create real client
+  console.log("✅ Creating Supabase client with URL:", supabaseUrl.substring(0, 30) + "...");
   supabaseServerInstance = createClient(supabaseUrl, supabaseServiceKey, {
     auth: {
       autoRefreshToken: false,
