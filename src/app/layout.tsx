@@ -16,7 +16,11 @@ export const metadata: Metadata = {
   title: "GroceryShare and Company",
   description: "GroceryShare and Company - Subscription account management",
   icons: {
-    icon: "/logos/GS_logo_highres_1x.png",
+    icon: [
+      { url: "/logos/GS_logo_highres_1x.png", type: "image/png" },
+    ],
+    shortcut: "/logos/GS_logo_highres_1x.png",
+    apple: "/logos/GS_logo_highres_1x.png",
   },
 };
 
