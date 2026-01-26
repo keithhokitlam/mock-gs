@@ -43,7 +43,12 @@ export default function Home() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Incorrect email or password.");
+        // Show detailed error if available (for debugging)
+        console.log("Login error response:", data);
+        const errorMessage = data.details 
+          ? `${data.error}\n\nDetails: ${data.details}${data.code ? ` (Code: ${data.code})` : ''}` 
+          : data.error || "Incorrect email or password.";
+        setError(errorMessage);
         setLoading(false);
         return;
       }
