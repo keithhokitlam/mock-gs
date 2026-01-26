@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
 
     try {
       await resend.emails.send({
-        from: "GroceryShare <onboarding@resend.dev>", // Use your verified domain in production
+        from: process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>",
         to: email,
         subject: "Reset your GroceryShare password",
         html: `
