@@ -5,24 +5,54 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DoorSplash from "./door-splash";
+import SignupModal from "./components/signup-modal";
+import ForgotPasswordModal from "./components/forgot-password-modal";
 
 export default function Home() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [showSignup, setShowSignup] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
+    setLoading(true);
+
     const formData = new FormData(event.currentTarget);
-    const username = String(formData.get("username") || "");
+    const email = String(formData.get("username") || "");
     const password = String(formData.get("password") || "");
 
-    if (username === "admin" && password === "admin") {
+    // Fallback to admin/admin for testing
+    if (email === "admin" && password === "admin") {
       setError("");
+      setLoading(false);
       router.push("/mastertable");
       return;
     }
 
-    setError("Incorrect username or password.");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Incorrect email or password.");
+        setLoading(false);
+        return;
+      }
+
+      // Login successful, redirect to mastertable
+      router.push("/mastertable");
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,9 +116,18 @@ export default function Home() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-700" htmlFor="password">
-              Password
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-zinc-700" htmlFor="password">
+                Password
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowForgotPassword(true)}
+                className="text-xs text-[#2B6B4A] hover:underline"
+              >
+                Forgot password?
+              </button>
+            </div>
             <input
               id="password"
               name="password"
@@ -106,16 +145,31 @@ export default function Home() {
           ) : null}
           <button
             type="submit"
-            className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300"
+            disabled={loading}
+            className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300 disabled:opacity-50"
           >
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            onClick={() => setShowSignup(true)}
+            className="text-sm text-[#2B6B4A] hover:underline"
+          >
+            Don't have an account? Sign up
+          </button>
+        </div>
         <p className="mt-6 text-center text-xs text-zinc-500">
           By continuing, you agree to the terms and privacy policy.
         </p>
         </div>
       </main>
+      <SignupModal isOpen={showSignup} onClose={() => setShowSignup(false)} />
+      <ForgotPasswordModal
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+      />
     </div>
   );
 }

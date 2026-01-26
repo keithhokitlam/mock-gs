@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import ActionsBar from "./actions-bar";
 import AdminTable, { type AdminColumn } from "./table";
+import { getCurrentUser } from "@/lib/auth";
 
 const SHEET_ID = "1kx7wArkJ5VDSwNuKDKizUMp1exnxfub-aI6xszqCZxs";
 const SHEET_GID = "0";
@@ -97,6 +99,15 @@ function parseFilterValue(value: string): FilterValue {
 }
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
+  // Check authentication
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/");
+  }
+  if (!user.email_verified) {
+    redirect("/");
+  }
+
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const rows = await getSheetRows();
   const headers = rows[0] || [];
