@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GroceryShare and Company",
   description: "GroceryShare and Company - Subscription account management",
+  icons: {
+    icon: "/logos/GS_logo_highres_1x.png",
+  },
 };
 
 export default function RootLayout({
