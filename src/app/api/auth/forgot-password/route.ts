@@ -31,7 +31,16 @@ export async function POST(request: NextRequest) {
       .single();
 
     // Don't reveal if email exists (security best practice)
-    if (findError || !user) {
+    if (findError) {
+      console.error("Supabase query error in forgot-password:", findError);
+      // Still return success to not reveal if email exists
+      return NextResponse.json({
+        success: true,
+        message: "If an account exists, a password reset link has been sent.",
+      });
+    }
+
+    if (!user) {
       return NextResponse.json({
         success: true,
         message: "If an account exists, a password reset link has been sent.",
