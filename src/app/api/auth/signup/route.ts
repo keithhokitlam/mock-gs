@@ -93,16 +93,24 @@ export async function POST(request: NextRequest) {
     }
 
     const resend = getResend();
-    const fromEmail = process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>";
+    // Use test domain if custom domain not verified, otherwise use custom
+    let fromEmail = process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>";
+    
+    // If custom domain is set but might not be verified, try it first, then fallback
+    const useCustomDomain = fromEmail.includes("@grocery-share.com");
     
     console.log("=== EMAIL SEND ATTEMPT ===");
     console.log("Sending verification email to:", email);
     console.log("From email:", fromEmail);
+    console.log("Using custom domain:", useCustomDomain);
     console.log("Verification link:", verifyLink);
     console.log("Resend API Key present:", !!resendApiKey);
     
+    let emailResult;
+    
     try {
-      const emailResult = await resend.emails.send({
+      // Try sending with configured email (might be custom domain)
+      emailResult = await resend.emails.send({
         from: fromEmail,
         to: email,
         subject: "Verify your GroceryShare account",
@@ -123,8 +131,41 @@ export async function POST(request: NextRequest) {
       
       // Check for errors in the response
       if (emailResult?.error) {
-        console.error("Resend returned an error:", JSON.stringify(emailResult.error, null, 2));
-        throw new Error(emailResult.error.message || "Resend API returned an error");
+        // Check if it's a domain verification error - fallback to test domain
+        const isDomainError = emailResult.error.statusCode === 403 && 
+                             emailResult.error.message?.includes("domain is not verified");
+        
+        if (isDomainError && useCustomDomain) {
+          console.warn("Custom domain not verified, falling back to test domain");
+          fromEmail = "GroceryShare <onboarding@resend.dev>";
+          
+          // Retry with test domain
+          emailResult = await resend.emails.send({
+            from: fromEmail,
+            to: email,
+            subject: "Verify your GroceryShare account",
+            html: `
+              <h1>Welcome to GroceryShare!</h1>
+              <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>
+              <p><a href="${verifyLink}" style="background-color: #2B6B4A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
+              <p>Or copy and paste this link into your browser:</p>
+              <p>${verifyLink}</p>
+              <p>This link will expire in 24 hours.</p>
+            `,
+          });
+          
+          console.log("=== RETRY WITH TEST DOMAIN ===");
+          console.log("Email result:", JSON.stringify(emailResult, null, 2));
+          
+          // Check retry result
+          if (emailResult?.error) {
+            console.error("Retry with test domain also failed:", emailResult.error);
+            throw new Error(emailResult.error.message || "Resend API returned an error");
+          }
+        } else {
+          // Not a domain error or not using custom domain, throw error
+          throw new Error(emailResult.error.message || "Resend API returned an error");
+        }
       }
       
       if (!emailResult?.data?.id) {
@@ -137,31 +178,13 @@ export async function POST(request: NextRequest) {
       // Log detailed error
       console.error("=== EMAIL SEND FAILED ===");
       console.error("Failed to send verification email:", emailError);
-      console.error("Error type:", typeof emailError);
-      console.error("Error constructor:", emailError?.constructor?.name);
-      console.error("Email error message:", emailError?.message);
-      console.error("Email error name:", emailError?.name);
-      console.error("Email error stack:", emailError?.stack);
-      console.error("Full error object:", JSON.stringify(emailError, Object.getOwnPropertyNames(emailError), 2));
-      
-      // Check if it's a Resend API error
-      if (emailError?.response) {
-        console.error("Resend API error response:", JSON.stringify(emailError.response, null, 2));
-      }
-      
-      // Check for Resend-specific error properties
-      if (emailError?.statusCode) {
-        console.error("Resend error status code:", emailError.statusCode);
-      }
-      if (emailError?.status) {
-        console.error("Resend error status:", emailError.status);
-      }
+      console.error("Error message:", emailError?.message);
       
       // Return error so user knows email wasn't sent
       return NextResponse.json(
         { 
           error: "Account created but failed to send verification email. Please contact support.",
-          details: emailError?.message || emailError?.name || "Email service error",
+          details: emailError?.message || "Email service error",
           verificationToken: verificationToken // Include token so user can verify manually if needed
         },
         { status: 500 }

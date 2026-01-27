@@ -76,9 +76,12 @@ export async function POST(request: NextRequest) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const resetLink = `${appUrl}/reset-password?token=${resetToken}`;
 
+    let fromEmail = process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>";
+    const useCustomDomain = fromEmail.includes("@grocery-share.com");
+
     try {
-      await getResend().emails.send({
-        from: process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>",
+      let emailResult = await getResend().emails.send({
+        from: fromEmail,
         to: email,
         subject: "Reset your GroceryShare password",
         html: `
@@ -91,6 +94,36 @@ export async function POST(request: NextRequest) {
           <p>If you didn't request this, please ignore this email.</p>
         `,
       });
+
+      // Check for domain verification error - fallback to test domain
+      if (emailResult?.error?.statusCode === 403 && 
+          emailResult?.error?.message?.includes("domain is not verified") &&
+          useCustomDomain) {
+        console.warn("Custom domain not verified, falling back to test domain for password reset");
+        fromEmail = "GroceryShare <onboarding@resend.dev>";
+        
+        // Retry with test domain
+        emailResult = await getResend().emails.send({
+          from: fromEmail,
+          to: email,
+          subject: "Reset your GroceryShare password",
+          html: `
+            <h1>Password Reset Request</h1>
+            <p>You requested to reset your password. Click the link below to reset it:</p>
+            <p><a href="${resetLink}" style="background-color: #2B6B4A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a></p>
+            <p>Or copy and paste this link into your browser:</p>
+            <p>${resetLink}</p>
+            <p>This link will expire in 1 hour.</p>
+            <p>If you didn't request this, please ignore this email.</p>
+          `,
+        });
+      }
+
+      if (emailResult?.error) {
+        console.error("Failed to send reset email:", emailResult.error);
+      } else {
+        console.log("Password reset email sent successfully:", emailResult.data?.id);
+      }
     } catch (emailError) {
       console.error("Failed to send reset email:", emailError);
     }
