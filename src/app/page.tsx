@@ -109,7 +109,7 @@ export default function Home() {
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-700" htmlFor="username">
-              Username or email
+              Email
             </label>
             <input
               id="username"
