@@ -179,16 +179,68 @@ export async function POST(request: NextRequest) {
       console.error("=== EMAIL SEND FAILED ===");
       console.error("Failed to send verification email:", emailError);
       console.error("Error message:", emailError?.message);
+      console.error("Error type:", typeof emailError);
+      console.error("Full error:", JSON.stringify(emailError, null, 2));
       
-      // Return error so user knows email wasn't sent
-      return NextResponse.json(
-        { 
-          error: "Account created but failed to send verification email. Please contact support.",
-          details: emailError?.message || "Email service error",
-          verificationToken: verificationToken // Include token so user can verify manually if needed
-        },
-        { status: 500 }
-      );
+      // Check if error message contains domain verification error
+      const errorMessage = emailError?.message || "";
+      const isDomainErrorInException = errorMessage.includes("domain is not verified");
+      
+      // If it's a domain error and we haven't tried test domain yet, retry
+      if (isDomainErrorInException && useCustomDomain) {
+        console.warn("Caught domain verification exception, retrying with test domain");
+        try {
+          fromEmail = "GroceryShare <onboarding@resend.dev>";
+          const retryResult = await resend.emails.send({
+            from: fromEmail,
+            to: email,
+            subject: "Verify your GroceryShare account",
+            html: `
+              <h1>Welcome to GroceryShare!</h1>
+              <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>
+              <p><a href="${verifyLink}" style="background-color: #2B6B4A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
+              <p>Or copy and paste this link into your browser:</p>
+              <p>${verifyLink}</p>
+              <p>This link will expire in 24 hours.</p>
+            `,
+          });
+          
+          console.log("=== RETRY WITH TEST DOMAIN (from exception) ===");
+          console.log("Retry result:", JSON.stringify(retryResult, null, 2));
+          
+          if (retryResult?.error) {
+            throw new Error(retryResult.error.message || "Resend API returned an error");
+          }
+          
+          if (!retryResult?.data?.id) {
+            throw new Error("Email service returned unexpected response - no email ID");
+          }
+          
+          console.log("✅ Email sent successfully with ID (retry):", retryResult.data.id);
+          // Success! Continue to return success response
+        } catch (retryError: any) {
+          console.error("Retry with test domain also failed:", retryError);
+          // Return error if retry also fails
+          return NextResponse.json(
+            { 
+              error: "Account created but failed to send verification email. Please contact support.",
+              details: retryError?.message || "Email service error",
+              verificationToken: verificationToken
+            },
+            { status: 500 }
+          );
+        }
+      } else {
+        // Not a domain error or already tried, return error
+        return NextResponse.json(
+          { 
+            error: "Account created but failed to send verification email. Please contact support.",
+            details: emailError?.message || "Email service error",
+            verificationToken: verificationToken
+          },
+          { status: 500 }
+        );
+      }
     }
 
     return NextResponse.json({

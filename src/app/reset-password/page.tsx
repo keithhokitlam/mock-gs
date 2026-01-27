@@ -127,6 +127,9 @@ function ResetPasswordForm() {
                 >
                   New Password
                 </label>
+                <p className="text-xs text-zinc-500">
+                  Password must be 6 or more characters
+                </p>
                 <div className="relative">
                   <input
                     id="reset-password"
