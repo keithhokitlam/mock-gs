@@ -248,173 +248,23 @@ You'll complete three things:
 
 ---
 
-## STEP 3: Set Up Automatic Sync
+## STEP 3: Set Up Automatic Scheduled Sync
 
-**What you're doing**: Setting up automatic sync so Google Sheets updates without you manually visiting the sync URL.
+**What you're doing**: Setting up automatic sync so Google Sheets updates automatically on a schedule (every hour) without any manual work.
 
-**Why**: Saves time - you won't need to manually sync every time you create a subscription.
+**Why**: Google Sheets will stay updated automatically - no manual syncing needed!
 
-**Time**: ~15 minutes
+**Time**: ~10 minutes
 
-### Option A: Manual Sync Button (Easier - Recommended)
+**What I've Already Done For You**:
+- ✅ Created the cron API route (`src/app/api/cron/sync-subscriptions/route.ts`)
+- ✅ Created the Vercel configuration file (`vercel.json`)
 
-**What you're doing**: Adding a button on your admin page that you can click to sync.
+**What You Need to Do**:
+- Add the `CRON_SECRET` environment variable to Vercel
+- Commit and push the new files
 
-#### Step 3A.1: Create a Sync Button Component
-
-1. **Create a new file**
-   - In Cursor, create a new file: `src/app/components/sync-button.tsx`
-   - Copy and paste this code:
-
-   ```typescript
-   "use client";
-
-   import { useState } from "react";
-
-   export default function SyncButton() {
-     const [loading, setLoading] = useState(false);
-     const [message, setMessage] = useState("");
-
-     const handleSync = async () => {
-       setLoading(true);
-       setMessage("");
-
-       try {
-         const response = await fetch("/api/sync/subscriptions-to-sheets", {
-           method: "POST",
-         });
-
-         const data = await response.json();
-
-         if (response.ok) {
-           setMessage(`✅ Successfully synced ${data.count || 0} subscriptions!`);
-         } else {
-           setMessage(`❌ Error: ${data.error || "Failed to sync"}`);
-         }
-       } catch (error: any) {
-         setMessage(`❌ Error: ${error.message || "Failed to sync"}`);
-       } finally {
-         setLoading(false);
-       }
-     };
-
-     return (
-       <div className="p-4 bg-white rounded-lg shadow">
-         <button
-           onClick={handleSync}
-           disabled={loading}
-           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-         >
-           {loading ? "Syncing..." : "Sync to Google Sheets"}
-         </button>
-         {message && (
-           <p className={`mt-2 text-sm ${message.includes("✅") ? "text-green-600" : "text-red-600"}`}>
-             {message}
-           </p>
-         )}
-       </div>
-     );
-   }
-   ```
-
-2. **Save the file** (Command+S)
-
-#### Step 3A.2: Add Button to Master Table Page
-
-1. **Open the master table page**
-   - Open: `src/app/mastertable/page.tsx`
-
-2. **Add the Sync Button**
-   - At the top of the file, add this import (after the other imports):
-     ```typescript
-     import SyncButton from "../components/sync-button";
-     ```
-   
-   - Find where the page content starts (look for the return statement)
-   - Add the SyncButton component near the top of the page content
-   - It should look something like this:
-     ```typescript
-     return (
-       <div className="min-h-screen bg-zinc-50">
-         <SyncButton />
-         {/* rest of your page content */}
-       </div>
-     );
-     ```
-
-3. **Save the file** (Command+S)
-
-4. **Test it**
-   - Go to: `http://localhost:3000/mastertable`
-   - You should see a blue button that says "Sync to Google Sheets"
-   - Click it
-   - It should show a success message
-
-**✅ Option A Complete!** You now have a sync button on your admin page.
-
----
-
-### Option B: Automatic Scheduled Sync (Advanced)
-
-**What you're doing**: Setting up Vercel Cron to automatically sync every hour (or whatever schedule you want).
-
-**Why**: Google Sheets will update automatically without any manual work.
-
-#### Step 3B.1: Create Cron API Route
-
-1. **Create a new file**
-   - Create: `src/app/api/cron/sync-subscriptions/route.ts`
-   - Copy and paste this code:
-
-   ```typescript
-   import { NextRequest, NextResponse } from "next/server";
-   import { syncSubscriptions } from "@/app/api/sync/subscriptions-to-sheets/route";
-
-   /**
-    * Vercel Cron Job: Sync subscriptions to Google Sheets
-    * Runs automatically on schedule (configured in vercel.json)
-    */
-   export async function GET(request: NextRequest) {
-     // Verify this is a cron request (optional security check)
-     const authHeader = request.headers.get("authorization");
-     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-     }
-
-     return syncSubscriptions();
-   }
-   ```
-
-2. **Save the file**
-
-#### Step 3B.2: Create vercel.json Configuration
-
-1. **Create a new file**
-   - Create: `vercel.json` in your project root (same folder as `package.json`)
-   - Copy and paste this code:
-
-   ```json
-   {
-     "crons": [
-       {
-         "path": "/api/cron/sync-subscriptions",
-         "schedule": "0 * * * *"
-       }
-     ]
-   }
-   ```
-
-   **Schedule Explanation**:
-   - `"0 * * * *"` = Every hour at minute 0 (1:00 AM, 2:00 AM, 3:00 AM, etc.)
-   - To change frequency, use [crontab.guru](https://crontab.guru/) to generate a schedule
-   - Examples:
-     - `"0 */6 * * *"` = Every 6 hours
-     - `"0 0 * * *"` = Once per day at midnight
-     - `"0 9 * * *"` = Once per day at 9 AM
-
-2. **Save the file**
-
-#### Step 3B.3: Add CRON_SECRET to Vercel
+#### Step 3.1: Add CRON_SECRET to Vercel
 
 1. **Generate a Secret**
    - Go to: https://www.uuidgenerator.net/
@@ -429,27 +279,51 @@ You'll complete three things:
    - **Environment**: Check **Production** only
    - Click **"Save"**
 
-#### Step 3B.4: Deploy
+#### Step 3.2: Commit and Push the New Files
 
-1. **Commit and Push**
-   - In Terminal, type:
-     ```bash
-     cd "/Users/keithlam/Documents/grocery-share.com"
-     git add .
-     git commit -m "Add automatic sync cron job"
-     git push
-     ```
+1. **Open Terminal**
+   - Type: `cd "/Users/keithlam/Documents/grocery-share.com"`
+   - Press Enter
 
-2. **Wait for Deployment**
+2. **Add, Commit, and Push**
+   - Type: `git add .`
+   - Press Enter
+   - Type: `git commit -m "Add automatic sync cron job"`
+   - Press Enter
+   - Type: `git push`
+   - Press Enter
+   - Wait for it to finish
+
+3. **Wait for Deployment**
    - Vercel will automatically deploy
-   - Wait 2-3 minutes
+   - Go to Vercel Dashboard → Your Project → **"Deployments"** tab
+   - Wait 2-3 minutes for deployment to complete
 
-3. **Verify Cron is Set Up**
-   - Go to Vercel Dashboard → Your Project → Settings → Cron Jobs
-   - You should see your cron job listed
+#### Step 3.3: Verify Cron is Set Up
+
+1. **Check Cron Jobs in Vercel**
+   - Go to Vercel Dashboard → Your Project → **"Settings"** tab
+   - Click **"Cron Jobs"** in the left sidebar
+   - You should see your cron job listed:
+     - **Path**: `/api/cron/sync-subscriptions`
+     - **Schedule**: `0 * * * *` (every hour)
    - It will show when it last ran and when it will run next
 
-**✅ Option B Complete!** Your Google Sheets will now sync automatically on schedule!
+2. **Test the Cron Endpoint Manually** (optional)
+   - You can test it by visiting: `https://grocery-share.com/api/cron/sync-subscriptions?secret=YOUR_CRON_SECRET`
+   - Replace `YOUR_CRON_SECRET` with the secret you created in Step 3.1
+   - You should see a success message
+
+**✅ Step 3 Complete!** Your Google Sheets will now sync automatically every hour!
+
+**Schedule Details**:
+- Current schedule: `0 * * * *` = Every hour at minute 0 (1:00 AM, 2:00 AM, 3:00 AM, etc.)
+- To change the schedule, edit `vercel.json` and change the `"schedule"` value
+- Use [crontab.guru](https://crontab.guru/) to generate different schedules
+- Examples:
+  - `"0 */6 * * *"` = Every 6 hours
+  - `"0 0 * * *"` = Once per day at midnight
+  - `"0 9 * * *"` = Once per day at 9 AM
 
 ---
 
