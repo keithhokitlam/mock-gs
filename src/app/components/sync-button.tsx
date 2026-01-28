@@ -18,9 +18,11 @@ export default function SyncButton() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage(`✅ Successfully synced ${data.count || 0} subscriptions!`);
+        const inactiveMsg = data.inactiveCount > 0 ? `, marked ${data.inactiveCount} as inactive` : "";
+        setMessage(`✅ Successfully synced ${data.count || 0} subscriptions${inactiveMsg}!`);
       } else {
-        setMessage(`❌ Error: ${data.error || "Failed to sync"}`);
+        const details = data.details ? `\n\nDetails: ${data.details}` : "";
+        setMessage(`❌ Error: ${data.error || "Failed to sync"}${details}`);
       }
     } catch (error: any) {
       setMessage(`❌ Error: ${error.message || "Failed to sync"}`);

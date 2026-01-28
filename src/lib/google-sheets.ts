@@ -72,6 +72,12 @@ export async function writeSheetData(rows: string[][], startRow: number = 2) {
     return;
   }
 
+  // Validate startRow - must be at least 2 (row 1 is header)
+  if (startRow < 2) {
+    console.error(`Invalid startRow: ${startRow}, using row 2 instead`);
+    startRow = 2;
+  }
+
   try {
     // Write data starting from specified row (default row 2, which is after header)
     await sheets.spreadsheets.values.update({
@@ -86,6 +92,7 @@ export async function writeSheetData(rows: string[][], startRow: number = 2) {
     console.log(`✅ Successfully wrote ${rows.length} rows to Google Sheet starting at row ${startRow}`);
   } catch (error: any) {
     console.error("Error writing to sheet:", error);
+    console.error(`Attempted to write to range: ${sheetName}!A${startRow}`);
     throw new Error(`Failed to write to sheet: ${error.message}`);
   }
 }

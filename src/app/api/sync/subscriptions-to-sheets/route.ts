@@ -179,10 +179,20 @@ async function syncSubscriptions() {
 
     // Add new rows
     if (rowsToAdd.length > 0) {
-      // Find the next empty row
-      const nextRowIndex = existingRows.length;
-      await writeSheetData(rowsToAdd, nextRowIndex);
-      console.log(`Added ${rowsToAdd.length} new rows`);
+      // Calculate the next row number (1-based: row 1 = header, row 2 = first data row)
+      // If no existing rows, start at row 2
+      // If there are existing rows, start after the last row
+      const existingRowCount = existingRows?.length || 0;
+      const nextRowNumber = existingRowCount === 0 ? 2 : existingRowCount + 2;
+      
+      // Safety check - ensure we never use row 0 or 1
+      if (nextRowNumber < 2) {
+        console.error(`Invalid row number calculated: ${nextRowNumber}, using row 2 instead`);
+        await writeSheetData(rowsToAdd, 2);
+      } else {
+        await writeSheetData(rowsToAdd, nextRowNumber);
+      }
+      console.log(`Added ${rowsToAdd.length} new rows starting at row ${nextRowNumber}`);
     }
 
     const totalProcessed = (subscriptions?.length || 0) + inactiveCount;
@@ -197,11 +207,30 @@ async function syncSubscriptions() {
       totalProcessed,
     });
   } catch (error: any) {
+    console.error("=== SYNC ERROR ===");
     console.error("Sync error:", error);
+    console.error("Error message:", error?.message);
+    console.error("Error stack:", error?.stack);
+    
+    // Provide more detailed error information
+    let errorDetails = error?.message || "Unknown error";
+    
+    // Check for common Google Sheets API errors
+    if (error?.message?.includes("Unable to parse range")) {
+      errorDetails = "Invalid sheet name or range. Check GOOGLE_SHEET_NAME environment variable.";
+    } else if (error?.message?.includes("The caller does not have permission")) {
+      errorDetails = "Service account doesn't have permission. Make sure you shared the Google Sheet with the service account email.";
+    } else if (error?.message?.includes("Requested entity was not found")) {
+      errorDetails = "Google Sheet not found. Check GOOGLE_SHEET_ID environment variable.";
+    } else if (error?.message?.includes("Invalid credentials")) {
+      errorDetails = "Invalid Google Sheets credentials. Check GOOGLE_SHEETS_CREDENTIALS environment variable.";
+    }
+    
     return NextResponse.json(
       {
         error: "Failed to sync subscriptions",
-        details: error.message || "Unknown error",
+        details: errorDetails,
+        fullError: process.env.NODE_ENV === "development" ? error?.stack : undefined,
       },
       { status: 500 }
     );
