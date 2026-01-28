@@ -248,38 +248,23 @@ You'll complete three things:
 
 ---
 
-## STEP 3: Set Up Automatic Scheduled Sync
+## STEP 3: Set Up Manual Sync Button
 
-**What you're doing**: Setting up automatic sync so Google Sheets updates automatically on a schedule (every hour) without any manual work.
+**What you're doing**: Adding a button on your admin page that you can click to sync subscriptions to Google Sheets.
 
-**Why**: Google Sheets will stay updated automatically - no manual syncing needed!
+**Why**: Easy and convenient - just click a button whenever you want to update Google Sheets!
 
-**Time**: ~10 minutes
+**Time**: ~5 minutes
 
 **What I've Already Done For You**:
-- ✅ Created the cron API route (`src/app/api/cron/sync-subscriptions/route.ts`)
-- ✅ Created the Vercel configuration file (`vercel.json`)
+- ✅ Created the sync button component (`src/app/components/sync-button.tsx`)
+- ✅ Added the sync button to your master table page (`src/app/mastertable/page.tsx`)
 
 **What You Need to Do**:
-- Add the `CRON_SECRET` environment variable to Vercel
-- Commit and push the new files
+- Commit and push the changes
+- Test the button on your live site
 
-#### Step 3.1: Add CRON_SECRET to Vercel
-
-1. **Generate a Secret**
-   - Go to: https://www.uuidgenerator.net/
-   - Click **"Generate UUID"**
-   - Copy the UUID
-
-2. **Add to Vercel**
-   - Go to Vercel Dashboard → Your Project → Settings → Environment Variables
-   - Click **"Add New"**
-   - **Key**: `CRON_SECRET`
-   - **Value**: Paste the UUID you generated
-   - **Environment**: Check **Production** only
-   - Click **"Save"**
-
-#### Step 3.2: Commit and Push the New Files
+#### Step 3.1: Commit and Push the Changes
 
 1. **Open Terminal**
    - Type: `cd "/Users/keithlam/Documents/grocery-share.com"`
@@ -288,7 +273,7 @@ You'll complete three things:
 2. **Add, Commit, and Push**
    - Type: `git add .`
    - Press Enter
-   - Type: `git commit -m "Add automatic sync cron job"`
+   - Type: `git commit -m "Add sync button to master table"`
    - Press Enter
    - Type: `git push`
    - Press Enter
@@ -299,31 +284,30 @@ You'll complete three things:
    - Go to Vercel Dashboard → Your Project → **"Deployments"** tab
    - Wait 2-3 minutes for deployment to complete
 
-#### Step 3.3: Verify Cron is Set Up
+#### Step 3.2: Test the Sync Button
 
-1. **Check Cron Jobs in Vercel**
-   - Go to Vercel Dashboard → Your Project → **"Settings"** tab
-   - Click **"Cron Jobs"** in the left sidebar
-   - You should see your cron job listed:
-     - **Path**: `/api/cron/sync-subscriptions`
-     - **Schedule**: `0 * * * *` (every hour)
-   - It will show when it last ran and when it will run next
+1. **Test on Your Live Site**
+   - Go to: `https://grocery-share.com/mastertable`
+   - Log in if needed
+   - You should see a blue button at the top that says **"Sync to Google Sheets"**
 
-2. **Test the Cron Endpoint Manually** (optional)
-   - You can test it by visiting: `https://grocery-share.com/api/cron/sync-subscriptions?secret=YOUR_CRON_SECRET`
-   - Replace `YOUR_CRON_SECRET` with the secret you created in Step 3.1
-   - You should see a success message
+2. **Click the Button**
+   - Click the **"Sync to Google Sheets"** button
+   - You should see a message appear below the button:
+     - ✅ **Success**: "Successfully synced X subscriptions!"
+     - ❌ **Error**: If there's an error, it will show the error message
 
-**✅ Step 3 Complete!** Your Google Sheets will now sync automatically every hour!
+3. **Verify in Google Sheets**
+   - Go to your Google Sheet
+   - **Refresh the page** (F5 or Command+R)
+   - You should see your subscription data updated!
 
-**Schedule Details**:
-- Current schedule: `0 * * * *` = Every hour at minute 0 (1:00 AM, 2:00 AM, 3:00 AM, etc.)
-- To change the schedule, edit `vercel.json` and change the `"schedule"` value
-- Use [crontab.guru](https://crontab.guru/) to generate different schedules
-- Examples:
-  - `"0 */6 * * *"` = Every 6 hours
-  - `"0 0 * * *"` = Once per day at midnight
-  - `"0 9 * * *"` = Once per day at 9 AM
+**✅ Step 3 Complete!** You now have a sync button on your admin page!
+
+**How to Use**:
+- Whenever you create or update subscriptions in Supabase, just click the "Sync to Google Sheets" button
+- The button will sync all subscriptions from Supabase to your Google Sheet
+- It's that simple!
 
 ---
 
