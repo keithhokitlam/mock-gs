@@ -82,6 +82,7 @@ export default async function SubscriptionsPage({
       }
 
       // Also check if subscription has expired (even if status hasn't been updated yet)
+      // If subscription_end_date is null, subscription is indefinite/active forever
       if (subscription.subscription_end_date) {
         const endDate = new Date(subscription.subscription_end_date);
         const today = new Date();
@@ -98,6 +99,7 @@ export default async function SubscriptionsPage({
           redirect("/?error=subscription_expired");
         }
       }
+      // If subscription_end_date is null, subscription is active indefinitely - allow access
     } else {
       // No subscription found - redirect to login
       redirect("/?error=no_subscription");
@@ -147,12 +149,16 @@ export default async function SubscriptionsPage({
 
   // Format subscription data for display
   const subscriptionRows = (subscriptions || []).map((sub) => {
-    const endDate = new Date(sub.subscription_end_date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    endDate.setHours(0, 0, 0, 0);
-    const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    const daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : "Expired";
+    // If subscription_end_date is null, subscription is indefinite - show "Unlimited"
+    let daysRemainingStr = "Unlimited";
+    if (sub.subscription_end_date) {
+      const endDate = new Date(sub.subscription_end_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      endDate.setHours(0, 0, 0, 0);
+      const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : "Expired";
+    }
 
     const userId = sub.user_id || sub.id || "";
     const checkInCount = checkInCounts.get(userId) || 0;

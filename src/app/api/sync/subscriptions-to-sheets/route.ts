@@ -201,12 +201,16 @@ async function syncSubscriptions() {
     // Column order: User ID, Email, Start Date, End Date, Renewal Date, Status, Plan Type, Days Remaining, Check-Ins, Monthly Avg Check-Ins, Created At, Updated At
     const newRows = (subscriptions || []).map((sub) => {
       // Calculate days remaining
-      const endDate = new Date(sub.subscription_end_date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      endDate.setHours(0, 0, 0, 0);
-      const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      const daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : "Expired";
+      // If subscription_end_date is null, subscription is indefinite - show "Unlimited"
+      let daysRemainingStr = "Unlimited";
+      if (sub.subscription_end_date) {
+        const endDate = new Date(sub.subscription_end_date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : "Expired";
+      }
 
       // Get check-in count for this user
       const userId = sub.user_id || sub.id || "";

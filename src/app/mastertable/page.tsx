@@ -134,6 +134,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       }
 
       // Also check if subscription has expired (even if status hasn't been updated yet)
+      // If subscription_end_date is null, subscription is indefinite/active forever
       if (subscription.subscription_end_date) {
         const endDate = new Date(subscription.subscription_end_date);
         const today = new Date();
@@ -150,6 +151,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           redirect("/?error=subscription_expired");
         }
       }
+      // If subscription_end_date is null, subscription is active indefinitely - allow access
     } else {
       // No subscription found - redirect to login
       redirect("/?error=no_subscription");

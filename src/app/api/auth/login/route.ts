@@ -124,6 +124,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Also check if subscription has expired (even if status hasn't been updated yet)
+        // If subscription_end_date is null, subscription is indefinite/active forever
         if (subscription.subscription_end_date) {
           const endDate = new Date(subscription.subscription_end_date);
           const today = new Date();
@@ -145,6 +146,7 @@ export async function POST(request: NextRequest) {
             );
           }
         }
+        // If subscription_end_date is null, subscription is active indefinitely - allow login
       } else {
         // No subscription found - deny login
         return NextResponse.json(
