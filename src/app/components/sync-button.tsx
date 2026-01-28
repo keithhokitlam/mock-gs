@@ -32,7 +32,7 @@ export default function SyncButton() {
   };
 
   return (
-    <>
+    <div className="flex flex-col">
       <button
         onClick={handleSync}
         disabled={loading}
@@ -45,6 +45,6 @@ export default function SyncButton() {
           {message}
         </p>
       )}
-    </>
+    </div>
   );
 }
