@@ -38,6 +38,18 @@ body {
   font-family: "Beckman Free", Arial, Helvetica, sans-serif;
 }
 
+@font-face {
+  font-family: "Kenyan Coffee";
+  src: url("/fonts/Kenyan Coffee Rg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-kenyan {
+  font-family: "Kenyan Coffee", Arial, Helvetica, sans-serif;
+}
+
 @media print {
   @page {
     size: landscape;
