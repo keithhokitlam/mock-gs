@@ -169,16 +169,19 @@ Follow these steps in order:
    - Rename it: `GroceryShare Subscriptions`
 
 2. **Set Up Header Row** (Row 1):
-   - **Cell A1**: `User Email`
-   - **Cell B1**: `Subscription Start Date`
-   - **Cell C1**: `Subscription End Date`
-   - **Cell D1**: `Renewal Date`
-   - **Cell E1**: `Status`
-   - **Cell F1**: `Plan Type`
-   - **Cell G1**: `Days Remaining`
-   - **Cell H1**: `Created At`
-   - **Cell I1**: `Updated At`
+   - **Cell A1**: `User ID` (this is the user_id from Supabase - used to match rows)
+   - **Cell B1**: `User Email`
+   - **Cell C1**: `Subscription Start Date`
+   - **Cell D1**: `Subscription End Date`
+   - **Cell E1**: `Renewal Date`
+   - **Cell F1**: `Status`
+   - **Cell G1**: `Plan Type`
+   - **Cell H1**: `Days Remaining`
+   - **Cell I1**: `Created At`
+   - **Cell J1**: `Updated At`
    - **Make Row 1 bold** (select row 1, click B button)
+   
+   **Important**: The `User ID` column (A1) is used to match subscriptions. If a subscription is removed from Supabase, its status in Google Sheets will automatically be set to "inactive" instead of being deleted.
 
 3. **Get Your Sheet ID**:
    - Look at the URL in your browser

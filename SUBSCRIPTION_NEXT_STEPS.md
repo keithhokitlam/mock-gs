@@ -355,8 +355,26 @@ You'll complete three things:
    - Go to your Google Sheet
    - **Refresh the page** (F5 or Command+R)
    - You should see your subscription data updated!
+   - **Important**: The sync now includes User ID in the first column. If you remove a subscription from Supabase and sync again, that subscription's status in Google Sheets will automatically change to "inactive" (instead of being deleted). This preserves historical data.
 
 **✅ Step 3 Complete!** You now have a sync button that only appears for admin users!
+
+**How Sync Works Now**:
+- **New subscriptions**: Added to Google Sheets
+- **Updated subscriptions**: Updated in Google Sheets  
+- **Removed subscriptions**: Status changed to "inactive" in Google Sheets (not deleted - preserves history)
+- **User ID column**: First column contains User ID from Supabase for matching subscriptions
+
+**Important - Update Your Google Sheet Header**:
+If your Google Sheet doesn't have "User ID" as the first column yet, you need to add it:
+1. Go to your Google Sheet
+2. **Insert a new column** at the beginning (right-click column A → "Insert 1 column left")
+3. In the new **Cell A1**, type: `User ID`
+4. **Shift all other headers** one column to the right:
+   - Old A1 (User Email) → New B1
+   - Old B1 (Subscription Start Date) → New C1
+   - etc.
+5. The sync will automatically populate User IDs for existing rows on the next sync
 
 **How It Works**:
 - **Admin/admin login**: Sync button always shows (no session, treated as admin)
