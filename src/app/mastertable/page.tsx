@@ -118,7 +118,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   // For admin/admin login (no session), always show sync button
   // For normal login, check if email matches admin email
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@grocery-share.com";
-  const isAdmin = !user || (user.email && (user.email === ADMIN_EMAIL || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()));
+  
+  // If no user session exists, it means admin/admin login was used (bypasses auth)
+  // So always show sync button for admin/admin
+  let isAdmin = false;
+  if (!user) {
+    // Admin/admin login - no session created, so user is null
+    isAdmin = true;
+  } else if (user.email) {
+    // Normal login - check if email matches admin email
+    isAdmin = user.email === ADMIN_EMAIL || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  }
+  
+  // Debug logging (remove in production if needed)
+  console.log("[Admin Check] User:", user?.email || "null (admin/admin)", "isAdmin:", isAdmin);
 
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const rows = await getSheetRows();
