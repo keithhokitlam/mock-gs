@@ -232,22 +232,6 @@ function LoginForm() {
     </div>
   );
 }
-
-export default function Home() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-zinc-600">Loading...</p>
-        </div>
-      </div>
-    }>
-      <LoginForm />
-    </Suspense>
-  );
-}
-
-export default function Home() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
