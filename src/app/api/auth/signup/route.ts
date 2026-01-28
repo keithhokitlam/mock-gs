@@ -75,6 +75,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Automatically create a subscription for the new user (1 year from today)
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setFullYear(endDate.getFullYear() + 1); // Add 1 year
+    
+    const { error: subscriptionError } = await supabaseServer
+      .from("subscriptions")
+      .insert({
+        user_id: user.id,
+        email: user.email,
+        subscription_start_date: startDate.toISOString().split("T")[0],
+        subscription_end_date: endDate.toISOString().split("T")[0],
+        status: "active",
+      });
+
+    if (subscriptionError) {
+      console.error("Failed to create subscription for new user:", subscriptionError);
+      // Don't fail the signup if subscription creation fails - user account is still created
+      // They can create subscription manually later
+    } else {
+      console.log(`✅ Created subscription for user ${user.email}`);
+    }
+
     // Send verification email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const verifyLink = `${appUrl}/verify-email?token=${verificationToken}`;
