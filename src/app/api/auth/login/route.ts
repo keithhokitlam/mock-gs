@@ -155,6 +155,21 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      // Record check-in (login event)
+      try {
+        await supabaseServer
+          .from("check_ins")
+          .insert({
+            user_id: user.id,
+            email: user.email,
+            checked_in_at: new Date().toISOString(),
+          });
+        console.log(`✅ Recorded check-in for user ${user.email}`);
+      } catch (checkInError: any) {
+        // Don't fail login if check-in recording fails - log error but continue
+        console.error("Failed to record check-in:", checkInError);
+      }
+
       // Create session
       await createSession(user.id);
 
