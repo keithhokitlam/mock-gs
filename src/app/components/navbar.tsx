@@ -17,14 +17,14 @@ export default function NavBar() {
         </Link>
         <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
           <span className="font-beckman">About</span>
+          <Link href="/pricing" className="font-beckman hover:opacity-80">
+            Pricing
+          </Link>
           <Link href="/support" className="font-beckman hover:opacity-80">
             Support
           </Link>
           <Link href="/contact" className="font-beckman hover:opacity-80">
             Contact
-          </Link>
-          <Link href="/pricing" className="font-beckman hover:opacity-80">
-            Pricing
           </Link>
           <span className="font-beckman">FAQ</span>
         </div>
