@@ -149,12 +149,14 @@ export default async function SubscriptionsPage({
 
   // Format subscription data for display
   const subscriptionRows = (subscriptions || []).map((sub) => {
+    // Define today once for use in both days remaining and monthly average calculations
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
     // If subscription_end_date is null, subscription is indefinite - show "Unlimited"
     let daysRemainingStr = "Unlimited";
     if (sub.subscription_end_date) {
       const endDate = new Date(sub.subscription_end_date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
       endDate.setHours(0, 0, 0, 0);
       const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
       daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : "Expired";
