@@ -23,13 +23,13 @@ function LoginForm() {
     if (errorParam) {
       switch (errorParam) {
         case "subscription_inactive":
-          setError("Your subscription is inactive. Please contact support to renew your subscription.");
+          setError("Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services");
           break;
         case "subscription_expired":
-          setError("Your subscription has expired. Please contact support to renew your subscription.");
+          setError("Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services");
           break;
         case "no_subscription":
-          setError("No active subscription found. Please contact support.");
+          setError("Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services");
           break;
         default:
           setError("Access denied. Please contact support.");
@@ -198,7 +198,7 @@ function LoginForm() {
             </div>
           </div>
           {error ? (
-            <p className="text-sm text-red-600" role="alert">
+            <p className="text-sm text-red-600 whitespace-pre-line" role="alert">
               {error}
             </p>
           ) : null}

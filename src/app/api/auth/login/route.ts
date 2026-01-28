@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
         if (subscription.status === "inactive" || subscription.status === "cancelled") {
           return NextResponse.json(
             {
-              error: "Your subscription is inactive. Please contact support to renew your subscription.",
+              error: "Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services",
             },
             { status: 403 }
           );
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
             
             return NextResponse.json(
               {
-                error: "Your subscription has expired. Please contact support to renew your subscription.",
+                error: "Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services",
               },
               { status: 403 }
             );
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
         // No subscription found - deny login
         return NextResponse.json(
           {
-            error: "No active subscription found. Please contact support.",
+            error: "Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services",
           },
           { status: 403 }
         );
