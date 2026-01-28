@@ -259,55 +259,115 @@ You'll complete three things:
 **What I've Already Done For You**:
 - ✅ Created the sync button component (`src/app/components/sync-button.tsx`)
 - ✅ Added the sync button to your master table page (`src/app/mastertable/page.tsx`)
+- ✅ Restricted the sync button to admin only (only shows for admin/admin login or admin email)
 
 **What You Need to Do**:
+- Optionally set your admin email in environment variables
 - Commit and push the changes
 - Test the button on your live site
 
-#### Step 3.1: Commit and Push the Changes
+#### Step 3.1: Set Admin Email (Optional)
+
+**Note**: The sync button is already configured to show only for admin/admin login. If you want to use a specific admin email address instead, follow these steps:
+
+1. **Open `.env.local` file**
+   - In Cursor, open `.env.local` file in your project root
+
+2. **Add Admin Email** (optional)
+   - Add this line at the end:
+     ```
+     ADMIN_EMAIL=your-admin-email@grocery-share.com
+     ```
+   - Replace `your-admin-email@grocery-share.com` with your actual admin email
+   - **If you skip this step**, the sync button will only show for admin/admin login (which is the default)
+
+3. **Save the file** (Command+S)
+
+4. **Add to Vercel** (if you set an admin email)
+   - Go to Vercel Dashboard → Your Project → Settings → Environment Variables
+   - Click **"Add New"**
+   - **Key**: `ADMIN_EMAIL`
+   - **Value**: Your admin email (e.g., `admin@grocery-share.com`)
+   - **Environment**: Check all three boxes:
+     - ✓ **Production**
+     - ✓ **Preview**
+     - ✓ **Development**
+   - Click **"Save"**
+
+#### Step 3.2: Commit and Push the Changes
 
 1. **Open Terminal**
+   - Press `Command + Space` (on Mac) to open Spotlight
+   - Type: `Terminal`
+   - Press Enter
+
+2. **Navigate to Your Project**
    - Type: `cd "/Users/keithlam/Documents/grocery-share.com"`
    - Press Enter
 
-2. **Add, Commit, and Push**
+3. **Add All Changes**
    - Type: `git add .`
    - Press Enter
-   - Type: `git commit -m "Add sync button to master table"`
+   - This stages all your changes (sync button, admin restriction, etc.)
+
+4. **Commit the Changes**
+   - Type: `git commit -m "Add sync button restricted to admin only"`
    - Press Enter
+   - You should see a message like: `[main abc1234] Add sync button restricted to admin only`
+
+5. **Push to GitHub**
    - Type: `git push`
    - Press Enter
-   - Wait for it to finish
+   - Wait for it to finish (you'll see "Writing objects" and "To github.com...")
+   - If prompted for credentials, enter your GitHub username and Personal Access Token
 
-3. **Wait for Deployment**
-   - Vercel will automatically deploy
+6. **Wait for Deployment**
+   - Vercel will automatically start deploying
    - Go to Vercel Dashboard → Your Project → **"Deployments"** tab
-   - Wait 2-3 minutes for deployment to complete
+   - You'll see a new deployment starting (it will say "Building..." or "Queued")
+   - Wait 2-3 minutes for it to finish
+   - When it says **"Ready"** (green checkmark), your site is deployed
 
-#### Step 3.2: Test the Sync Button
+#### Step 3.3: Test the Sync Button
 
-1. **Test on Your Live Site**
-   - Go to: `https://grocery-share.com/mastertable`
-   - Log in if needed
-   - You should see a blue button at the top that says **"Sync to Google Sheets"**
+1. **Test as Admin (admin/admin login)**
+   - Go to: `https://grocery-share.com`
+   - Log in with:
+     - **Email/Username**: `admin`
+     - **Password**: `admin`
+   - You should be redirected to `/mastertable`
+   - **You should see** a blue button at the top that says **"Sync to Google Sheets"**
 
-2. **Click the Button**
-   - Click the **"Sync to Google Sheets"** button
+2. **Test as Regular User** (to verify it's hidden)
+   - Log out (or open in incognito/private window)
+   - Go to: `https://grocery-share.com`
+   - Log in with a regular user account (not admin/admin)
+   - Go to `/mastertable`
+   - **You should NOT see** the sync button (it's hidden for non-admin users)
+
+3. **Click the Sync Button** (as admin)
+   - While logged in as admin/admin, click the **"Sync to Google Sheets"** button
    - You should see a message appear below the button:
      - ✅ **Success**: "Successfully synced X subscriptions!"
      - ❌ **Error**: If there's an error, it will show the error message
 
-3. **Verify in Google Sheets**
+4. **Verify in Google Sheets**
    - Go to your Google Sheet
    - **Refresh the page** (F5 or Command+R)
    - You should see your subscription data updated!
 
-**✅ Step 3 Complete!** You now have a sync button on your admin page!
+**✅ Step 3 Complete!** You now have a sync button that only appears for admin users!
+
+**How It Works**:
+- **Admin/admin login**: Sync button always shows (no session, treated as admin)
+- **Admin email login**: Sync button shows if user's email matches `ADMIN_EMAIL` environment variable
+- **Regular users**: Sync button is hidden
 
 **How to Use**:
-- Whenever you create or update subscriptions in Supabase, just click the "Sync to Google Sheets" button
+- Log in as admin/admin (or your admin email)
+- Go to `/mastertable`
+- Click the "Sync to Google Sheets" button whenever you want to update Google Sheets
 - The button will sync all subscriptions from Supabase to your Google Sheet
-- It's that simple!
 
 ---
 
@@ -317,25 +377,25 @@ You've completed:
 
 1. ✅ **Tested API subscription creation** - You can now create subscriptions programmatically
 2. ✅ **Deployed to production** - Your live site can sync to Google Sheets
-3. ✅ **Set up automatic sync** - Either manual button (Option A) or scheduled cron (Option B)
+3. ✅ **Set up manual sync button** - Admin-only sync button on your master table page
 
 ## What Happens Now?
 
-- **Manual Sync (Option A)**: Click the "Sync to Google Sheets" button whenever you want to update the sheet
-- **Automatic Sync (Option B)**: Google Sheets updates automatically on schedule - no manual work needed!
+- **Manual Sync Button**: Log in as admin/admin, go to `/mastertable`, and click the "Sync to Google Sheets" button whenever you want to update the sheet
+- The button is **admin-only** - regular users won't see it
 
 ## Troubleshooting
 
+**If sync button doesn't appear:**
+- Make sure you're logged in as admin/admin (or your admin email)
+- Check that you're on the `/mastertable` page
+- Regular users won't see the button (this is intentional)
+
 **If sync button doesn't work:**
 - Check browser console (F12) for errors
-- Make sure you're logged in
+- Make sure you're logged in as admin
 - Check Terminal for error messages
-
-**If cron job doesn't run:**
-- Check Vercel Dashboard → Settings → Cron Jobs
-- Verify `vercel.json` is in your project root
-- Check that `CRON_SECRET` is set in Vercel environment variables
-- Check Vercel function logs for errors
+- Verify Google Sheets credentials are set in Vercel environment variables
 
 **If production sync fails:**
 - Verify all three environment variables are set in Vercel
