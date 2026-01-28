@@ -112,7 +112,7 @@ export default async function PricingPage() {
       
       <main className="mx-auto w-full max-w-6xl px-4 py-10">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 font-kenyan">Subscription Pricing</h1>
+          <h1 className="text-4xl font-bold mb-4 font-beckman">Subscription Pricing</h1>
         </div>
 
         {/* Auto-renewal Notice */}
