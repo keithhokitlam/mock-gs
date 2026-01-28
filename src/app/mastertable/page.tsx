@@ -136,8 +136,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               userEmailLower === "admin@grocery-share.com";
   }
   
-  // Debug logging (remove in production if needed)
-  console.log("[Admin Check] User:", user?.email || "null (admin/admin)", "isAdmin:", isAdmin);
 
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const rows = await getSheetRows();
@@ -244,17 +242,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </span>
       </div>
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
-        {/* Temporary debug indicator - remove after fixing */}
-        <div className="mb-2 p-2 bg-yellow-100 text-xs border border-yellow-300">
-          Debug Info: isAdmin = {String(isAdmin)}, User = {user?.email || "null (admin/admin)"}, ADMIN_EMAIL = {ADMIN_EMAIL}
-        </div>
-        {isAdmin ? (
-          <SyncButton />
-        ) : (
-          <div className="mb-2 p-2 bg-red-100 text-xs border border-red-300">
-            Sync button hidden - Not admin. User: {user?.email || "null"}
-          </div>
-        )}
+        {isAdmin && <SyncButton />}
         <ActionsBar
           columns={columns.map((column) => column.label)}
           rows={visibleRows}
