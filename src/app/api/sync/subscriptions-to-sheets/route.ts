@@ -34,6 +34,55 @@ async function syncSubscriptions() {
 
     console.log(`Found ${subscriptions?.length || 0} subscriptions to sync`);
 
+    // Check for expired subscriptions and update their status to "inactive"
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const expiredSubscriptions = (subscriptions || []).filter((sub) => {
+      if (!sub.subscription_end_date) return false;
+      const endDate = new Date(sub.subscription_end_date);
+      endDate.setHours(0, 0, 0, 0);
+      return endDate < today && sub.status !== "inactive" && sub.status !== "cancelled";
+    });
+
+    if (expiredSubscriptions.length > 0) {
+      console.log(`Found ${expiredSubscriptions.length} expired subscriptions to mark as inactive`);
+      
+      // Update each expired subscription in Supabase
+      for (const sub of expiredSubscriptions) {
+        try {
+          const { error: updateError } = await supabaseServer
+            .from("subscriptions")
+            .update({ status: "inactive" })
+            .eq("id", sub.id);
+          
+          if (updateError) {
+            console.error(`Failed to update subscription ${sub.id} to inactive:`, updateError);
+          } else {
+            console.log(`✅ Marked subscription ${sub.id} (user: ${sub.email}) as inactive (expired on ${sub.subscription_end_date})`);
+            // Update the local subscription object so sync reflects the change
+            sub.status = "inactive";
+          }
+        } catch (error: any) {
+          console.error(`Error updating subscription ${sub.id}:`, error);
+        }
+      }
+    }
+
+    // Re-fetch subscriptions to get updated statuses
+    const { data: updatedSubscriptions, error: refetchError } = await supabaseServer
+      .from("subscriptions")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (refetchError) {
+      console.error("Error re-fetching subscriptions after status update:", refetchError);
+      // Continue with original subscriptions if refetch fails
+    } else {
+      subscriptions = updatedSubscriptions;
+      console.log(`Re-fetched ${subscriptions?.length || 0} subscriptions after status updates`);
+    }
+
     // Read existing data from Google Sheets
     let existingRows: string[][] = [];
     try {
