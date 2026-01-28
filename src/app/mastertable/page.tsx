@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import ActionsBar from "./actions-bar";
 import AdminTable, { type AdminColumn } from "./table";
 import { getCurrentUser } from "@/lib/auth";
+import SyncButton from "../components/sync-button";
 
 const SHEET_ID = "1kx7wArkJ5VDSwNuKDKizUMp1exnxfub-aI6xszqCZxs";
 const SHEET_GID = "0";
@@ -212,7 +213,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           TEST DATA ONLY
         </span>
       </div>
-      <div className="w-full px-0 pt-4 pb-10 overflow-x-visible">
+      <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
+        <SyncButton />
         <ActionsBar
           columns={columns.map((column) => column.label)}
           rows={visibleRows}
