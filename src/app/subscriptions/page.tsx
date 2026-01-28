@@ -163,19 +163,28 @@ export default async function SubscriptionsPage({
     }
 
     const userId = sub.user_id || sub.id || "";
-    const checkInCount = checkInCounts.get(userId) || 0;
+    const status = sub.status || "active";
+    
+    // If status is inactive, set Check-Ins and Monthly Avg Check-Ins to empty
+    let checkInCount = 0;
+    let monthlyAvgCheckIns = "";
+    
+    if (status !== "inactive" && status !== "cancelled") {
+      checkInCount = checkInCounts.get(userId) || 0;
 
-    // Calculate monthly average check-ins
-    let monthlyAvgCheckIns = "0";
-    if (checkInCount > 0 && sub.subscription_start_date) {
-      const startDate = new Date(sub.subscription_start_date);
-      startDate.setHours(0, 0, 0, 0);
-      const monthsSinceStart = Math.max(
-        1, // At least 1 month to avoid division by zero
-        (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44) // Average days per month
-      );
-      const avgPerMonth = checkInCount / monthsSinceStart;
-      monthlyAvgCheckIns = avgPerMonth.toFixed(1); // Round to 1 decimal place
+      // Calculate monthly average check-ins
+      if (checkInCount > 0 && sub.subscription_start_date) {
+        const startDate = new Date(sub.subscription_start_date);
+        startDate.setHours(0, 0, 0, 0);
+        const monthsSinceStart = Math.max(
+          1, // At least 1 month to avoid division by zero
+          (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44) // Average days per month
+        );
+        const avgPerMonth = checkInCount / monthsSinceStart;
+        monthlyAvgCheckIns = avgPerMonth.toFixed(1); // Round to 1 decimal place
+      } else {
+        monthlyAvgCheckIns = "0";
+      }
     }
 
     return [
@@ -184,10 +193,10 @@ export default async function SubscriptionsPage({
       sub.subscription_start_date || "",
       sub.subscription_end_date || "",
       sub.renewal_date || "",
-      sub.status || "active",
+      status,
       sub.plan_type || "",
       daysRemainingStr,
-      checkInCount.toString(),
+      checkInCount > 0 ? checkInCount.toString() : "",
       monthlyAvgCheckIns,
       sub.created_at ? new Date(sub.created_at).toLocaleString() : "",
       sub.updated_at ? new Date(sub.updated_at).toLocaleString() : "",
@@ -214,9 +223,9 @@ export default async function SubscriptionsPage({
     (header) => header.trim().toLowerCase() === "status"
   );
 
+  // Include status column in display (don't filter it out)
   const columns: AdminColumn[] = headers
-    .map((header, index) => ({ label: header || `Column ${index + 1}`, index }))
-    .filter((column) => column.index !== statusIndex);
+    .map((header, index) => ({ label: header || `Column ${index + 1}`, index }));
 
   const activeRows = subscriptionRows;
 
@@ -265,12 +274,9 @@ export default async function SubscriptionsPage({
     });
   }
 
-  const visibleRows = rowsToSort.map((row) =>
-    row.filter((_, index) => index !== statusIndex)
-  );
-  const filterRows = activeRows.map((row) =>
-    row.filter((_, index) => index !== statusIndex)
-  );
+  // Include all columns including status
+  const visibleRows = rowsToSort;
+  const filterRows = activeRows;
 
   return (
     <div className="min-h-screen w-max min-w-full bg-zinc-50 text-zinc-900">
