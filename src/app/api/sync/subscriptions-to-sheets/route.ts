@@ -19,7 +19,7 @@ async function syncSubscriptions() {
     console.log("🔄 Starting subscription sync to Google Sheets...");
 
     // Fetch all subscriptions from Supabase
-    const { data: subscriptions, error } = await supabaseServer
+    let { data: subscriptions, error } = await supabaseServer
       .from("subscriptions")
       .select("*")
       .order("created_at", { ascending: false });
