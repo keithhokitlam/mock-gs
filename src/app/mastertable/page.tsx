@@ -286,7 +286,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
         {isAdmin && (
           <div className="p-4 bg-white rounded-lg shadow mb-4">
-            <div className="flex gap-3">
+            <div className="flex gap-3 items-start">
               <SyncButton />
               <Link
                 href="/subscriptions"
