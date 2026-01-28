@@ -39,43 +39,72 @@ export async function POST(request: NextRequest) {
       .eq("email", email.toLowerCase())
       .single();
 
+    let user;
+    let isExistingUser = false;
+
     if (existingUser) {
-      return NextResponse.json(
-        { error: "An account with this email already exists" },
-        { status: 400 }
-      );
+      // User exists - update their password and create a new subscription
+      isExistingUser = true;
+      const passwordHash = await bcrypt.hash(password, 10);
+      
+      // Update password for existing user
+      const verificationToken = crypto.randomBytes(32).toString("hex");
+      const { data: updatedUser, error: updateError } = await supabaseServer
+        .from("users")
+        .update({
+          password_hash: passwordHash,
+          email_verified: false, // Require re-verification for security
+          verification_token: verificationToken,
+        })
+        .eq("id", existingUser.id)
+        .select()
+        .single();
+
+      if (updateError || !updatedUser) {
+        console.error("Failed to update existing user:", updateError);
+        return NextResponse.json(
+          { error: "Failed to update account. Please try again." },
+          { status: 500 }
+        );
+      }
+
+      user = updatedUser;
+    } else {
+      // New user - create account
+      const passwordHash = await bcrypt.hash(password, 10);
+      const verificationToken = crypto.randomBytes(32).toString("hex");
+
+      // Create user
+      const { data: newUser, error: insertError } = await supabaseServer
+        .from("users")
+        .insert({
+          email: email.toLowerCase(),
+          password_hash: passwordHash,
+          email_verified: false,
+          verification_token: verificationToken,
+        })
+        .select()
+        .single();
+
+      if (insertError || !newUser) {
+        console.error("Failed to create user:", insertError);
+        return NextResponse.json(
+          { 
+            error: "Failed to create account",
+            details: process.env.NODE_ENV === "development" ? insertError?.message : undefined
+          },
+          { status: 500 }
+        );
+      }
+
+      user = newUser;
     }
 
-    // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
+    // Get verification token (already set above for both cases)
+    const verificationToken = user.verification_token!;
 
-    // Generate verification token
-    const verificationToken = crypto.randomBytes(32).toString("hex");
-
-    // Create user
-    const { data: user, error: insertError } = await supabaseServer
-      .from("users")
-      .insert({
-        email: email.toLowerCase(),
-        password_hash: passwordHash,
-        email_verified: false,
-        verification_token: verificationToken,
-      })
-      .select()
-      .single();
-
-    if (insertError || !user) {
-      console.error("Failed to create user:", insertError);
-      return NextResponse.json(
-        { 
-          error: "Failed to create account",
-          details: process.env.NODE_ENV === "development" ? insertError?.message : undefined
-        },
-        { status: 500 }
-      );
-    }
-
-    // Automatically create a subscription for the new user (1 year from today)
+    // Automatically create a NEW subscription (1 year from today)
+    // This allows tracking multiple subscriptions per user
     const startDate = new Date();
     const endDate = new Date();
     endDate.setFullYear(endDate.getFullYear() + 1); // Add 1 year
@@ -91,16 +120,26 @@ export async function POST(request: NextRequest) {
       });
 
     if (subscriptionError) {
-      console.error("Failed to create subscription for new user:", subscriptionError);
-      // Don't fail the signup if subscription creation fails - user account is still created
+      console.error("Failed to create subscription:", subscriptionError);
+      // Don't fail the signup if subscription creation fails - user account is still created/updated
       // They can create subscription manually later
     } else {
-      console.log(`✅ Created subscription for user ${user.email}`);
+      console.log(`✅ Created ${isExistingUser ? 'new' : 'initial'} subscription for user ${user.email}`);
     }
 
-    // Send verification email
+    // Send verification email (for both new and existing users)
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const verifyLink = `${appUrl}/verify-email?token=${verificationToken}`;
+    
+    const emailSubject = isExistingUser 
+      ? "Verify your GroceryShare account - Subscription Renewed"
+      : "Verify your GroceryShare account";
+    
+    const emailMessage = isExistingUser
+      ? `<h1>Welcome back to GroceryShare!</h1>
+         <p>Your subscription has been renewed. Please verify your email address by clicking the link below:</p>`
+      : `<h1>Welcome to GroceryShare!</h1>
+         <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>`;
 
     // Check if Resend is configured
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -136,10 +175,9 @@ export async function POST(request: NextRequest) {
       emailResult = await resend.emails.send({
         from: fromEmail,
         to: email,
-        subject: "Verify your GroceryShare account",
+        subject: emailSubject,
         html: `
-          <h1>Welcome to GroceryShare!</h1>
-          <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>
+          ${emailMessage}
           <p><a href="${verifyLink}" style="background-color: #2B6B4A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
           <p>Or copy and paste this link into your browser:</p>
           <p>${verifyLink}</p>
@@ -166,10 +204,9 @@ export async function POST(request: NextRequest) {
           emailResult = await resend.emails.send({
             from: fromEmail,
             to: email,
-            subject: "Verify your GroceryShare account",
+            subject: emailSubject,
             html: `
-              <h1>Welcome to GroceryShare!</h1>
-              <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>
+              ${emailMessage}
               <p><a href="${verifyLink}" style="background-color: #2B6B4A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
               <p>Or copy and paste this link into your browser:</p>
               <p>${verifyLink}</p>
@@ -217,10 +254,9 @@ export async function POST(request: NextRequest) {
           const retryResult = await resend.emails.send({
             from: fromEmail,
             to: email,
-            subject: "Verify your GroceryShare account",
+            subject: emailSubject,
             html: `
-              <h1>Welcome to GroceryShare!</h1>
-              <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>
+              ${emailMessage}
               <p><a href="${verifyLink}" style="background-color: #2B6B4A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
               <p>Or copy and paste this link into your browser:</p>
               <p>${verifyLink}</p>
@@ -268,7 +304,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "Account created. Please check your email to verify your account.",
+      message: isExistingUser 
+        ? "Account updated and new subscription created. Please check your email to verify your account."
+        : "Account created. Please check your email to verify your account.",
     });
   } catch (error) {
     console.error("Signup error:", error);
