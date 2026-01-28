@@ -268,6 +268,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <div className="p-4 bg-white rounded-lg shadow mb-4">
             <div className="flex gap-3 items-start">
               <SyncButton />
+              <span className="text-black font-bold text-xl self-center">→</span>
               <Link
                 href="/subscriptions"
                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-semibold inline-block"
