@@ -27,9 +27,22 @@ export default function Home() {
 
     // Fallback to admin/admin for testing
     if (email === "admin" && password === "admin") {
+      // Clear any existing session first (so admin/admin works even if another user was logged in)
+      try {
+        const logoutResponse = await fetch("/api/auth/logout", { 
+          method: "POST",
+          credentials: "include" 
+        });
+        // Wait a moment for the cookie to be cleared
+        await new Promise(resolve => setTimeout(resolve, 100));
+      } catch (err) {
+        // Ignore errors - session might not exist
+        console.log("Logout error (ignored):", err);
+      }
       setError("");
       setLoading(false);
-      router.push("/mastertable");
+      // Use window.location instead of router.push to ensure fresh page load
+      window.location.href = "/mastertable";
       return;
     }
 

@@ -115,19 +115,25 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   // If no user, assume admin/admin login was used (bypasses auth)
 
   // Check if user is admin
-  // For admin/admin login (no session), always show sync button
-  // For normal login, check if email matches admin email
+  // Admin/admin login bypasses auth and doesn't create a session
+  // So if no user exists, it means admin/admin was used
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@grocery-share.com";
   
-  // If no user session exists, it means admin/admin login was used (bypasses auth)
-  // So always show sync button for admin/admin
+  // Determine if current user is admin
+  // Admin/admin login bypasses auth and clears session, so user should be null
+  // But if there's a stale session, check if email matches admin criteria
   let isAdmin = false;
   if (!user) {
-    // Admin/admin login - no session created, so user is null
+    // No session = admin/admin login was used (bypasses auth, session cleared)
     isAdmin = true;
-  } else if (user.email) {
-    // Normal login - check if email matches admin email
-    isAdmin = user.email === ADMIN_EMAIL || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  } else {
+    // There's a user session - check if it's an admin
+    // Check against ADMIN_EMAIL env var, or if email is exactly "admin"
+    const userEmailLower = user.email?.toLowerCase() || "";
+    const adminEmailLower = ADMIN_EMAIL.toLowerCase();
+    isAdmin = userEmailLower === adminEmailLower || 
+              userEmailLower === "admin" ||
+              userEmailLower === "admin@grocery-share.com";
   }
   
   // Debug logging (remove in production if needed)
