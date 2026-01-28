@@ -188,22 +188,43 @@ async function syncSubscriptions() {
     });
 
     // Find rows that need to be updated vs added
+    // Match by user_id + start_date + end_date to handle multiple subscriptions per user
     const rowsToUpdate: Array<{ rowIndex: number; data: string[] }> = [];
     const rowsToAdd: string[][] = [];
 
     for (const newRow of newRows) {
       const userId = newRow[0]; // User ID is first column
       const email = newRow[1]?.toLowerCase(); // Email is second column
+      const startDate = newRow[2]; // Start Date is third column (index 2)
+      const endDate = newRow[3]; // End Date is fourth column (index 3)
       
-      // Try to find existing row by user_id (new format) or email (old format)
+      // Try to find existing row by user_id + start_date + end_date (unique subscription identifier)
+      // This allows multiple subscriptions per user to each have their own row
       const existingRowIndex = existingRows.findIndex((row) => {
         if (row.length === 0) return false;
-        // Check if first column matches user_id (new format)
-        if (row[userIdColumnIndex]?.trim() === userId) return true;
-        // Check if first column is email and matches (old format)
-        if (row[userIdColumnIndex]?.includes("@") && row[userIdColumnIndex]?.toLowerCase() === email) return true;
-        // Check if second column is email and matches (if row was already converted)
-        if (row[emailColumnIndex]?.toLowerCase() === email) return true;
+        
+        // Get values from existing row
+        const rowUserId = row[userIdColumnIndex]?.trim();
+        const rowEmail = row[emailColumnIndex]?.toLowerCase();
+        const rowStartDate = row[2]?.trim(); // Start Date column
+        const rowEndDate = row[3]?.trim(); // End Date column
+        
+        // Match by user_id + dates (most reliable)
+        if (rowUserId === userId && rowStartDate === startDate && rowEndDate === endDate) {
+          return true;
+        }
+        
+        // Fallback: match by email + dates (for old format rows)
+        if (rowEmail === email && rowStartDate === startDate && rowEndDate === endDate) {
+          return true;
+        }
+        
+        // Legacy fallback: match by user_id only (for backward compatibility)
+        // Only if dates don't match, this handles old rows without proper date matching
+        if (rowUserId === userId && (!rowStartDate || !rowEndDate || !startDate || !endDate)) {
+          return true;
+        }
+        
         return false;
       });
 
@@ -211,7 +232,7 @@ async function syncSubscriptions() {
         // Row exists - update it
         rowsToUpdate.push({ rowIndex: existingRowIndex, data: newRow });
       } else {
-        // New row - add it
+        // New row - add it (this handles multiple subscriptions per user)
         rowsToAdd.push(newRow);
       }
     }
