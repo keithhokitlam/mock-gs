@@ -143,9 +143,8 @@ export default async function PricingPage() {
               {/* Duration */}
               <div className="text-center mb-4">
                 <span className="text-2xl font-bold text-zinc-900">
-                  {displayPlan.duration_months} Month{displayPlan.duration_months !== 1 ? "s" : ""}
+                  1 year of:
                 </span>
-                <span className="text-zinc-500 ml-2">Annual Plan</span>
               </div>
 
               {/* Features */}
@@ -177,9 +176,6 @@ export default async function PricingPage() {
 
         {/* Additional Info */}
         <div className="mt-12 text-center text-zinc-600">
-          <p className="mb-2">
-            All plans include a 1-year subscription period with automatic renewal.
-          </p>
           <p>
             Questions? <Link href="/contact" className="text-[#2B6B4A] hover:underline">Contact us</Link> for more information.
           </p>
