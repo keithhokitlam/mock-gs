@@ -2,6 +2,33 @@
 
 import { useState } from "react";
 
+// Gold grocery icon SVG (shopping basket with groceries)
+const GoldGroceryIcon = () => (
+  <svg
+    className="w-12 h-12"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="goldGradientSignup" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" />
+        <stop offset="50%" stopColor="#FFA500" />
+        <stop offset="100%" stopColor="#FF8C00" />
+      </linearGradient>
+    </defs>
+    {/* Shopping basket */}
+    <path
+      d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+      fill="url(#goldGradientSignup)"
+    />
+    {/* Grocery items inside */}
+    <circle cx="6" cy="9" r="1.5" fill="url(#goldGradientSignup)" opacity="0.8" />
+    <circle cx="10" cy="9" r="1.5" fill="url(#goldGradientSignup)" opacity="0.8" />
+    <circle cx="14" cy="9" r="1.5" fill="url(#goldGradientSignup)" opacity="0.8" />
+  </svg>
+);
+
 type SignupModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -69,8 +96,8 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 overflow-y-auto">
+      <div className="relative w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg my-8">
         <button
           type="button"
           onClick={onClose}
@@ -192,6 +219,45 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   )}
                 </button>
               </div>
+            </div>
+
+            {/* Subscription Plan Box */}
+            <div className="mt-4 rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+              {/* Gold Icon */}
+              <div className="flex items-center justify-center mb-3">
+                <GoldGroceryIcon />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-bold mb-2 text-center text-zinc-900">Standard Annual Subscription</h3>
+
+              {/* Description */}
+              <p className="text-zinc-600 mb-3 text-xs leading-relaxed text-center">
+                Our standard annual subscription plan with full access to all GroceryShare category lists.
+              </p>
+
+              {/* Duration */}
+              <div className="text-center mb-3">
+                <span className="text-xl font-bold text-zinc-900">
+                  1 year of:
+                </span>
+              </div>
+
+              {/* Features */}
+              <ul className="space-y-1.5 mb-3 text-xs text-zinc-600">
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Full access to all features</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Priority customer support</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Auto-renewal (except Alipay)</span>
+                </li>
+              </ul>
             </div>
 
             {error && (
