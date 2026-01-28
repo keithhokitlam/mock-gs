@@ -2,19 +2,40 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import DoorSplash from "./door-splash";
 import SignupModal from "./components/signup-modal";
 import ForgotPasswordModal from "./components/forgot-password-modal";
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [error, setError] = useState("");
   const [showSignup, setShowSignup] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  // Check for error messages in URL parameters (from redirects)
+  useEffect(() => {
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      switch (errorParam) {
+        case "subscription_inactive":
+          setError("Your subscription is inactive. Please contact support to renew your subscription.");
+          break;
+        case "subscription_expired":
+          setError("Your subscription has expired. Please contact support to renew your subscription.");
+          break;
+        case "no_subscription":
+          setError("No active subscription found. Please contact support.");
+          break;
+        default:
+          setError("Access denied. Please contact support.");
+      }
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

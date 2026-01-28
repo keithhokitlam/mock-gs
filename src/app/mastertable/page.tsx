@@ -5,6 +5,7 @@ import ActionsBar from "./actions-bar";
 import AdminTable, { type AdminColumn } from "./table";
 import { getCurrentUser } from "@/lib/auth";
 import SyncButton from "../components/sync-button";
+import { supabaseServer } from "@/lib/supabase-server";
 
 const SHEET_ID = "1kx7wArkJ5VDSwNuKDKizUMp1exnxfub-aI6xszqCZxs";
 const SHEET_GID = "0";
@@ -110,6 +111,47 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     // Normal user login - check email verification
     if (!user.email_verified) {
       redirect("/");
+    }
+
+    // Check if user has an active subscription
+    const { data: subscriptions, error: subscriptionError } = await supabaseServer
+      .from("subscriptions")
+      .select("id, status, subscription_end_date")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    if (subscriptionError) {
+      console.error("Error checking subscription:", subscriptionError);
+      // Don't block access if we can't check subscription - log error but allow
+    } else if (subscriptions && subscriptions.length > 0) {
+      const subscription = subscriptions[0];
+      
+      // Check if subscription is inactive or cancelled
+      if (subscription.status === "inactive" || subscription.status === "cancelled") {
+        redirect("/?error=subscription_inactive");
+      }
+
+      // Also check if subscription has expired (even if status hasn't been updated yet)
+      if (subscription.subscription_end_date) {
+        const endDate = new Date(subscription.subscription_end_date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        
+        if (endDate < today && subscription.status !== "cancelled") {
+          // Subscription has expired - mark as inactive and redirect
+          await supabaseServer
+            .from("subscriptions")
+            .update({ status: "inactive" })
+            .eq("id", subscription.id);
+          
+          redirect("/?error=subscription_expired");
+        }
+      }
+    } else {
+      // No subscription found - redirect to login
+      redirect("/?error=no_subscription");
     }
   }
   // If no user, assume admin/admin login was used (bypasses auth)

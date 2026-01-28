@@ -99,6 +99,62 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      // Check if user has an active subscription
+      const { data: subscriptions, error: subscriptionError } = await supabaseServer
+        .from("subscriptions")
+        .select("id, status, subscription_end_date")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (subscriptionError) {
+        console.error("Error checking subscription:", subscriptionError);
+        // Don't block login if we can't check subscription - log error but allow
+      } else if (subscriptions && subscriptions.length > 0) {
+        const subscription = subscriptions[0];
+        
+        // Check if subscription is inactive or cancelled
+        if (subscription.status === "inactive" || subscription.status === "cancelled") {
+          return NextResponse.json(
+            {
+              error: "Your subscription is inactive. Please contact support to renew your subscription.",
+            },
+            { status: 403 }
+          );
+        }
+
+        // Also check if subscription has expired (even if status hasn't been updated yet)
+        if (subscription.subscription_end_date) {
+          const endDate = new Date(subscription.subscription_end_date);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          endDate.setHours(0, 0, 0, 0);
+          
+          if (endDate < today && subscription.status !== "cancelled") {
+            // Subscription has expired - mark as inactive and deny login
+            await supabaseServer
+              .from("subscriptions")
+              .update({ status: "inactive" })
+              .eq("id", subscription.id);
+            
+            return NextResponse.json(
+              {
+                error: "Your subscription has expired. Please contact support to renew your subscription.",
+              },
+              { status: 403 }
+            );
+          }
+        }
+      } else {
+        // No subscription found - deny login
+        return NextResponse.json(
+          {
+            error: "No active subscription found. Please contact support.",
+          },
+          { status: 403 }
+        );
+      }
+
       // Create session
       await createSession(user.id);
 
