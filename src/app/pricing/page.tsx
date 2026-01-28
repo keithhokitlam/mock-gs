@@ -72,33 +72,38 @@ export default async function PricingPage() {
       plan_type: planType,
       category: category,
       title: `${planType} Subscription`,
-      description: `Annual ${planType} subscription plan with full access to all features. Perfect for individuals and families looking for convenient grocery sharing services.`,
+      description: `Our standard annual subscription plan with full access to all GroceryShare category lists.`,
       duration_months: 12,
     });
   });
 
-  // If no plans found, show default plans
+  // If no plans found, show default plan
   if (Object.keys(plansByCategory).length === 0) {
-    plansByCategory["Standard"] = [
+    plansByCategory["default"] = [
       {
         id: "plan-standard",
         plan_type: "standard",
-        category: "Standard",
+        category: "default",
         title: "Standard Annual Subscription",
-        description: "Our standard annual subscription plan with full access to all grocery sharing features. Perfect for individuals and families.",
+        description: "Our standard annual subscription plan with full access to all GroceryShare category lists.",
         duration_months: 12,
       },
     ];
-    plansByCategory["Premium"] = [
-      {
-        id: "plan-premium",
-        plan_type: "premium",
-        category: "Premium",
-        title: "Premium Annual Subscription",
-        description: "Premium annual subscription with priority support and exclusive features. Ideal for frequent users and larger families.",
-        duration_months: 12,
-      },
-    ];
+  }
+
+  // Get the first plan from the first category (only show one plan)
+  const firstCategory = Object.keys(plansByCategory)[0];
+  const displayPlan = plansByCategory[firstCategory]?.[0] || null;
+
+  if (!displayPlan) {
+    return (
+      <div className="min-h-screen bg-zinc-50 text-zinc-900">
+        <NavBar />
+        <main className="mx-auto w-full max-w-6xl px-4 py-10">
+          <p className="text-center text-zinc-600">No subscription plans available.</p>
+        </main>
+      </div>
+    );
   }
 
   return (
@@ -108,9 +113,6 @@ export default async function PricingPage() {
       <main className="mx-auto w-full max-w-6xl px-4 py-10">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Subscription Pricing</h1>
-          <p className="text-lg text-zinc-600">
-            Choose the perfect annual plan for your grocery sharing needs
-          </p>
         </div>
 
         {/* Auto-renewal Notice */}
@@ -121,66 +123,57 @@ export default async function PricingPage() {
           </p>
         </div>
 
-        {/* Plans by Category */}
-        {Object.entries(plansByCategory).map(([category, plans]) => (
-          <div key={category} className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 text-zinc-800">{category}</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {plans.map((plan) => (
-                <div
-                  key={plan.id}
-                  className="bg-white rounded-lg border border-zinc-200 shadow-sm p-6 hover:shadow-md transition-shadow"
-                >
-                  {/* Gold Icon */}
-                  <div className="flex items-center justify-center mb-4">
-                    <GoldGroceryIcon />
-                  </div>
+        {/* Single Plan Display */}
+        <div className="flex justify-center">
+          <div className="max-w-md w-full">
+            <div className="bg-white rounded-lg border border-zinc-200 shadow-sm p-6 hover:shadow-md transition-shadow">
+              {/* Gold Icon */}
+              <div className="flex items-center justify-center mb-4">
+                <GoldGroceryIcon />
+              </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold mb-3 text-center">{plan.title}</h3>
+              {/* Title */}
+              <h3 className="text-xl font-bold mb-3 text-center">{displayPlan.title}</h3>
 
-                  {/* Description */}
-                  <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
-                    {plan.description}
-                  </p>
+              {/* Description */}
+              <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
+                {displayPlan.description}
+              </p>
 
-                  {/* Duration */}
-                  <div className="text-center mb-4">
-                    <span className="text-2xl font-bold text-zinc-900">
-                      {plan.duration_months} Month{plan.duration_months !== 1 ? "s" : ""}
-                    </span>
-                    <span className="text-zinc-500 ml-2">Annual Plan</span>
-                  </div>
+              {/* Duration */}
+              <div className="text-center mb-4">
+                <span className="text-2xl font-bold text-zinc-900">
+                  {displayPlan.duration_months} Month{displayPlan.duration_months !== 1 ? "s" : ""}
+                </span>
+                <span className="text-zinc-500 ml-2">Annual Plan</span>
+              </div>
 
-                  {/* Features */}
-                  <ul className="space-y-2 mb-6 text-sm text-zinc-600">
-                    <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
-                      <span>Full access to all features</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
-                      <span>Priority customer support</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
-                      <span>Auto-renewal (except Alipay)</span>
-                    </li>
-                  </ul>
+              {/* Features */}
+              <ul className="space-y-2 mb-6 text-sm text-zinc-600">
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Full access to all features</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Priority customer support</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Auto-renewal (except Alipay)</span>
+                </li>
+              </ul>
 
-                  {/* CTA Button */}
-                  <Link
-                    href="/"
-                    className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
-                  >
-                    Sign Up Now
-                  </Link>
-                </div>
-              ))}
+              {/* CTA Button */}
+              <Link
+                href="/"
+                className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
+              >
+                Sign Up Now
+              </Link>
             </div>
           </div>
-        ))}
+        </div>
 
         {/* Additional Info */}
         <div className="mt-12 text-center text-zinc-600">
