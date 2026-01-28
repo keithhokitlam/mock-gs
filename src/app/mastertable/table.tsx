@@ -15,6 +15,7 @@ type AdminTableProps = {
   activeFilters: Record<number, string | string[]>;
   sortIndex: number | null;
   sortDirection: "asc" | "desc";
+  headerClassName?: string;
 };
 
 type FilterValue = string | string[];
@@ -59,6 +60,7 @@ export default function AdminTable({
   activeFilters,
   sortIndex,
   sortDirection,
+  headerClassName = "rounded-t-2xl bg-black text-xs uppercase tracking-wide text-white font-beckman",
 }: AdminTableProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -268,7 +270,7 @@ export default function AdminTable({
   return (
     <div className="print-table relative inline-block min-w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
       <table className="min-w-max text-left text-sm">
-        <thead className="rounded-t-2xl bg-black text-xs uppercase tracking-wide text-white font-beckman">
+        <thead className={headerClassName}>
           <tr>
             {columns.map((column) => {
               const headerLabel = column.label;

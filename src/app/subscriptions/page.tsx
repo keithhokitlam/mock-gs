@@ -3,8 +3,38 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase-server";
 import { getCurrentUser } from "@/lib/auth";
+import ActionsBar from "../mastertable/actions-bar";
+import AdminTable, { type AdminColumn } from "../mastertable/table";
 
-export default async function SubscriptionsPage() {
+type FilterValue = string | string[];
+
+function parseFilterValue(value: string): FilterValue {
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item) => typeof item === "string");
+    }
+  } catch {
+    // fall through to raw string
+  }
+  return value;
+}
+
+function normalizeText(value: string) {
+  return value
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export default async function SubscriptionsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   // Check authentication
   const user = await getCurrentUser();
   
@@ -125,19 +155,19 @@ export default async function SubscriptionsPage() {
     const userId = sub.user_id || sub.id || "";
     const checkInCount = checkInCounts.get(userId) || 0;
 
-    return {
+    return [
       userId,
-      email: sub.email || "",
-      startDate: sub.subscription_start_date || "",
-      endDate: sub.subscription_end_date || "",
-      renewalDate: sub.renewal_date || "",
-      status: sub.status || "active",
-      planType: sub.plan_type || "",
-      daysRemaining: daysRemainingStr,
-      checkIns: checkInCount.toString(),
-      createdAt: sub.created_at ? new Date(sub.created_at).toLocaleString() : "",
-      updatedAt: sub.updated_at ? new Date(sub.updated_at).toLocaleString() : "",
-    };
+      sub.email || "",
+      sub.subscription_start_date || "",
+      sub.subscription_end_date || "",
+      sub.renewal_date || "",
+      sub.status || "active",
+      sub.plan_type || "",
+      daysRemainingStr,
+      checkInCount.toString(),
+      sub.created_at ? new Date(sub.created_at).toLocaleString() : "",
+      sub.updated_at ? new Date(sub.updated_at).toLocaleString() : "",
+    ];
   });
 
   const headers = [
@@ -153,6 +183,69 @@ export default async function SubscriptionsPage() {
     "Created At",
     "Updated At",
   ];
+
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const statusIndex = headers.findIndex(
+    (header) => header.trim().toLowerCase() === "status"
+  );
+
+  const columns: AdminColumn[] = headers
+    .map((header, index) => ({ label: header || `Column ${index + 1}`, index }))
+    .filter((column) => column.index !== statusIndex);
+
+  const activeRows = subscriptionRows;
+
+  const columnFilters: Record<number, FilterValue> = {};
+  Object.entries(resolvedSearchParams || {}).forEach(([key, value]) => {
+    if (!key.startsWith("f_")) return;
+    const index = Number(key.replace("f_", ""));
+    if (Number.isNaN(index)) return;
+    if (index === statusIndex) return;
+    if (Array.isArray(value)) return;
+    if (typeof value !== "string") return;
+    columnFilters[index] = parseFilterValue(value);
+  });
+
+  const filteredRows = activeRows.filter((row) =>
+    Object.entries(columnFilters).every(([indexValue, filterValue]) => {
+      const index = Number(indexValue);
+      const cell = normalizeText((row[index] || "").toString());
+      if (Array.isArray(filterValue)) {
+        return filterValue
+          .map((value) => normalizeText(value))
+          .includes(cell);
+      }
+      return cell.includes(normalizeText(filterValue));
+    })
+  );
+
+  const sortIndexRaw = resolvedSearchParams?.sort;
+  const sortIndex = Number(
+    Array.isArray(sortIndexRaw) ? sortIndexRaw[0] : sortIndexRaw
+  );
+  const sortDirectionRaw = resolvedSearchParams?.dir;
+  const sortDirection = Array.isArray(sortDirectionRaw)
+    ? sortDirectionRaw[0]
+    : sortDirectionRaw;
+
+  const sortableIndices = new Set(columns.map((column) => column.index));
+  const rowsToSort = [...filteredRows];
+  if (!Number.isNaN(sortIndex) && sortableIndices.has(sortIndex)) {
+    rowsToSort.sort((left, right) => {
+      const leftValue = (left[sortIndex] || "").toString().toLowerCase();
+      const rightValue = (right[sortIndex] || "").toString().toLowerCase();
+      if (leftValue < rightValue) return sortDirection === "desc" ? 1 : -1;
+      if (leftValue > rightValue) return sortDirection === "desc" ? -1 : 1;
+      return 0;
+    });
+  }
+
+  const visibleRows = rowsToSort.map((row) =>
+    row.filter((_, index) => index !== statusIndex)
+  );
+  const filterRows = activeRows.map((row) =>
+    row.filter((_, index) => index !== statusIndex)
+  );
 
   return (
     <div className="min-h-screen w-max min-w-full bg-zinc-50 text-zinc-900">
@@ -195,57 +288,19 @@ export default async function SubscriptionsPage() {
         {/* Title */}
         <h1 className="text-2xl font-bold mb-4">Subscriptions</h1>
 
-        {/* Table */}
-        <div className="relative inline-block min-w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-          <table className="min-w-max text-left text-sm">
-            <thead className="rounded-t-2xl bg-black text-xs uppercase tracking-wide text-white font-beckman">
-              <tr>
-                {headers.map((header) => (
-                  <th key={header} className="px-4 py-3 whitespace-nowrap">
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-200">
-              {subscriptionRows.length === 0 ? (
-                <tr>
-                  <td colSpan={headers.length} className="px-4 py-8 text-center text-zinc-500">
-                    No subscriptions found
-                  </td>
-                </tr>
-              ) : (
-                subscriptionRows.map((row, index) => (
-                  <tr key={index} className="hover:bg-zinc-50">
-                    <td className="px-4 py-3 whitespace-nowrap">{row.userId}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.email}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.startDate}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.endDate}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.renewalDate}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <span
-                        className={`px-2 py-1 rounded text-xs font-semibold ${
-                          row.status === "active"
-                            ? "bg-green-100 text-green-800"
-                            : row.status === "inactive"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {row.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.planType}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.daysRemaining}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.checkIns}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.createdAt}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">{row.updatedAt}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <ActionsBar
+          columns={columns.map((column) => column.label)}
+          rows={visibleRows}
+        />
+        <AdminTable
+          columns={columns}
+          rows={visibleRows}
+          filterRows={filterRows}
+          activeFilters={columnFilters}
+          sortIndex={Number.isNaN(sortIndex) ? null : sortIndex}
+          sortDirection={sortDirection === "desc" ? "desc" : "asc"}
+          headerClassName="rounded-t-2xl bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-xs uppercase tracking-wide text-white font-beckman"
+        />
 
         {/* Summary */}
         <div className="mt-4 text-sm text-zinc-600">

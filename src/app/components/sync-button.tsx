@@ -32,7 +32,7 @@ export default function SyncButton() {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
+    <>
       <button
         onClick={handleSync}
         disabled={loading}
@@ -45,6 +45,6 @@ export default function SyncButton() {
           {message}
         </p>
       )}
-    </div>
+    </>
   );
 }
