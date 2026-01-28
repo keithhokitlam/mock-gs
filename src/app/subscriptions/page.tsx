@@ -122,7 +122,7 @@ export default async function SubscriptionsPage({
     );
   }
 
-  // Get check-in counts for each user
+  // Get check-in counts and dates for each user
   const userIds = (subscriptions || []).map(sub => sub.user_id).filter(Boolean);
   let checkInCounts: Map<string, number> = new Map();
   
@@ -130,8 +130,9 @@ export default async function SubscriptionsPage({
     try {
       const { data: checkIns, error: checkInError } = await supabaseServer
         .from("check_ins")
-        .select("user_id")
-        .in("user_id", userIds);
+        .select("user_id, checked_in_at")
+        .in("user_id", userIds)
+        .order("checked_in_at", { ascending: true });
       
       if (!checkInError && checkIns) {
         checkIns.forEach(checkIn => {
@@ -156,6 +157,19 @@ export default async function SubscriptionsPage({
     const userId = sub.user_id || sub.id || "";
     const checkInCount = checkInCounts.get(userId) || 0;
 
+    // Calculate monthly average check-ins
+    let monthlyAvgCheckIns = "0";
+    if (checkInCount > 0 && sub.subscription_start_date) {
+      const startDate = new Date(sub.subscription_start_date);
+      startDate.setHours(0, 0, 0, 0);
+      const monthsSinceStart = Math.max(
+        1, // At least 1 month to avoid division by zero
+        (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44) // Average days per month
+      );
+      const avgPerMonth = checkInCount / monthsSinceStart;
+      monthlyAvgCheckIns = avgPerMonth.toFixed(1); // Round to 1 decimal place
+    }
+
     return [
       userId,
       sub.email || "",
@@ -166,6 +180,7 @@ export default async function SubscriptionsPage({
       sub.plan_type || "",
       daysRemainingStr,
       checkInCount.toString(),
+      monthlyAvgCheckIns,
       sub.created_at ? new Date(sub.created_at).toLocaleString() : "",
       sub.updated_at ? new Date(sub.updated_at).toLocaleString() : "",
     ];
@@ -181,6 +196,7 @@ export default async function SubscriptionsPage({
     "Plan Type",
     "Days Remaining",
     "Check-Ins",
+    "Monthly Avg Check-Ins",
     "Created At",
     "Updated At",
   ];

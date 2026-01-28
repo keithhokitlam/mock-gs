@@ -24,23 +24,33 @@ async function syncSubscriptions() {
       .select("*")
       .order("created_at", { ascending: false });
 
-    // Get check-in counts for each user
+    // Get check-in counts and dates for each user
     const userIds = (subscriptions || []).map(sub => sub.user_id).filter(Boolean);
     let checkInCounts: Map<string, number> = new Map();
+    let checkInDates: Map<string, Date[]> = new Map(); // Store check-in dates for monthly average calculation
     
     if (userIds.length > 0) {
       try {
-        // Count check-ins per user
+        // Get check-ins with dates per user
         const { data: checkIns, error: checkInError } = await supabaseServer
           .from("check_ins")
-          .select("user_id")
-          .in("user_id", userIds);
+          .select("user_id, checked_in_at")
+          .in("user_id", userIds)
+          .order("checked_in_at", { ascending: true });
         
         if (!checkInError && checkIns) {
-          // Count check-ins per user_id
+          // Count check-ins and store dates per user_id
           checkIns.forEach(checkIn => {
             const userId = checkIn.user_id;
             checkInCounts.set(userId, (checkInCounts.get(userId) || 0) + 1);
+            
+            // Store check-in dates for monthly average calculation
+            if (!checkInDates.has(userId)) {
+              checkInDates.set(userId, []);
+            }
+            if (checkIn.checked_in_at) {
+              checkInDates.get(userId)!.push(new Date(checkIn.checked_in_at));
+            }
           });
         }
       } catch (err) {
@@ -125,7 +135,7 @@ async function syncSubscriptions() {
 
     // Process existing rows: mark as inactive if not in Supabase
     let inactiveCount = 0;
-    const statusColumnIndex = 5; // Status is column F (index 5, 0-based): User ID=0, Email=1, Start=2, End=3, Renewal=4, Status=5, Plan=6, Days=7, Check-Ins=8
+    const statusColumnIndex = 5; // Status is column F (index 5, 0-based): User ID=0, Email=1, Start=2, End=3, Renewal=4, Status=5, Plan=6, Days=7, Check-Ins=8, Monthly Avg=9
     const userIdColumnIndex = 0; // User ID is first column (index 0)
     const emailColumnIndex = 1; // Email is second column (index 1)
 
@@ -188,7 +198,7 @@ async function syncSubscriptions() {
     }
 
     // Format new/updated subscriptions for Google Sheets
-    // Column order: User ID, Email, Start Date, End Date, Renewal Date, Status, Plan Type, Days Remaining, Check-Ins, Created At, Updated At
+    // Column order: User ID, Email, Start Date, End Date, Renewal Date, Status, Plan Type, Days Remaining, Check-Ins, Monthly Avg Check-Ins, Created At, Updated At
     const newRows = (subscriptions || []).map((sub) => {
       // Calculate days remaining
       const endDate = new Date(sub.subscription_end_date);
@@ -202,6 +212,19 @@ async function syncSubscriptions() {
       const userId = sub.user_id || sub.id || "";
       const checkInCount = checkInCounts.get(userId) || 0;
 
+      // Calculate monthly average check-ins
+      let monthlyAvgCheckIns = "0";
+      if (checkInCount > 0 && sub.subscription_start_date) {
+        const startDate = new Date(sub.subscription_start_date);
+        startDate.setHours(0, 0, 0, 0);
+        const monthsSinceStart = Math.max(
+          1, // At least 1 month to avoid division by zero
+          (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44) // Average days per month
+        );
+        const avgPerMonth = checkInCount / monthsSinceStart;
+        monthlyAvgCheckIns = avgPerMonth.toFixed(1); // Round to 1 decimal place
+      }
+
       return [
         userId, // User ID (first column - used for matching)
         sub.email || "", // User Email
@@ -211,7 +234,8 @@ async function syncSubscriptions() {
         sub.status || "active", // Status
         sub.plan_type || "", // Plan Type
         daysRemainingStr, // Days Remaining (calculated)
-        checkInCount.toString(), // Check-Ins Count
+        checkInCount.toString(), // Check-Ins Count (total)
+        monthlyAvgCheckIns, // Monthly Average Check-Ins
         sub.created_at ? new Date(sub.created_at).toLocaleString() : "", // Created At
         sub.updated_at ? new Date(sub.updated_at).toLocaleString() : "", // Updated At
       ];
