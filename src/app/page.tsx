@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import DoorSplash from "./door-splash";
 import SignupModal from "./components/signup-modal";
 import ForgotPasswordModal from "./components/forgot-password-modal";
 
-export default function Home() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState("");
@@ -230,5 +230,33 @@ export default function Home() {
         onClose={() => setShowForgotPassword(false)}
       />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-zinc-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-zinc-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }
