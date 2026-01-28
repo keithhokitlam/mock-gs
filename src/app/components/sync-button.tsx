@@ -32,11 +32,11 @@ export default function SyncButton() {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow mb-4">
+    <div className="p-4 bg-white rounded-lg shadow">
       <button
         onClick={handleSync}
         disabled={loading}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-semibold"
       >
         {loading ? "Syncing..." : "Sync to Google Sheets"}
       </button>

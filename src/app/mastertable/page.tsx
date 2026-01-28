@@ -284,7 +284,17 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </span>
       </div>
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
-        {isAdmin && <SyncButton />}
+        {isAdmin && (
+          <div className="flex gap-3 mb-4">
+            <SyncButton />
+            <Link
+              href="/subscriptions"
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-semibold inline-block"
+            >
+              Subscriptions
+            </Link>
+          </div>
+        )}
         <ActionsBar
           columns={columns.map((column) => column.label)}
           rows={visibleRows}
