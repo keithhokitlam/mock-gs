@@ -112,15 +112,7 @@ export default async function PricingPage() {
       
       <main className="mx-auto w-full max-w-6xl px-4 py-10">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 font-beckman">Subscription Pricing</h1>
-        </div>
-
-        {/* Auto-renewal Notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-          <p className="text-sm text-blue-800">
-            <strong>Note:</strong> All subscriptions will automatically renew at the subscription end date, 
-            with the exception of payments made through Alipay. Alipay subscriptions require manual renewal.
-          </p>
+          <h1 className="text-4xl font-bold mb-4 font-beckman">PRICING</h1>
         </div>
 
         {/* Single Plan Display */}
@@ -143,7 +135,7 @@ export default async function PricingPage() {
               {/* Duration */}
               <div className="text-center mb-4">
                 <span className="text-2xl font-bold text-zinc-900">
-                  1 year of:
+                  12 months of:
                 </span>
               </div>
 
@@ -170,6 +162,18 @@ export default async function PricingPage() {
               >
                 Sign Up Now
               </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Auto-renewal Notice */}
+        <div className="flex justify-center mt-8">
+          <div className="max-w-md w-full">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-800">
+                <strong>Note:</strong> All subscriptions will automatically renew at the subscription end date, 
+                with the exception of payments made through Alipay. Alipay subscriptions require manual renewal.
+              </p>
             </div>
           </div>
         </div>
