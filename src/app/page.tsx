@@ -23,13 +23,13 @@ function LoginForm() {
     if (errorParam) {
       switch (errorParam) {
         case "subscription_inactive":
-          setError("Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services");
+          setError("Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services");
           break;
         case "subscription_expired":
-          setError("Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services");
+          setError("Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services");
           break;
         case "no_subscription":
-          setError("Your account either:\n1) Does not exist with the email provided and you must sign up for services or\n2) Your account has expired and you must sign up to resume services");
+          setError("Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services");
           break;
         default:
           setError("Access denied. Please contact support.");
