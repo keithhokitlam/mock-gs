@@ -5,6 +5,7 @@ import { supabaseServer } from "@/lib/supabase-server";
 import { getCurrentUser } from "@/lib/auth";
 import ActionsBar from "../mastertable/actions-bar";
 import AdminTable, { type AdminColumn } from "../mastertable/table";
+import NavBar from "../components/navbar";
 
 type FilterValue = string | string[];
 
@@ -249,30 +250,7 @@ export default async function SubscriptionsPage({
 
   return (
     <div className="min-h-screen w-max min-w-full bg-zinc-50 text-zinc-900">
-      <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
-        <div className="flex w-full items-center gap-4 px-2 py-0">
-          <Link href="/" aria-label="Go to home">
-            <Image
-              src="/logos/GS_logo_highres_2x.png"
-              alt="GroceryShare"
-              width={260}
-              height={104}
-              className="h-16 w-auto translate-y-[2px]"
-              priority
-            />
-          </Link>
-          <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-            <span className="font-beckman">About</span>
-            <Link href="/support" className="font-beckman hover:opacity-80">
-              Support
-            </Link>
-            <Link href="/contact" className="font-beckman hover:opacity-80">
-              Contact
-            </Link>
-            <span className="font-beckman">FAQ</span>
-          </div>
-        </div>
-      </nav>
+      <NavBar />
 
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
         {/* Back Button */}

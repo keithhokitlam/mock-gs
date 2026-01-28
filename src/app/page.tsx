@@ -7,6 +7,7 @@ import { useState, useEffect, Suspense } from "react";
 import DoorSplash from "./door-splash";
 import SignupModal from "./components/signup-modal";
 import ForgotPasswordModal from "./components/forgot-password-modal";
+import NavBar from "./components/navbar";
 
 function LoginForm() {
   const router = useRouter();
@@ -98,30 +99,7 @@ function LoginForm() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <DoorSplash />
-      <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
-        <div className="flex w-full items-center gap-4 px-2 py-0">
-          <Link href="/" aria-label="Go to home">
-            <Image
-              src="/logos/GS_logo_highres_2x.png"
-              alt="GroceryShare"
-            width={260}
-            height={104}
-            className="h-16 w-auto translate-y-[2px]"
-              priority
-            />
-          </Link>
-          <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-            <span className="font-beckman">About</span>
-            <Link href="/support" className="font-beckman hover:opacity-80">
-              Support
-            </Link>
-            <Link href="/contact" className="font-beckman hover:opacity-80">
-              Contact
-            </Link>
-            <span className="font-beckman">FAQ</span>
-          </div>
-        </div>
-      </nav>
+      <NavBar />
       <main className="mx-auto w-full max-w-md px-4 pt-1 pb-10">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
         <div className="-mt-16 mb-8 space-y-0 text-center">
