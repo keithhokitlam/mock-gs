@@ -102,12 +102,23 @@ function parseFilterValue(value: string): FilterValue {
 export default async function AdminPage({ searchParams }: AdminPageProps) {
   // Check authentication
   const user = await getCurrentUser();
-  if (!user) {
-    redirect("/");
+  
+  // Admin/admin login bypasses normal auth (no session created)
+  // So if no user exists, allow access (admin/admin was used)
+  // Otherwise, check normal authentication
+  if (user) {
+    // Normal user login - check email verification
+    if (!user.email_verified) {
+      redirect("/");
+    }
   }
-  if (!user.email_verified) {
-    redirect("/");
-  }
+  // If no user, assume admin/admin login was used (bypasses auth)
+
+  // Check if user is admin
+  // For admin/admin login (no session), always show sync button
+  // For normal login, check if email matches admin email
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@grocery-share.com";
+  const isAdmin = !user || (user.email && (user.email === ADMIN_EMAIL || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()));
 
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const rows = await getSheetRows();
@@ -214,7 +225,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </span>
       </div>
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
-        <SyncButton />
+        {isAdmin && <SyncButton />}
         <ActionsBar
           columns={columns.map((column) => column.label)}
           rows={visibleRows}
