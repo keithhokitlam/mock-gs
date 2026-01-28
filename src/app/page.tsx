@@ -232,6 +232,8 @@ function LoginForm() {
     </div>
   );
 }
+
+export default function Home() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
