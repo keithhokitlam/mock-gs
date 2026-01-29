@@ -17,6 +17,34 @@ const faqData: FAQItem[] = [
     question: "Once I purchase a subscription, can it be refunded?",
     answer: "Unfortunately, subscriptions cannot be refunded once purchased. Please note that subscriptions are set to auto-renew automatically (except for payments made through Alipay). To stop future auto-renewals, please follow these steps:\n1) Log into your account\n2) Click your email address in the top right corner of the browser\n3) Select 'Stop Auto-Renewal (non-Alipay only)' from the dropdown menu\n\nThis will prevent your subscription from automatically renewing for the next billing cycle.",
   },
+  {
+    question: "Why can't I log into my account?",
+    answer: "There can be several explanations:\na) You were sent an email verification link that has not been clicked yet (please also check your junk or spam folder).\nb) Your subscription has expired and you would need to sign up again to resume access.\nc) Your password is incorrect (click the 'Forgot Password' button on the Sign In page to reset it).",
+  },
+  {
+    question: "I didn't receive my email verification link. What should I do?",
+    answer: "a) Check your spam or junk folder—verification emails are sometimes filtered there.\nb) If you still cannot find it, contact us at support@grocery-share.com and we will assist you.",
+  },
+  {
+    question: "What happens if my subscription expires?",
+    answer: "If you stopped auto-renewal and your subscription has expired, you will lose access to GroceryShare features. You will need to sign up again to regain access.",
+  },
+  {
+    question: "How long does my subscription last?",
+    answer: "Each subscription lasts 12 months. Subscriptions automatically renew at the end of the period when paid by credit card. Payments made through Alipay do not auto-renew and require manual renewal.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer: "We accept Visa, Mastercard, American Express, and Alipay.",
+  },
+  {
+    question: "What happens if I stop the auto-renewal process?",
+    answer: "You will continue to have access to GroceryShare features until the current subscription period ends. No renewal will be triggered after the subscription end date.",
+  },
+  {
+    question: "What do I get with my subscription?",
+    answer: "",
+  },
 ];
 
 export default function FAQPage() {
