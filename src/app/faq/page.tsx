@@ -14,7 +14,7 @@ const faqData: FAQItem[] = [
     answer: "You can change your password in two ways:\n1) Click the 'Forgot Password' button on the sign-in page to receive a password reset link via email, or\n2) After logging into your account, click your email address in the top right corner of the browser, then select 'Change Password' from the dropdown menu.",
   },
   {
-    question: "Once I purchased a subscription, can it be refunded?",
+    question: "Once I purchase a subscription, can it be refunded?",
     answer: "Unfortunately, subscriptions cannot be refunded once purchased. Please note that subscriptions are set to auto-renew automatically (except for payments made through Alipay). To stop future auto-renewals, please follow these steps:\n1) Log into your account\n2) Click your email address in the top right corner of the browser\n3) Select 'Stop Auto-Renewal (non-Alipay only)' from the dropdown menu\n\nThis will prevent your subscription from automatically renewing for the next billing cycle.",
   },
 ];
