@@ -268,7 +268,24 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <div className="p-4 bg-white rounded-lg shadow mb-4">
             <div className="flex gap-3 items-start">
               <SyncButton />
-              <span className="text-black font-bold text-xl self-center">→</span>
+              <span className="self-center" aria-hidden>
+                <svg
+                  width="28"
+                  height="24"
+                  viewBox="0 0 28 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-black"
+                >
+                  <path
+                    d="M2 12h20m0 0l-6-6m6 6l-6 6"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
               <Link
                 href="/subscriptions"
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold inline-block"
