@@ -22,8 +22,8 @@ export default function NavBar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Fetch current user email
-    fetch("/api/auth/current-user")
+    // Fetch current user email (credentials include so session cookie is sent on all pages)
+    fetch("/api/auth/current-user", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.email) {
