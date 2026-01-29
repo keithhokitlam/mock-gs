@@ -140,7 +140,9 @@ export default function NavBar() {
             <Link href="/contact" className="font-beckman hover:opacity-80">
               Contact
             </Link>
-            <span className="font-beckman">FAQ</span>
+            <Link href="/faq" className="font-beckman hover:opacity-80">
+              FAQ
+            </Link>
           </div>
         </div>
         {userEmail && (
