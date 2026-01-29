@@ -278,6 +278,11 @@ export default async function SubscriptionsPage({
   const visibleRows = rowsToSort;
   const filterRows = activeRows;
 
+  const totalSubscriptions = subscriptionRows.length;
+  const activeSubscriptionsCount = (subscriptions || []).filter(
+    (s) => (s.status || "active") === "active"
+  ).length;
+
   return (
     <div className="min-h-screen w-max min-w-full bg-zinc-50 text-zinc-900">
       <NavBar />
@@ -294,7 +299,14 @@ export default async function SubscriptionsPage({
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl font-bold mb-4">Subscriptions</h1>
+        <h1 className="text-2xl font-bold mb-2">Subscriptions</h1>
+
+        {/* Summary - below title */}
+        <div className="mb-4 text-sm text-zinc-600">
+          Total subscriptions: {totalSubscriptions}
+          <br />
+          Total active subscriptions: {activeSubscriptionsCount}
+        </div>
 
         <ActionsBar
           columns={columns.map((column) => column.label)}
@@ -309,11 +321,6 @@ export default async function SubscriptionsPage({
           sortDirection={sortDirection === "desc" ? "desc" : "asc"}
           headerClassName="rounded-t-2xl bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-xs uppercase tracking-wide text-white font-beckman"
         />
-
-        {/* Summary */}
-        <div className="mt-4 text-sm text-zinc-600">
-          Total subscriptions: {subscriptionRows.length}
-        </div>
       </div>
     </div>
   );
