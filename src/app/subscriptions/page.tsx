@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase-server";
 import { getCurrentUser } from "@/lib/auth";
@@ -288,16 +287,6 @@ export default async function SubscriptionsPage({
       <NavBar />
 
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
-        {/* Back Button */}
-        <div className="mb-4">
-          <Link
-            href="/mastertable"
-            className="inline-block px-4 py-2 bg-zinc-600 text-white rounded hover:bg-zinc-700 text-sm font-semibold"
-          >
-            ← Back to Master Table
-          </Link>
-        </div>
-
         {/* Title */}
         <h1 className="text-2xl font-bold mb-2">Subscriptions</h1>
 
