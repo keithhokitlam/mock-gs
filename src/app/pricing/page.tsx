@@ -181,7 +181,7 @@ export default async function PricingPage() {
         {/* Additional Info */}
         <div className="mt-12 text-center text-zinc-600">
           <p>
-            Questions? <Link href="/contact" className="text-[#2B6B4A] hover:underline">Contact us</Link> for more information.
+            Questions? Please <Link href="/contact" className="text-[#2B6B4A] underline hover:no-underline">contact us</Link> for further inquiries.
           </p>
         </div>
       </main>
