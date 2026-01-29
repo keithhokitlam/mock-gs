@@ -43,7 +43,24 @@ export async function POST(request: NextRequest) {
     let isExistingUser = false;
 
     if (existingUser) {
-      // User exists - update their password and create a new subscription
+      // User exists - check if they have an active subscription
+      const { data: activeSubscriptions } = await supabaseServer
+        .from("subscriptions")
+        .select("id")
+        .eq("user_id", existingUser.id)
+        .eq("status", "active");
+
+      if (activeSubscriptions && activeSubscriptions.length > 0) {
+        // Email exists and has active subscription - block signup, force Forgot Password
+        return NextResponse.json(
+          {
+            error: "An account with this email already exists and has an active subscription. Please use the Forgot Password button on the Sign In page to access your account.",
+          },
+          { status: 409 }
+        );
+      }
+
+      // No active subscription - allow re-signup (update password and create new subscription)
       isExistingUser = true;
       const passwordHash = await bcrypt.hash(password, 10);
       
