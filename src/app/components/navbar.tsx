@@ -1,10 +1,25 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/auth";
+import { useEffect, useState } from "react";
 
-export default async function NavBar() {
-  const user = await getCurrentUser();
-  const userEmail = user?.email || null;
+export default function NavBar() {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch current user email
+    fetch("/api/auth/current-user")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.email) {
+          setUserEmail(data.email);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching user email:", err);
+      });
+  }, []);
 
   return (
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
