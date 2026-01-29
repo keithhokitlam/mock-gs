@@ -275,14 +275,15 @@ export default function NavBar() {
                     </>
                   )}
 
-                  {/* Stop Auto-Renewal Button */}
+                  {/* Stop Auto-Renewal (non-Alipay only) */}
                   {!isAdmin && (
                     <button
+                      type="button"
                       onClick={() => {
                         // Placeholder - will be implemented with Stripe integration
                         alert("Stop Auto-Renewal feature will be available after Stripe integration");
                       }}
-                      className="w-full rounded bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                      className="w-full text-left text-sm text-[#2B6B4A] hover:underline"
                     >
                       Stop Auto-Renewal (non-Alipay only)
                     </button>
