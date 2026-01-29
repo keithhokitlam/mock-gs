@@ -11,7 +11,7 @@ type FAQItem = {
 const faqData: FAQItem[] = [
   {
     question: "How do I change my password?",
-    answer: "You can change your password in two ways: 1) Click the 'Forgot Password' button on the sign-in page to receive a password reset link via email, or 2) After logging into your account, click your email address in the top right corner of the browser, then select 'Change Password' from the dropdown menu.",
+    answer: "You can change your password in two ways:\n1) Click the 'Forgot Password' button on the sign-in page to receive a password reset link via email, or\n2) After logging into your account, click your email address in the top right corner of the browser, then select 'Change Password' from the dropdown menu.",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function FAQPage() {
                 </button>
                 {openIndex === index && (
                   <div className="pb-4 pl-0">
-                    <p className="text-base leading-relaxed text-zinc-700">
+                    <p className="text-base leading-relaxed text-zinc-700 whitespace-pre-line">
                       {faq.answer}
                     </p>
                   </div>
