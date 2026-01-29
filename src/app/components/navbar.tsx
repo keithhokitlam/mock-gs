@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     // Fetch current user email
@@ -14,12 +16,19 @@ export default function NavBar() {
       .then((data) => {
         if (data.email) {
           setUserEmail(data.email);
+        } else {
+          // If no user email and we're on an admin page, it's likely admin/admin
+          const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
+          setUserEmail(isAdminPage ? "ADMIN" : null);
         }
       })
       .catch((err) => {
         console.error("Error fetching user email:", err);
+        // On error, check if we're on admin page
+        const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
+        setUserEmail(isAdminPage ? "ADMIN" : null);
       });
-  }, []);
+  }, [pathname]);
 
   return (
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
