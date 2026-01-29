@@ -143,6 +143,11 @@ export default function NavBar() {
             <Link href="/faq" className="font-beckman hover:opacity-80">
               FAQ
             </Link>
+            {userEmail && (
+              <Link href="/mastertable" className="font-beckman hover:opacity-80">
+                MASTER TABLE
+              </Link>
+            )}
           </div>
         </div>
         {userEmail && (
