@@ -264,6 +264,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </span>
       </div>
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
+        <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
+          MASTER TABLE
+        </h1>
         {isAdmin && (
           <div className="p-4 bg-white rounded-lg shadow mb-4">
             <div className="flex gap-3 items-start">
