@@ -139,6 +139,9 @@ export default function NavBar() {
                 MASTER TABLE
               </Link>
             )}
+            <Link href="/foodcategory" className="font-beckman hover:opacity-80">
+              FOOD CATEGORY
+            </Link>
             <Link href="/support" className="font-beckman hover:opacity-80">
               Support
             </Link>
