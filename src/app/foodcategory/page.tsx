@@ -5,7 +5,7 @@ export default function FoodCategoryPage() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
-      <main className="mx-auto w-full max-w-4xl px-4 py-12">
+      <main className="mx-auto w-full max-w-[67rem] px-4 py-12">
         <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
           FOOD CATEGORY
         </h1>
