@@ -138,7 +138,7 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 text-zinc-400 hover:text-zinc-600"
+          className="absolute right-4 top-8 text-zinc-400 hover:text-zinc-600"
           aria-label="Close"
         >
           ✕
