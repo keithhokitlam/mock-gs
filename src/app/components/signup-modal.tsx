@@ -196,7 +196,7 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                 type="text"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
-                placeholder="Company (optional)"
+                placeholder="Company"
                 className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
               />
             </div>
@@ -319,23 +319,23 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
               {/* Duration */}
               <div className="text-center mb-3">
                 <span className="text-xl font-bold text-zinc-900">
-                  1 year of:
+                  12 months of:
                 </span>
               </div>
 
-              {/* Features */}
-              <ul className="space-y-1.5 mb-3 text-xs text-zinc-600">
+              {/* Features - same as /pricing */}
+              <ul className="space-y-1.5 mb-3 text-sm text-zinc-600">
                 <li className="flex items-start">
                   <span className="text-green-500 mr-2">✓</span>
-                  <span>Full access to all features</span>
+                  <span>Full access to all food lists and tasty know-how</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-500 mr-2">✓</span>
-                  <span>Priority customer support</span>
+                  <span>We&apos;ve got your back—priority support when you need us</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-500 mr-2">✓</span>
-                  <span>Auto-renewal (except Alipay)</span>
+                  <span>Auto-renewal so you never miss a beat (except Alipay)</span>
                 </li>
               </ul>
             </div>
