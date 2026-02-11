@@ -364,7 +364,7 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                 onChange={(e) => setAgreeToTerms(e.target.checked)}
                 className="mt-1 h-4 w-4 rounded border-zinc-300 text-[#2B6B4A] focus:ring-[#2B6B4A]"
               />
-              <span className="text-sm text-zinc-700 leading-relaxed">
+              <span className="text-xs text-zinc-700 leading-relaxed">
                 I agree to the{" "}
                 <Link
                   href="/terms"
