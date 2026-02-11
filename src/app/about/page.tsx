@@ -82,17 +82,6 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* Canadian flavours callout */}
-          <section className="border-t border-zinc-200 pt-8">
-            <p className="text-sm font-semibold text-zinc-800 mb-2">
-              Canadian flavours we celebrate
-            </p>
-            <p className="text-sm leading-relaxed text-zinc-600">
-              From BC cherries to Quebec cheese, Prairie grains, multicultural
-              aisles, seasonal eats, and farmers markets—we&apos;re here for it
-              all.
-            </p>
-          </section>
         </div>
       </main>
     </div>
