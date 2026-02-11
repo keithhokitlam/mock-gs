@@ -11,39 +11,39 @@ type FAQItem = {
 const faqData: FAQItem[] = [
   {
     question: "How do I change my password?",
-    answer: "You can change your password in two ways:\n1) Click the 'Forgot Password' button on the sign-in page to receive a password reset link via email, or\n2) After logging into your account, click your email address in the top right corner of the browser, then select 'Change Password' from the dropdown menu.",
+    answer: "Easy! Two ways:\n1) Click the 'Forgot Password' button on the sign-in page to receive a password reset link via email, or\n2) After logging in, click your email in the top right corner, then select 'Change Password' from the dropdown. We've got you covered!",
   },
   {
     question: "Once I purchase a subscription, can it be refunded?",
-    answer: "Unfortunately, subscriptions cannot be refunded once purchased. Please note that subscriptions are set to auto-renew automatically (except for payments made through Alipay). To stop future auto-renewals, please follow these steps:\n1) Log into your account\n2) Click your email address in the top right corner of the browser\n3) Select 'Stop Auto-Renewal (non-Alipay only)' from the dropdown menu\n\nThis will prevent your subscription from automatically renewing for the next billing cycle.",
+    answer: "Unfortunately, we can't offer refunds once a subscription is purchased. Heads up: subscriptions auto-renew (except Alipay). To stop future renewals:\n1) Log in\n2) Click your email in the top right\n3) Select 'Stop Auto-Renewal (non-Alipay only)' from the dropdown\n\nThat'll prevent the next billing cycle from triggering.",
   },
   {
     question: "Why can't I log into my account?",
-    answer: "There can be several explanations:\na) You were sent an email verification link that has not been clicked yet (please also check your junk or spam folder).\nb) Your subscription has expired and you would need to sign up again to resume access.\nc) Your password is incorrect (click the 'Forgot Password' button on the Sign In page to reset it).",
+    answer: "A few things to check:\na) An email verification link was sent—have you clicked it? (Peek in spam/junk too!)\nb) If your subscription expired, you'll need to sign up again.\nc) Wrong password? No worries—hit 'Forgot Password' on the Sign In page to reset.",
   },
   {
     question: "I didn't receive my email verification link. What should I do?",
-    answer: "a) Check your spam or junk folder—verification emails are sometimes filtered there.\nb) If you still cannot find it, contact us at support@grocery-share.com and we will assist you.",
+    answer: "First, check your spam or junk folder—verification emails sometimes end up there. Still nada? Reach out to support@grocery-share.com and we'll sort it out pronto!",
   },
   {
     question: "What happens if my subscription expires?",
-    answer: "If you stopped auto-renewal and your subscription has expired, you will lose access to GroceryShare features. You will need to sign up again to regain access.",
+    answer: "You'll lose access when it expires—but don't worry! You can sign up again anytime to jump back in. We'd love to have you back!",
   },
   {
     question: "How long does my subscription last?",
-    answer: "Each subscription lasts 12 months. Subscriptions automatically renew at the end of the period when paid by credit card. Payments made through Alipay do not auto-renew and require manual renewal.",
+    answer: "Each subscription is 12 months of delicious access. Paid by card? It'll auto-renew at the end. Alipay? We'll need you to renew manually when the time comes.",
   },
   {
     question: "What payment methods do you accept?",
-    answer: "We accept Visa, Mastercard, American Express, and Alipay.",
+    answer: "We take Visa, Mastercard, American Express, and Alipay. Pick what works for you!",
   },
   {
     question: "What happens if I stop the auto-renewal process?",
-    answer: "You will continue to have access to GroceryShare features until the current subscription period ends. No renewal will be triggered after the subscription end date.",
+    answer: "No stress—you'll keep full access until your current period ends. After that date, no renewal will happen. You're in control!",
   },
   {
     question: "What do I get with my subscription?",
-    answer: "",
+    answer: "Full access to all GroceryShare category lists—your digital food-savvy friend! Think part encyclopedia, part comedy show, and 100% your cheerleader in eating well. Learning about food should be as fun as eating it!",
   },
 ];
 

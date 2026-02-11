@@ -130,7 +130,9 @@ export default function NavBar() {
             />
           </Link>
           <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-            <span className="font-beckman">About</span>
+            <Link href="/about" className="font-beckman hover:opacity-80">
+              About
+            </Link>
             <Link href="/pricing" className="font-beckman hover:opacity-80">
               Pricing
             </Link>

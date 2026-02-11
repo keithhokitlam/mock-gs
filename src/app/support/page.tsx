@@ -14,11 +14,13 @@ export default function SupportPage() {
           </h1>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-700">
-            We&apos;re here to help with account, subscription, and access issues.
+            We&apos;ve got your back! Got questions about your account,
+            subscription, or access? We&apos;re here to help—and we love hearing
+            from you.
           </p>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-700">
-            If you are experiencing any issues please contact{" "}
+            If something&apos;s not quite right, reach out to{" "}
             <a
               href="mailto:support@grocery-share.com"
               className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
@@ -38,19 +40,19 @@ export default function SupportPage() {
                 <Link href="/faq" className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
                   FAQ
                 </Link>
-                — Common questions and answers
+                — Your go-to answers, served with a smile
               </li>
               <li>
                 <Link href="/contact" className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
                   Contact
                 </Link>
-                — General inquiries
+                — We&apos;d love to hear from you
               </li>
               <li>
                 <Link href="/" className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
                   Forgot password?
                 </Link>
-                — Use the Forgot Password button on the Sign In page
+                — Hit the Forgot Password button on the Sign In page
               </li>
             </ul>
           </div>

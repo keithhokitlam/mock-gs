@@ -11,7 +11,9 @@ export default function ContactPage() {
           </h1>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-700">
-            Get in touch for general inquiries, partnership opportunities, or feedback about GroceryShare.
+            We&apos;d love to hear from you! Whether it&apos;s a question, a
+            partnership idea, or just some feedback—drop us a line. We&apos;re
+            all ears.
           </p>
 
           <div className="mb-6 space-y-4 text-base leading-relaxed text-zinc-700">
@@ -37,7 +39,8 @@ export default function ContactPage() {
           </div>
 
           <p className="text-base leading-relaxed text-zinc-700">
-            We typically respond within 24–48 hours (business days).
+            We typically respond within 24–48 hours (business days). Can&apos;t
+            wait to connect!
           </p>
         </div>
       </main>

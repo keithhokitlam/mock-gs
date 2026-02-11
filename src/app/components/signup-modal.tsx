@@ -107,12 +107,15 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
           ✕
         </button>
 
-        <h2 className="mb-6 text-2xl font-semibold text-zinc-900">Sign up</h2>
+        <h2 className="mb-6 text-2xl font-semibold text-zinc-900">
+          Join the GroceryShare family!
+        </h2>
 
         {success ? (
           <div className="space-y-4">
             <p className="text-sm text-green-600">
-              Account created successfully! Please check your email to verify your account.
+              You&apos;re in! Check your email to verify your account—then
+              you&apos;re all set to start exploring.
             </p>
             <button
               type="button"
@@ -229,11 +232,14 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-bold mb-2 text-center text-zinc-900">Standard Annual Subscription</h3>
+              <h3 className="text-lg font-bold mb-2 text-center text-zinc-900">
+                Standard Annual Subscription
+              </h3>
 
               {/* Description */}
               <p className="text-zinc-600 mb-3 text-xs leading-relaxed text-center">
-                Our standard annual subscription plan with full access to all GroceryShare category lists.
+                Your digital food-savvy friend—full access to all category lists,
+                quirky food facts, and kitchen inspiration!
               </p>
 
               {/* Duration */}

@@ -123,7 +123,7 @@ function LoginForm() {
           </div>
           <h1 className="text-3xl font-semibold">Welcome back</h1>
           <p className="text-sm text-zinc-500">
-            Sign in to continue to your subscription account.
+            Sign in to unlock your grocery lists and food adventures.
           </p>
         </div>
         <form className="space-y-5" onSubmit={handleSubmit}>
