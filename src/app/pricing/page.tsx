@@ -129,8 +129,8 @@ export default async function PricingPage() {
 
               {/* Description */}
               <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
-                We blend food knowledge with a dash of humour—and we&apos;re
-                always in your corner for eating well. {displayPlan.description}
+                Your digital food-savvy friend—full access to all category lists,
+                quirky food facts, and kitchen inspiration!
               </p>
 
               {/* Duration */}
