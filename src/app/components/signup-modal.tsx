@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 // Gold grocery icon SVG (shopping basket with groceries)
 const GoldGroceryIcon = () => (
@@ -35,9 +36,13 @@ type SignupModalProps = {
 };
 
 export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -52,8 +57,13 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
     setSuccess(false);
 
     // Validation
-    if (!email || !password || !confirmPassword) {
-      setError("All fields are required");
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      setError("All required fields must be filled in");
+      return;
+    }
+
+    if (!agreeToTerms) {
+      setError("You must agree to the Terms of Use and Privacy Policy to create an account");
       return;
     }
 
@@ -73,7 +83,13 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          company: company || undefined,
+          email,
+          password,
+        }),
       });
 
       const data = await response.json();
@@ -85,9 +101,13 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
       }
 
       setSuccess(true);
+      setFirstName("");
+      setLastName("");
+      setCompany("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      setAgreeToTerms(false);
     } catch (err) {
       setError("An error occurred. Please try again.");
     } finally {
@@ -127,6 +147,60 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <label
+                  className="text-sm font-medium text-zinc-700"
+                  htmlFor="signup-firstname"
+                >
+                  First Name
+                </label>
+                <input
+                  id="signup-firstname"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First name"
+                  required
+                  className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  className="text-sm font-medium text-zinc-700"
+                  htmlFor="signup-lastname"
+                >
+                  Last Name
+                </label>
+                <input
+                  id="signup-lastname"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last name"
+                  required
+                  className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label
+                className="text-sm font-medium text-zinc-700"
+                htmlFor="signup-company"
+              >
+                Company
+              </label>
+              <input
+                id="signup-company"
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Company (optional)"
+                className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
+              />
+            </div>
+
             <div className="space-y-2">
               <label
                 className="text-sm font-medium text-zinc-700"
@@ -265,6 +339,46 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                 </li>
               </ul>
             </div>
+
+            <label className="flex gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreeToTerms}
+                onChange={(e) => setAgreeToTerms(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-zinc-300 text-[#2B6B4A] focus:ring-[#2B6B4A]"
+              />
+              <span className="text-sm text-zinc-700 leading-relaxed">
+                I agree to the{" "}
+                <Link
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
+                >
+                  Terms of Use
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
+                >
+                  Privacy Policy
+                </Link>{" "}
+                and declare that I have read the information that is required in
+                accordance with{" "}
+                <a
+                  href="https://gdpr-info.eu/art-13-gdpr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
+                >
+                  Article 13 of the GDPR
+                </a>
+                .
+              </span>
+            </label>
 
             {error && (
               <p className="text-sm text-red-600" role="alert">

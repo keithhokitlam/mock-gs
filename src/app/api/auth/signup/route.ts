@@ -15,7 +15,7 @@ function getResend() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password } = body;
+    const { email, password, firstName, lastName, company } = body;
 
     // Validation
     if (!email || !password) {
@@ -64,15 +64,20 @@ export async function POST(request: NextRequest) {
       isExistingUser = true;
       const passwordHash = await bcrypt.hash(password, 10);
       
-      // Update password for existing user
+      // Update password for existing user (and profile fields if columns exist)
       const verificationToken = crypto.randomBytes(32).toString("hex");
+      const userUpdate: Record<string, unknown> = {
+        password_hash: passwordHash,
+        email_verified: false, // Require re-verification for security
+        verification_token: verificationToken,
+      };
+      if (firstName) userUpdate.first_name = firstName;
+      if (lastName) userUpdate.last_name = lastName;
+      if (company) userUpdate.company = company;
+
       const { data: updatedUser, error: updateError } = await supabaseServer
         .from("users")
-        .update({
-          password_hash: passwordHash,
-          email_verified: false, // Require re-verification for security
-          verification_token: verificationToken,
-        })
+        .update(userUpdate)
         .eq("id", existingUser.id)
         .select()
         .single();
@@ -91,15 +96,20 @@ export async function POST(request: NextRequest) {
       const passwordHash = await bcrypt.hash(password, 10);
       const verificationToken = crypto.randomBytes(32).toString("hex");
 
-      // Create user
+      // Create user (first_name, last_name, company require matching columns in users table)
+      const userInsert: Record<string, unknown> = {
+        email: email.toLowerCase(),
+        password_hash: passwordHash,
+        email_verified: false,
+        verification_token: verificationToken,
+      };
+      if (firstName) userInsert.first_name = firstName;
+      if (lastName) userInsert.last_name = lastName;
+      if (company) userInsert.company = company;
+
       const { data: newUser, error: insertError } = await supabaseServer
         .from("users")
-        .insert({
-          email: email.toLowerCase(),
-          password_hash: passwordHash,
-          email_verified: false,
-          verification_token: verificationToken,
-        })
+        .insert(userInsert)
         .select()
         .single();
 
