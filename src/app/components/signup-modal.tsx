@@ -30,6 +30,23 @@ const GoldGroceryIcon = () => (
   </svg>
 );
 
+const ExternalLinkIcon = () => (
+  <svg
+    className="w-3 h-3 shrink-0"
+    viewBox="0 0 12 12"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <path d="M10 6V9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3" />
+    <path d="M7 1h4v4" />
+    <path d="M11 1 5 7" />
+  </svg>
+);
+
 type SignupModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -353,18 +370,20 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   href="/terms"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
+                  className="text-[#2B6B4A] underline hover:text-[#1f4d35] inline-flex items-center gap-0.5"
                 >
                   Terms of Use
+                  <ExternalLinkIcon />
                 </Link>{" "}
                 and{" "}
                 <Link
                   href="/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
+                  className="text-[#2B6B4A] underline hover:text-[#1f4d35] inline-flex items-center gap-0.5"
                 >
                   Privacy Policy
+                  <ExternalLinkIcon />
                 </Link>{" "}
                 and declare that I have read the information that is required in
                 accordance with{" "}
@@ -372,9 +391,10 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   href="https://gdpr-info.eu/art-13-gdpr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
+                  className="text-[#2B6B4A] underline hover:text-[#1f4d35] inline-flex items-center gap-0.5"
                 >
                   Article 13 of the GDPR
+                  <ExternalLinkIcon />
                 </a>
                 .
               </span>
