@@ -129,8 +129,8 @@ export default async function PricingPage() {
 
               {/* Description */}
               <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
-                Think of us as part encyclopedia, part comedy show—your
-                cheerleader in eating well. {displayPlan.description}
+                We blend food knowledge with a dash of humour—and we&apos;re
+                always in your corner for eating well. {displayPlan.description}
               </p>
 
               {/* Duration */}
@@ -161,7 +161,7 @@ export default async function PricingPage() {
                 href="/"
                 className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
               >
-                Let&apos;s Get Started!
+                Sign Up Here!
               </Link>
             </div>
           </div>

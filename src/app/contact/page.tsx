@@ -19,7 +19,7 @@ export default function ContactPage() {
           <div className="mb-6 space-y-4 text-base leading-relaxed text-zinc-700">
             <p className="font-semibold text-zinc-900">Contact methods</p>
             <p>
-              <strong>General inquiries:</strong>{" "}
+              General inquiries:{" "}
               <a
                 href="mailto:info@grocery-share.com"
                 className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
@@ -28,7 +28,7 @@ export default function ContactPage() {
               </a>
             </p>
             <p>
-              <strong>Technical support:</strong>{" "}
+              Technical support:{" "}
               <a
                 href="mailto:support@grocery-share.com"
                 className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
