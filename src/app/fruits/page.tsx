@@ -2,7 +2,7 @@ import Link from "next/link";
 import NavBar from "../components/navbar";
 import ActionsBar from "../mastertable/actions-bar";
 import AdminTable, { type AdminColumn } from "../mastertable/table";
-import { readExcelRows, findExcelInFolder } from "@/lib/excel";
+import fruitsData from "@/data/fruits.json";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 type FilterValue = string | string[];
@@ -29,34 +29,14 @@ function parseFilterValue(value: string): FilterValue {
   return value;
 }
 
+const rows = fruitsData as string[][];
+
 export default async function FruitsPage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const excelPath = findExcelInFolder("food-category-lists", /fruits/i);
   const resolvedSearchParams = await Promise.resolve(searchParams);
-
-  if (!excelPath) {
-    return (
-      <div className="min-h-screen bg-zinc-50 text-zinc-900">
-        <NavBar />
-        <main className="mx-auto w-full max-w-[67rem] px-4 py-12">
-          <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
-            FRUITS
-          </h1>
-          <p className="text-zinc-600">
-            No fruits Excel file found in <code className="rounded bg-zinc-200 px-1">food-category-lists/</code>.
-          </p>
-          <Link href="/foodcategory" className="mt-4 inline-block text-[#2B6B4A] hover:underline">
-            ← Back to Food Category
-          </Link>
-        </main>
-      </div>
-    );
-  }
-
-  const rows = readExcelRows(excelPath);
   const headers = rows[0] || [];
   const dataRows = rows.slice(1);
 

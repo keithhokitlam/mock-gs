@@ -7,7 +7,8 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "process-slides": "node scripts/process-slides.js"
+    "process-slides": "node scripts/process-slides.js",
+    "process-fruits": "node scripts/process-fruits.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.93.1",
