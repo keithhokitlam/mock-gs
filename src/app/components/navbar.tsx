@@ -146,6 +146,16 @@ export default function NavBar() {
             <Link href="/foodcategory" className="font-beckman hover:opacity-80">
               FOOD CATEGORY
             </Link>
+            {pathname === "/consumer" && (
+              <>
+                <span className="font-beckman cursor-default">
+                  RECIPES
+                </span>
+                <span className="font-beckman cursor-default">
+                  QUIZZES
+                </span>
+              </>
+            )}
             <Link href="/support" className="font-beckman hover:opacity-80">
               Support
             </Link>
