@@ -120,6 +120,7 @@ export default function NavBar() {
     pathname.startsWith("/mastertable/") ||
     pathname === "/subscriptions" ||
     pathname.startsWith("/subscriptions/");
+  const isConsumerPage = !isCommercialPage;
 
   return (
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
@@ -139,7 +140,7 @@ export default function NavBar() {
             <Link href="/about" className="font-beckman hover:opacity-80">
               About
             </Link>
-            {pathname !== "/consumer" && (
+            {isCommercialPage && (
               <Link href="/pricing" className="font-beckman hover:opacity-80">
                 Pricing
               </Link>
@@ -152,14 +153,10 @@ export default function NavBar() {
             <Link href="/foodcategory" className="font-beckman hover:opacity-80">
               FOOD CATEGORY
             </Link>
-            {pathname === "/consumer" && (
+            {isConsumerPage && (
               <>
-                <span className="font-beckman cursor-default">
-                  RECIPES
-                </span>
-                <span className="font-beckman cursor-default">
-                  QUIZZES
-                </span>
+                <span className="font-beckman cursor-default">RECIPES</span>
+                <span className="font-beckman cursor-default">QUIZZES</span>
               </>
             )}
             <Link href="/support" className="font-beckman hover:opacity-80">
