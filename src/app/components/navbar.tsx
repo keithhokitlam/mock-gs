@@ -114,6 +114,12 @@ export default function NavBar() {
   };
 
   const isAdmin = userEmail === "ADMIN";
+  const isCommercialPage =
+    pathname === "/commercialhome" ||
+    pathname === "/mastertable" ||
+    pathname.startsWith("/mastertable/") ||
+    pathname === "/subscriptions" ||
+    pathname.startsWith("/subscriptions/");
 
   return (
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
@@ -138,7 +144,7 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {userEmail && pathname !== "/consumer" && (
+            {userEmail && isCommercialPage && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>
