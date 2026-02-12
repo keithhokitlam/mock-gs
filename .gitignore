@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# slides input (user's source images - opt out of committing)
+/slides-input/*
+!/slides-input/README.md
