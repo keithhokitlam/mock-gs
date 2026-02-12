@@ -26,6 +26,13 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
+// Clear existing slide images so we only have the latest set
+for (const f of fs.readdirSync(outputDir)) {
+  if (IMAGE_EXT.test(f)) {
+    fs.unlinkSync(path.join(outputDir, f));
+  }
+}
+
 function findImages(dir, relativePath = "") {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const images = [];
