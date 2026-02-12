@@ -20,7 +20,7 @@ export default function Home() {
           priority
           className="h-auto w-[48rem] md:w-[60rem]"
         />
-        <div className="-mt-[11.375rem] flex w-full max-w-4xl gap-8 md:-mt-[13.375rem]">
+        <div className="-mt-[10.125rem] flex w-full max-w-4xl gap-8 md:-mt-[12.125rem]">
           <Link
             href="/consumer"
             className="flex flex-1 flex-col items-center justify-center rounded-2xl border-2 border-zinc-200 bg-white p-12 shadow-sm transition-all duration-300 hover:border-[#225a3d] hover:bg-[#225a3d] hover:shadow-lg group"
