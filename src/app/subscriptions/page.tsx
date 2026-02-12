@@ -58,7 +58,7 @@ export default async function SubscriptionsPage({
   if (!isAdmin && user) {
     // Normal user login - check email verification
     if (!user.email_verified) {
-      redirect("/");
+      redirect("/commercialhome");
     }
 
     // Check if user has an active subscription
@@ -77,7 +77,7 @@ export default async function SubscriptionsPage({
       
       // Check if subscription is inactive or cancelled
       if (subscription.status === "inactive" || subscription.status === "cancelled") {
-        redirect("/?error=subscription_inactive");
+        redirect("/commercialhome?error=subscription_inactive");
       }
 
       // Also check if subscription has expired (even if status hasn't been updated yet)
@@ -95,17 +95,17 @@ export default async function SubscriptionsPage({
             .update({ status: "inactive" })
             .eq("id", subscription.id);
           
-          redirect("/?error=subscription_expired");
+          redirect("/commercialhome?error=subscription_expired");
         }
       }
       // If subscription_end_date is null, subscription is active indefinitely - allow access
     } else {
       // No subscription found - redirect to login
-      redirect("/?error=no_subscription");
+      redirect("/commercialhome?error=no_subscription");
     }
   } else if (!isAdmin && !user) {
     // Not admin and not logged in - redirect to login
-    redirect("/");
+    redirect("/commercialhome");
   }
 
   // Fetch all subscriptions from Supabase with check-in counts

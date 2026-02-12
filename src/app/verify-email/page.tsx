@@ -36,7 +36,7 @@ function VerifyEmailForm() {
           setMessage(data.message || "Email verified successfully!");
           // Redirect to login after 2 seconds
           setTimeout(() => {
-            router.push("/");
+            router.push("/commercialhome");
           }, 2000);
         } else {
           setStatus("error");
@@ -79,7 +79,7 @@ function VerifyEmailForm() {
               </p>
               <p className="text-sm text-zinc-700">{message}</p>
               <Link
-                href="/"
+                href="/commercialhome"
                 className="inline-block rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
               >
                 Go to Login
