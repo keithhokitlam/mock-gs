@@ -8,14 +8,17 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <DoorSplash />
-      <main className="flex min-h-screen flex-col items-center justify-center px-6 py-12">
+      <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
+        <div className="h-16" />
+      </nav>
+      <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
         <Image
           src="/logos/GroceryShare_logo_stacked_1024.png"
           alt="GroceryShare"
           width={1200}
           height={1200}
           priority
-          className="mb-12 h-auto w-[48rem] md:w-[60rem]"
+          className="mb-2 h-auto w-[48rem] md:w-[60rem]"
         />
         <div className="flex w-full max-w-4xl gap-8">
           <Link
