@@ -18,9 +18,9 @@ export default function Home() {
           width={1200}
           height={1200}
           priority
-          className="mb-2 h-auto w-[48rem] md:w-[60rem]"
+          className="h-auto w-[48rem] md:w-[60rem]"
         />
-        <div className="flex w-full max-w-4xl gap-8">
+        <div className="-mt-48 flex w-full max-w-4xl gap-8 md:-mt-56">
           <Link
             href="/consumer"
             className="flex flex-1 flex-col items-center justify-center rounded-2xl border-2 border-zinc-200 bg-white p-12 shadow-sm transition-all duration-300 hover:border-[#225a3d] hover:bg-[#225a3d] hover:shadow-lg group"
