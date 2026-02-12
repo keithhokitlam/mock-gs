@@ -18,9 +18,27 @@ if (!excelFile) {
   process.exit(1);
 }
 
+function isBlank(v) {
+  return v == null || String(v).trim() === "";
+}
+
 const workbook = XLSX.read(fs.readFileSync(path.join(inputDir, excelFile)), { type: "buffer" });
 const sheet = workbook.Sheets[workbook.SheetNames[0]];
-const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "", raw: false });
+let rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "", raw: false });
+
+// Remove blank rows (entire row is empty)
+rows = rows.filter((row) => !row.every((cell) => isBlank(cell)));
+
+// Find columns that have at least one non-blank cell
+const numCols = Math.max(...rows.map((r) => r.length), 0);
+const colHasContent = Array(numCols)
+  .fill(false)
+  .map((_, i) => rows.some((row) => !isBlank(row[i])));
+
+// Filter to only columns with content
+rows = rows.map((row) =>
+  row.filter((_, i) => i < colHasContent.length && colHasContent[i])
+);
 
 const dir = path.dirname(outputFile);
 if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
