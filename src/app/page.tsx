@@ -12,10 +12,10 @@ export default function Home() {
         <Image
           src="/logos/GroceryShare_logo_stacked_1024.png"
           alt="GroceryShare"
-          width={400}
-          height={400}
+          width={1200}
+          height={1200}
           priority
-          className="mb-12 h-auto w-64 md:w-80"
+          className="mb-12 h-auto w-[48rem] md:w-[60rem]"
         />
         <div className="flex w-full max-w-4xl gap-8">
           <Link
