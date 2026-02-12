@@ -26,22 +26,28 @@ export default function FoodCategoryPage() {
         </h1>
         <SectionNav />
 
+        <h2 className="mb-4 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide">
+          FRUITS & VEGETABLES
+        </h2>
+
         {slideImages.length > 0 ? (
           <div className="space-y-6">
             {slideImages.map((src, i) => (
-              <div
-                key={src}
-                className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden"
-              >
-                <Image
-                  src={src}
-                  alt={`Food category slide ${i + 1}`}
-                  width={1920}
-                  height={1080}
-                  quality={95}
-                  className="w-full h-auto"
-                  unoptimized
-                />
+              <div key={src} className="space-y-6">
+                {i === 1 && (
+                  <p className="text-lg font-semibold text-zinc-800 font-beckman">FRUIT</p>
+                )}
+                <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
+                  <Image
+                    src={src}
+                    alt={`Food category slide ${i + 1}`}
+                    width={1920}
+                    height={1080}
+                    quality={95}
+                    className="w-full h-auto"
+                    unoptimized
+                  />
+                </div>
               </div>
             ))}
           </div>
