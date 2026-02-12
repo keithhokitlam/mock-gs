@@ -116,6 +116,7 @@ export default function NavBar() {
   const isAdmin = userEmail === "ADMIN";
   const isCommercialPage =
     pathname === "/commercialhome" ||
+    pathname === "/pricing" ||
     pathname === "/mastertable" ||
     pathname.startsWith("/mastertable/") ||
     pathname === "/subscriptions" ||
