@@ -47,7 +47,13 @@ export default function SectionNav() {
         </button>
         {openDropdown === "fruits" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <button type="button" className={dropdownItemClass}>Fruit</button>
+            <a
+              href="#section-fruits"
+              onClick={() => setOpenDropdown(null)}
+              className={dropdownItemClass}
+            >
+              Fruits
+            </a>
             <button type="button" className={dropdownItemClass}>Vegetable</button>
             <button type="button" className={dropdownItemClass}>Vegan</button>
           </div>
