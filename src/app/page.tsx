@@ -19,7 +19,7 @@ export default function Home() {
             width={1200}
             height={1200}
             priority
-            className="h-auto w-[48rem] md:w-[60rem]"
+            className="h-auto w-[40.8rem] md:w-[51rem]"
           />
           <div className="-mt-[7rem] flex w-full max-w-4xl gap-8 md:-mt-[9rem]">
           <Link
