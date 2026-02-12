@@ -34,9 +34,11 @@ export default function FoodCategoryPage() {
                 <Image
                   src={src}
                   alt={`Food category slide ${i + 1}`}
-                  width={1200}
-                  height={900}
+                  width={1920}
+                  height={1080}
+                  quality={95}
                   className="w-full h-auto"
+                  unoptimized
                 />
               </div>
             ))}
