@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import NavBar from "../components/navbar";
 import SectionNav from "./section-nav";
 import fs from "fs";
@@ -35,7 +36,13 @@ export default function FoodCategoryPage() {
             {slideImages.map((src, i) => (
               <div key={src} className="space-y-6">
                 {i === 1 && (
-                  <p id="section-fruits" className="scroll-mt-24 text-lg font-semibold text-zinc-800 font-beckman">FRUITS</p>
+                  <p id="section-fruits" className="scroll-mt-24 text-lg font-semibold text-zinc-800 font-beckman">
+                    FRUITS (for complete list,{" "}
+                    <Link href="/fruits" className="text-[#2B6B4A] hover:underline">
+                      click here
+                    </Link>
+                    )
+                  </p>
                 )}
                 <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
                   <Image

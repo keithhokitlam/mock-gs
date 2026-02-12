@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 type ActionsBarProps = {
   columns: string[];
   rows: string[][];
+  clearFiltersHref?: string;
 };
 
 function escapeCsvValue(value: string) {
@@ -53,7 +54,7 @@ function downloadFile(contents: string, filename: string, mimeType: string) {
   URL.revokeObjectURL(url);
 }
 
-export default function ActionsBar({ columns, rows }: ActionsBarProps) {
+export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastertable" }: ActionsBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const exportMenuRef = useRef<HTMLDivElement | null>(null);
   const safeColumns = useMemo(
@@ -150,7 +151,7 @@ export default function ActionsBar({ columns, rows }: ActionsBarProps) {
         Print
       </button>
       <Link
-        href="/mastertable"
+        href={clearFiltersHref}
         className="rounded-md bg-zinc-400 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
       >
         Clear All Filters

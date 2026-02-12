@@ -138,7 +138,7 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {userEmail && (
+            {userEmail && pathname !== "/consumer" && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>

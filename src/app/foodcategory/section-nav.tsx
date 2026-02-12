@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 const ChevronDown = ({ open }: { open: boolean }) => (
@@ -47,13 +48,13 @@ export default function SectionNav() {
         </button>
         {openDropdown === "fruits" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <a
+            <Link
               href="#section-fruits"
               onClick={() => setOpenDropdown(null)}
               className={dropdownItemClass}
             >
               Fruits
-            </a>
+            </Link>
             <button type="button" className={dropdownItemClass}>Vegetable</button>
             <button type="button" className={dropdownItemClass}>Vegan</button>
           </div>
