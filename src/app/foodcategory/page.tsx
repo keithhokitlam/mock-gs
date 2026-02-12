@@ -1,5 +1,6 @@
 import Image from "next/image";
 import NavBar from "../components/navbar";
+import SectionNav from "./section-nav";
 import fs from "fs";
 import path from "path";
 
@@ -20,9 +21,10 @@ export default function FoodCategoryPage() {
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
       <main className="mx-auto w-full max-w-[67rem] px-4 py-12">
-        <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
+        <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">
           FOOD CATEGORY
         </h1>
+        <SectionNav />
 
         {slideImages.length > 0 ? (
           <div className="space-y-6">
