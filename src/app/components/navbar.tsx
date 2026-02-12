@@ -20,6 +20,31 @@ export default function NavBar() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [navMode, setNavMode] = useState<"commercial" | "consumer">("consumer");
+
+  const isExplicitCommercial =
+    pathname === "/commercialhome" ||
+    pathname === "/pricing" ||
+    pathname === "/mastertable" ||
+    pathname.startsWith("/mastertable/") ||
+    pathname === "/subscriptions" ||
+    pathname.startsWith("/subscriptions/");
+  const isExplicitConsumer = pathname === "/consumer";
+  const isSharedPage = !isExplicitCommercial && !isExplicitConsumer;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (isExplicitCommercial) {
+      sessionStorage.setItem("navMode", "commercial");
+      setNavMode("commercial");
+    } else if (isExplicitConsumer) {
+      sessionStorage.setItem("navMode", "consumer");
+      setNavMode("consumer");
+    } else if (isSharedPage) {
+      const stored = sessionStorage.getItem("navMode");
+      setNavMode(stored === "commercial" ? "commercial" : "consumer");
+    }
+  }, [pathname, isExplicitCommercial, isExplicitConsumer, isSharedPage]);
 
   useEffect(() => {
     // Fetch current user email (credentials include so session cookie is sent on all pages)
@@ -114,13 +139,7 @@ export default function NavBar() {
   };
 
   const isAdmin = userEmail === "ADMIN";
-  const isCommercialPage =
-    pathname === "/commercialhome" ||
-    pathname === "/pricing" ||
-    pathname === "/mastertable" ||
-    pathname.startsWith("/mastertable/") ||
-    pathname === "/subscriptions" ||
-    pathname.startsWith("/subscriptions/");
+  const isCommercialPage = isExplicitCommercial || (isSharedPage && navMode === "commercial");
   const isConsumerPage = !isCommercialPage;
 
   return (
