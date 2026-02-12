@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
-import DoorSplash from "../door-splash";
 import SignupModal from "../components/signup-modal";
 import ForgotPasswordModal from "../components/forgot-password-modal";
 import NavBar from "../components/navbar";
@@ -105,7 +104,6 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <DoorSplash />
       <NavBar />
       <main className="mx-auto w-full max-w-md px-4 pt-1 pb-10">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
