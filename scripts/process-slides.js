@@ -26,10 +26,24 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
-const files = fs.readdirSync(inputDir).filter((f) => IMAGE_EXT.test(f)).sort();
+function findImages(dir, relativePath = "") {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const images = [];
+  for (const e of entries) {
+    const rel = relativePath ? `${relativePath}/${e.name}` : e.name;
+    if (e.isDirectory()) {
+      images.push(...findImages(path.join(dir, e.name), rel));
+    } else if (IMAGE_EXT.test(e.name)) {
+      images.push(rel);
+    }
+  }
+  return images.sort();
+}
+
+const files = findImages(inputDir);
 
 if (files.length === 0) {
-  console.log("No image files found in slides-input/. Add PNG/JPG images and run again.");
+  console.log("No image files found in slides-input/ or subfolders. Add PNG/JPG images and run again.");
   process.exit(0);
 }
 
