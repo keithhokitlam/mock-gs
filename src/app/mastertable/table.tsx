@@ -268,8 +268,8 @@ export default function AdminTable({
   const closeDropdown = () => setOpenMenu(null);
 
   return (
-    <div className="print-table relative inline-block min-w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-      <table className="min-w-max text-left text-sm">
+    <div className="print-table relative w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+      <table className="w-full text-left text-sm">
         <thead className={headerClassName}>
           <tr>
             {columns.map((column) => {
