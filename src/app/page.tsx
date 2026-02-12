@@ -12,7 +12,7 @@ export default function Home() {
         <div className="h-16" />
       </nav>
       <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
-        <div className="-mt-[200px]">
+        <div className="-mt-[400px]">
           <Image
             src="/logos/GroceryShare_logo_stacked_1024.png"
             alt="GroceryShare"
