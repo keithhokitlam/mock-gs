@@ -133,9 +133,11 @@ export default function NavBar() {
             <Link href="/about" className="font-beckman hover:opacity-80">
               About
             </Link>
-            <Link href="/pricing" className="font-beckman hover:opacity-80">
-              Pricing
-            </Link>
+            {pathname !== "/consumer" && (
+              <Link href="/pricing" className="font-beckman hover:opacity-80">
+                Pricing
+              </Link>
+            )}
             {userEmail && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
