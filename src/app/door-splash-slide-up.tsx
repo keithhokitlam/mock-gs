@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const LOGO_HEIGHT = 400;
 const LOGO_WIDTH = 600;
 const HALF_HEIGHT = LOGO_HEIGHT / 2;
-const ANIMATION_MS = 3000;
+const ANIMATION_MS = 1200;
 
 const LOGO_SRC = "/logos/GroceryShare_logo_stacked_1024.png";
 
