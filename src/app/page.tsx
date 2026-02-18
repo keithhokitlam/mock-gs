@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <DoorSplash />
-      <nav className="sticky top-0 z-40 w-full bg-[#CCFF00]">
+      <nav className="sticky top-0 z-40 w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
         <div className="h-16" />
       </nav>
       <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
