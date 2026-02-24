@@ -150,9 +150,9 @@ export default function NavBar() {
             <Image
               src="/logos/Grocery-Share Logo.png"
               alt="GroceryShare"
-              width={64}
-              height={64}
-              className="h-16 w-auto translate-y-[2px]"
+              width={48}
+              height={48}
+              className="h-12 w-auto translate-y-[2px]"
               priority
             />
           </Link>
