@@ -148,10 +148,10 @@ export default function NavBar() {
         <div className="flex items-center gap-4">
           <Link href="/" aria-label="Go to home">
             <Image
-              src="/logos/Grocery-Share Logo (Side).png"
+              src="/logos/Grocery-Share Logo.png"
               alt="GroceryShare"
-              width={260}
-              height={104}
+              width={64}
+              height={64}
               className="h-16 w-auto translate-y-[2px]"
               priority
             />
