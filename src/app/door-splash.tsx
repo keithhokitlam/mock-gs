@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 const LOGO_SIZE = 400;
@@ -51,16 +52,17 @@ export default function DoorSplash() {
         }}
         aria-hidden
       >
-        <div
-          className="relative shrink-0 overflow-hidden bg-no-repeat"
-          style={{
-            width: `${HALF}px`,
-            height: `${LOGO_HEIGHT}px`,
-            backgroundImage: `url(${LOGO_SRC})`,
-            backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
-            backgroundPosition: "0 0",
-          }}
-        />
+        <div className="relative shrink-0 overflow-hidden" style={{ width: HALF, height: LOGO_SIZE }}>
+          <Image
+            src={LOGO_SRC}
+            alt=""
+            width={LOGO_SIZE}
+            height={LOGO_SIZE}
+            className="object-cover"
+            style={{ objectPosition: "left center" }}
+            unoptimized
+          />
+        </div>
       </div>
       {/* Right door — 50vw, white, logo half; slides off-screen right */}
       <div
@@ -71,16 +73,17 @@ export default function DoorSplash() {
         }}
         aria-hidden
       >
-        <div
-          className="relative shrink-0 overflow-hidden bg-no-repeat"
-          style={{
-            width: `${HALF}px`,
-            height: `${LOGO_HEIGHT}px`,
-            backgroundImage: `url(${LOGO_SRC})`,
-            backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
-            backgroundPosition: `${-HALF}px 0`,
-          }}
-        />
+        <div className="relative shrink-0 overflow-hidden" style={{ width: HALF, height: LOGO_SIZE }}>
+          <Image
+            src={LOGO_SRC}
+            alt=""
+            width={LOGO_SIZE}
+            height={LOGO_SIZE}
+            className="object-cover"
+            style={{ objectPosition: "right center", marginLeft: -HALF }}
+            unoptimized
+          />
+        </div>
       </div>
     </>
   );
