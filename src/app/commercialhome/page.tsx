@@ -107,8 +107,8 @@ function LoginForm() {
       <NavBar />
       <main className="mx-auto w-full max-w-md px-4 pt-1 pb-10">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
-          <div className="-mt-16 mb-8 space-y-0 text-center">
-            <div className="mx-auto w-[17.5rem] -mb-10 translate-x-[-26px]">
+          <div className="mb-8 space-y-4 text-center">
+            <div className="mx-auto flex justify-center w-[17.5rem]">
               <Image
                 src="/logos/Grocery-Share Logo.png"
                 alt="GroceryShare"
