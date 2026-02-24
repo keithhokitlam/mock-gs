@@ -108,12 +108,12 @@ function LoginForm() {
       <main className="mx-auto w-full max-w-md px-4 pt-1 pb-10">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
           <div className="-mt-16 mb-8 space-y-0 text-center">
-            <div className="mx-auto w-[25rem] -mb-10 translate-x-[-26px]">
+            <div className="mx-auto w-[17.5rem] -mb-10 translate-x-[-26px]">
               <Image
                 src="/logos/Grocery-Share Logo.png"
                 alt="GroceryShare"
-                width={800}
-                height={800}
+                width={560}
+                height={560}
                 priority
                 className="h-auto w-full"
               />
