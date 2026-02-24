@@ -12,9 +12,9 @@ export default function Home() {
         <div className="h-16" />
       </nav>
       <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
-        <div className="-mt-[200px]">
+        <div className="-mt-[200px] flex w-full justify-center">
           <Image
-            src="/logos/Grocery-Share Logo.png"
+            src="/logos/Grocery-Share Logo (Stacked).png"
             alt="GroceryShare"
             width={600}
             height={600}
