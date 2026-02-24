@@ -2,9 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const LOGO_SIZE = 400;
-const LOGO_HEIGHT = LOGO_SIZE;
-const LOGO_WIDTH = LOGO_SIZE;
+const LOGO_WIDTH = 400;
+const LOGO_HEIGHT = 300;
 const HALF = LOGO_WIDTH / 2;
 const ANIMATION_MS = 3000;
 const AUTO_PLAY_DELAY_MS = 800;
@@ -55,9 +54,9 @@ export default function DoorSplash() {
           className="relative shrink-0 overflow-hidden bg-no-repeat"
           style={{
             width: HALF,
-            height: LOGO_SIZE,
+            height: LOGO_HEIGHT,
             backgroundImage: `url("${LOGO_SRC.replace(/ /g, "%20")}")`,
-            backgroundSize: `${LOGO_SIZE}px ${LOGO_SIZE}px`,
+            backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
             backgroundPosition: "left center",
           }}
         />
@@ -75,9 +74,9 @@ export default function DoorSplash() {
           className="relative shrink-0 overflow-hidden"
           style={{
             width: HALF,
-            height: LOGO_SIZE,
+            height: LOGO_HEIGHT,
             backgroundImage: `url("${LOGO_SRC.replace(/ /g, "%20")}")`,
-            backgroundSize: `${LOGO_SIZE}px ${LOGO_SIZE}px`,
+            backgroundSize: `${LOGO_WIDTH}px ${LOGO_HEIGHT}px`,
             backgroundPosition: "right center",
           }}
         />
