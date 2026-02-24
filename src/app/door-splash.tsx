@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 const LOGO_SIZE = 400;
@@ -43,7 +42,7 @@ export default function DoorSplash() {
 
   return (
     <>
-      {/* Left door — 50vw, white, logo half; slides off-screen left. No overlay — page shows through gap. */}
+      {/* Left door — left half of logo, meets center; slides off-screen left */}
       <div
         className="fixed left-0 top-0 z-50 flex h-screen w-1/2 items-center justify-end bg-white transition-transform ease-out"
         style={{
@@ -52,19 +51,18 @@ export default function DoorSplash() {
         }}
         aria-hidden
       >
-        <div className="relative shrink-0 overflow-hidden" style={{ width: HALF, height: LOGO_SIZE }}>
-          <Image
-            src={LOGO_SRC}
-            alt=""
-            width={LOGO_SIZE}
-            height={LOGO_SIZE}
-            className="object-cover"
-            style={{ objectPosition: "left center" }}
-            unoptimized
-          />
-        </div>
+        <div
+          className="relative shrink-0 overflow-hidden bg-no-repeat"
+          style={{
+            width: HALF,
+            height: LOGO_SIZE,
+            backgroundImage: `url("${LOGO_SRC.replace(/ /g, "%20")}")`,
+            backgroundSize: `${LOGO_SIZE}px ${LOGO_SIZE}px`,
+            backgroundPosition: "left center",
+          }}
+        />
       </div>
-      {/* Right door — 50vw, white, logo half; slides off-screen right */}
+      {/* Right door — right half of logo, meets center; slides off-screen right */}
       <div
         className="fixed right-0 top-0 z-50 flex h-screen w-1/2 items-center justify-start bg-white transition-transform ease-out"
         style={{
@@ -73,17 +71,16 @@ export default function DoorSplash() {
         }}
         aria-hidden
       >
-        <div className="relative shrink-0 overflow-hidden" style={{ width: HALF, height: LOGO_SIZE }}>
-          <Image
-            src={LOGO_SRC}
-            alt=""
-            width={LOGO_SIZE}
-            height={LOGO_SIZE}
-            className="object-cover"
-            style={{ objectPosition: "right center", marginLeft: -HALF }}
-            unoptimized
-          />
-        </div>
+        <div
+          className="relative shrink-0 overflow-hidden"
+          style={{
+            width: HALF,
+            height: LOGO_SIZE,
+            backgroundImage: `url("${LOGO_SRC.replace(/ /g, "%20")}")`,
+            backgroundSize: `${LOGO_SIZE}px ${LOGO_SIZE}px`,
+            backgroundPosition: "right center",
+          }}
+        />
       </div>
     </>
   );
