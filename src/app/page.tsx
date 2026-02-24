@@ -11,15 +11,15 @@ export default function Home() {
       <nav className="sticky top-0 z-40 w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
         <div className="h-16" />
       </nav>
-      <main className="flex min-h-screen flex-col items-center justify-start pt-8 px-6 pb-8">
-        <div className="flex flex-col items-center gap-8">
+      <main className="flex min-h-screen flex-col items-center justify-start pt-2 px-6 pb-8">
+        <div className="flex flex-col items-center gap-4">
           <Image
             src="/logos/Grocery-Share Logo (Stacked).png"
             alt="GroceryShare"
-            width={780}
-            height={780}
+            width={585}
+            height={585}
             priority
-            className="h-auto w-[26.5rem] md:w-[33rem]"
+            className="h-auto w-[19.9rem] md:w-[24.75rem]"
           />
           <div className="flex w-full max-w-4xl gap-8">
             <Link
