@@ -8,7 +8,7 @@ const HALF = LOGO_WIDTH / 2;
 const ANIMATION_MS = 3000;
 const AUTO_PLAY_DELAY_MS = 800;
 
-const LOGO_SRC = "/logos/Grocery-Share Logo (Bottom).png";
+const LOGO_SRC = "/logos/Grocery-Share Logo.png";
 
 export default function DoorSplash() {
   const [isOpen, setIsOpen] = useState(false);
