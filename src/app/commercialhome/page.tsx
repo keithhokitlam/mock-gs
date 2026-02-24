@@ -110,7 +110,7 @@ function LoginForm() {
           <div className="-mt-16 mb-8 space-y-0 text-center">
             <div className="mx-auto w-[25rem] -mb-10 translate-x-[-26px]">
               <Image
-                src="/logos/GroceryShare_logo_stacked_1024.png"
+                src="/logos/Grocery-Share Logo (Bottom).png"
                 alt="GroceryShare"
                 width={800}
                 height={800}

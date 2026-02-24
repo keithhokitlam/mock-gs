@@ -14,7 +14,7 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
         <div className="-mt-[400px]">
           <Image
-            src="/logos/GroceryShare_logo_stacked_1024.png"
+            src="/logos/Grocery-Share Logo (Bottom).png"
             alt="GroceryShare"
             width={1200}
             height={1200}
