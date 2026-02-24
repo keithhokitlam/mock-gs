@@ -11,7 +11,7 @@ export default function Home() {
       <nav className="sticky top-0 z-40 w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
         <div className="h-16" />
       </nav>
-      <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
+      <main className="flex min-h-screen flex-col items-center justify-start pt-8 px-6 pb-8">
         <div className="flex flex-col items-center gap-8">
           <Image
             src="/logos/Grocery-Share Logo (Stacked).png"
