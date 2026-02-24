@@ -165,7 +165,7 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {isCommercialPage && (
+            {userEmail && isCommercialPage && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>
