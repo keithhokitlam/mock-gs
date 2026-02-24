@@ -12,16 +12,16 @@ export default function Home() {
         <div className="h-16" />
       </nav>
       <main className="flex min-h-screen flex-col items-center justify-center px-6 py-8">
-        <div className="-mt-[400px]">
+        <div className="-mt-[200px]">
           <Image
             src="/logos/Grocery-Share Logo (Bottom).png"
             alt="GroceryShare"
-            width={1200}
-            height={1200}
+            width={600}
+            height={600}
             priority
-            className="h-auto w-[40.8rem] md:w-[51rem]"
+            className="h-auto w-[20.4rem] md:w-[25.5rem]"
           />
-          <div className="-mt-[7rem] flex w-full max-w-4xl gap-8 md:-mt-[9rem]">
+          <div className="-mt-[3.5rem] flex w-full max-w-4xl gap-8 md:-mt-[4.5rem]">
           <Link
             href="/consumer"
             className="flex flex-1 flex-col items-center justify-center rounded-2xl border-2 border-zinc-200 bg-white p-12 shadow-sm transition-all duration-300 hover:border-[#225a3d] hover:bg-[#225a3d] hover:shadow-lg group"
