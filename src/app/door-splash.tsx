@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const LOGO_HEIGHT = 400;
-const LOGO_WIDTH = 600;
+const LOGO_SIZE = 400;
+const LOGO_HEIGHT = LOGO_SIZE;
+const LOGO_WIDTH = LOGO_SIZE;
 const HALF = LOGO_WIDTH / 2;
 const ANIMATION_MS = 3000;
 const AUTO_PLAY_DELAY_MS = 800;
