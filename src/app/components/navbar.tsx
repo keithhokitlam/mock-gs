@@ -23,6 +23,8 @@ export default function NavBar() {
   const [navMode, setNavMode] = useState<"commercial" | "consumer">("consumer");
 
   const isExplicitCommercial =
+    pathname === "/" ||
+    pathname === "/home" ||
     pathname === "/commercialhome" ||
     pathname === "/pricing" ||
     pathname === "/mastertable" ||

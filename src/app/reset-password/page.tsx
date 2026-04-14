@@ -72,7 +72,7 @@ function ResetPasswordForm() {
       setSuccess(true);
       // Redirect to login after 2 seconds
       setTimeout(() => {
-        router.push("/commercialhome");
+        router.push("/home");
       }, 2000);
     } catch (err) {
       setError("An error occurred. Please try again.");

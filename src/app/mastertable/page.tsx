@@ -113,7 +113,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   if (user) {
     // Normal user login - check email verification
     if (!user.email_verified) {
-      redirect("/commercialhome");
+      redirect("/home");
     }
 
     // Check if user has an active subscription
@@ -132,7 +132,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       
       // Check if subscription is inactive or cancelled
       if (subscription.status === "inactive" || subscription.status === "cancelled") {
-        redirect("/commercialhome?error=subscription_inactive");
+        redirect("/home?error=subscription_inactive");
       }
 
       // Also check if subscription has expired (even if status hasn't been updated yet)
@@ -150,13 +150,13 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             .update({ status: "inactive" })
             .eq("id", subscription.id);
           
-          redirect("/commercialhome?error=subscription_expired");
+          redirect("/home?error=subscription_expired");
         }
       }
       // If subscription_end_date is null, subscription is active indefinitely - allow access
     } else {
       // No subscription found - redirect to login
-      redirect("/commercialhome?error=no_subscription");
+      redirect("/home?error=no_subscription");
     }
   }
   // If no user, assume admin/admin login was used (bypasses auth)
