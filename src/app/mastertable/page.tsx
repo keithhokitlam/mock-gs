@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/auth";
 import SyncButton from "../components/sync-button";
 import { supabaseServer } from "@/lib/supabase-server";
 import NavBar from "../components/navbar";
+import GoToTopButton from "../components/go-to-top-button";
 
 const SHEET_ID = "1kx7wArkJ5VDSwNuKDKizUMp1exnxfub-aI6xszqCZxs";
 const SHEET_GID = "0";
@@ -311,6 +312,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           sortDirection={sortDirection === "desc" ? "desc" : "asc"}
         />
       </div>
+      <GoToTopButton paths={["/mastertable"]} matchNested />
     </div>
   );
 }

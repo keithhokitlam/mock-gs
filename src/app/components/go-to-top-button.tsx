@@ -15,14 +15,20 @@ function getScrollY(): number {
   return window.scrollY ?? el.scrollTop ?? document.body.scrollTop ?? 0;
 }
 
-/** Same long-form food category experience as /foodcategory */
-const FOOD_CATEGORY_PATHS = new Set(["/foodcategory", "/consumer"]);
+export type GoToTopButtonProps = {
+  /** Exact pathnames where the button may appear (after scrolling). */
+  paths: string[];
+  /** Also match `path + "/..."` for each path (e.g. /mastertable/extra). */
+  matchNested?: boolean;
+};
 
-export default function FoodCategoryGoToTop() {
+export default function GoToTopButton({ paths, matchNested = false }: GoToTopButtonProps) {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
-  const showOnThisRoute = pathname != null && FOOD_CATEGORY_PATHS.has(pathname);
+  const showOnThisRoute =
+    pathname != null &&
+    paths.some((p) => pathname === p || (matchNested && pathname.startsWith(`${p}/`)));
 
   const updateVisible = useCallback(() => {
     if (!showOnThisRoute) return;
