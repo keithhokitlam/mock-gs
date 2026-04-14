@@ -6,6 +6,7 @@ import { useState, useEffect, Suspense } from "react";
 import SignupModal from "../components/signup-modal";
 import ForgotPasswordModal from "../components/forgot-password-modal";
 import NavBar from "../components/navbar";
+import DoorSplash from "../door-splash";
 
 function LoginForm() {
   const router = useRouter();
@@ -218,16 +219,19 @@ function LoginForm() {
 
 export default function HomeLoginPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
-          <div className="text-center">
-            <p className="text-zinc-600">Loading...</p>
+    <>
+      <DoorSplash />
+      <Suspense
+        fallback={
+          <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-zinc-600">Loading...</p>
+            </div>
           </div>
-        </div>
-      }
-    >
-      <LoginForm />
-    </Suspense>
+        }
+      >
+        <LoginForm />
+      </Suspense>
+    </>
   );
 }
