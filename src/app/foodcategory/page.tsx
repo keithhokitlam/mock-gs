@@ -51,7 +51,7 @@ export default function FoodCategoryPage() {
               id="section-seafood"
               className="mb-4 scroll-mt-24 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide"
             >
-              SEAFOOD
+              FISH & SEAFOOD
             </h2>
             <div className="mb-10 space-y-6">
               {seafoodSlides.map((src, i) => (
