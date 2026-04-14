@@ -5,18 +5,35 @@ import SectionNav from "./section-nav";
 import fs from "fs";
 import path from "path";
 
-function getSlideImages(): string[] {
-  const slidesDir = path.join(process.cwd(), "public", "foodcategory");
+function getSlideSortValue(filename: string): number {
+  const slideNumberMatch = filename.match(/slide[\s_-]*(\d+)/i);
+  if (slideNumberMatch) return Number(slideNumberMatch[1]);
+
+  const firstNumberMatch = filename.match(/(\d+)/);
+  if (firstNumberMatch) return Number(firstNumberMatch[1]);
+
+  return Number.MAX_SAFE_INTEGER;
+}
+
+function getSectionSlideImages(sectionDirName: string): string[] {
+  const slidesDir = path.join(process.cwd(), "public", "foodcategory", sectionDirName);
   if (!fs.existsSync(slidesDir)) return [];
+
   return fs
     .readdirSync(slidesDir)
-    .filter((f) => /\.(png|jpg|jpeg|webp)$/i.test(f))
-    .sort()
-    .map((f) => `/foodcategory/${f}`);
+    .filter((file) => /\.(png|jpg|jpeg|webp)$/i.test(file))
+    .sort((a, b) => {
+      const aSort = getSlideSortValue(a);
+      const bSort = getSlideSortValue(b);
+      if (aSort !== bSort) return aSort - bSort;
+      return a.localeCompare(b);
+    })
+    .map((file) => `/foodcategory/${sectionDirName}/${file}`);
 }
 
 export default function FoodCategoryPage() {
-  const slideImages = getSlideImages();
+  const seafoodSlides = getSectionSlideImages("Seafood");
+  const fruitsAndVegetablesSlides = getSectionSlideImages("Fruits&Vegetables");
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
@@ -27,13 +44,39 @@ export default function FoodCategoryPage() {
         </h1>
         <SectionNav />
 
+        {seafoodSlides.length > 0 && (
+          <>
+            <h2
+              id="section-seafood"
+              className="mb-4 scroll-mt-24 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide"
+            >
+              SEAFOOD
+            </h2>
+            <div className="mb-10 space-y-6">
+              {seafoodSlides.map((src, i) => (
+                <div key={src} className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
+                  <Image
+                    src={src}
+                    alt={`Seafood slide ${i + 1}`}
+                    width={1920}
+                    height={1080}
+                    quality={95}
+                    className="w-full h-auto"
+                    unoptimized
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         <h2 className="mb-4 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide">
           FRUITS & VEGETABLES
         </h2>
 
-        {slideImages.length > 0 ? (
+        {fruitsAndVegetablesSlides.length > 0 ? (
           <div className="space-y-6">
-            {slideImages.map((src, i) => (
+            {fruitsAndVegetablesSlides.map((src, i) => (
               <div key={src} className="space-y-6">
                 {i === 1 && (
                   <p id="section-fruits" className="scroll-mt-24 text-lg font-semibold text-zinc-800 font-beckman">
@@ -47,7 +90,7 @@ export default function FoodCategoryPage() {
                 <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
                   <Image
                     src={src}
-                    alt={`Food category slide ${i + 1}`}
+                    alt={`Fruits and vegetables slide ${i + 1}`}
                     width={1920}
                     height={1080}
                     quality={95}
