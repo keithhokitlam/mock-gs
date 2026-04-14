@@ -95,8 +95,8 @@ function LoginForm() {
         return;
       }
 
-      // Login successful, redirect to mastertable
-      router.push("/mastertable");
+      // Login successful — land on food category (consumer entry)
+      router.push("/foodcategory");
     } catch (err) {
       setError("An error occurred. Please try again.");
       setLoading(false);
