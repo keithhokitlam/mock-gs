@@ -71,7 +71,7 @@ function LoginForm() {
       setError("");
       setLoading(false);
       // Use window.location instead of router.push to ensure fresh page load
-      window.location.href = "/mastertable";
+      window.location.href = "/foodcategory";
       return;
     }
 
