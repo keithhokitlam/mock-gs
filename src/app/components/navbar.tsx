@@ -22,6 +22,9 @@ export default function NavBar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [navMode, setNavMode] = useState<"commercial" | "consumer">("consumer");
 
+  /** Login landing (/ and /home share the same page as /home) */
+  const isLoginHomePath = pathname === "/home" || pathname === "/";
+
   const isExplicitCommercial =
     pathname === "/" ||
     pathname === "/home" ||
@@ -167,17 +170,19 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {userEmail && isCommercialPage && (
+            {userEmail && isCommercialPage && !isLoginHomePath && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>
             )}
-            <Link
-              href={isConsumerPage ? "/consumer" : "/foodcategory"}
-              className="font-beckman hover:opacity-80"
-            >
-              FOOD CATEGORY
-            </Link>
+            {!isLoginHomePath && (
+              <Link
+                href={isConsumerPage ? "/consumer" : "/foodcategory"}
+                className="font-beckman hover:opacity-80"
+              >
+                FOOD CATEGORY
+              </Link>
+            )}
             {isConsumerPage && (
               <>
                 <span className="font-beckman cursor-default">RECIPES</span>
