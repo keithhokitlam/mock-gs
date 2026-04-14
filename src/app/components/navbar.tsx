@@ -170,7 +170,10 @@ export default function NavBar() {
                 MASTER TABLE
               </Link>
             )}
-            <Link href="/foodcategory" className="font-beckman hover:opacity-80">
+            <Link
+              href={isConsumerPage ? "/consumer" : "/foodcategory"}
+              className="font-beckman hover:opacity-80"
+            >
               FOOD CATEGORY
             </Link>
             {isConsumerPage && (
