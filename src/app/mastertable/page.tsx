@@ -8,6 +8,7 @@ import SyncButton from "../components/sync-button";
 import { supabaseServer } from "@/lib/supabase-server";
 import NavBar from "../components/navbar";
 import GoToTopButton from "../components/go-to-top-button";
+import MastertableStickyLayout from "./mastertable-sticky-layout";
 
 const SHEET_ID = "1kx7wArkJ5VDSwNuKDKizUMp1exnxfub-aI6xszqCZxs";
 const SHEET_GID = "0";
@@ -254,7 +255,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
   return (
     <div className="min-h-screen w-max min-w-full bg-zinc-50 text-zinc-900">
-      <NavBar />
       {/* Watermark */}
       <div className="fixed inset-0 pointer-events-none z-10 flex items-center justify-center">
         <span
@@ -264,45 +264,53 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           TEST DATA ONLY
         </span>
       </div>
-      <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
-        <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
-          MASTER TABLE
-        </h1>
-        {isAdmin && (
-          <div className="p-4 bg-white rounded-lg shadow mb-4">
-            <div className="flex gap-3 items-start">
-              <SyncButton />
-              <span className="self-center" aria-hidden>
-                <svg
-                  width="28"
-                  height="24"
-                  viewBox="0 0 28 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-black"
-                >
-                  <path
-                    d="M2 12h20m0 0l-6-6m6 6l-6 6"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <Link
-                href="/subscriptions"
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold inline-block"
-              >
-                Subscriptions
-              </Link>
+      <MastertableStickyLayout
+        header={
+          <>
+            <NavBar />
+            <div className="w-full px-4 pt-4">
+              <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
+                MASTER TABLE
+              </h1>
+              {isAdmin && (
+                <div className="p-4 bg-white rounded-lg shadow mb-4">
+                  <div className="flex gap-3 items-start">
+                    <SyncButton />
+                    <span className="self-center" aria-hidden>
+                      <svg
+                        width="28"
+                        height="24"
+                        viewBox="0 0 28 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-black"
+                      >
+                        <path
+                          d="M2 12h20m0 0l-6-6m6 6l-6 6"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    <Link
+                      href="/subscriptions"
+                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold inline-block"
+                    >
+                      Subscriptions
+                    </Link>
+                  </div>
+                </div>
+              )}
+              <ActionsBar
+                columns={columns.map((column) => column.label)}
+                rows={visibleRows}
+              />
             </div>
-          </div>
-        )}
-        <ActionsBar
-          columns={columns.map((column) => column.label)}
-          rows={visibleRows}
-        />
+          </>
+        }
+      >
         <AdminTable
           columns={columns}
           rows={visibleRows}
@@ -311,7 +319,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           sortIndex={Number.isNaN(sortIndex) ? null : sortIndex}
           sortDirection={sortDirection === "desc" ? "desc" : "asc"}
         />
-      </div>
+      </MastertableStickyLayout>
       <GoToTopButton paths={["/mastertable"]} matchNested />
     </div>
   );

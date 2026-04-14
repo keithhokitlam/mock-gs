@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useMastertableStickyHeader } from "./mastertable-sticky-context";
 
 export type AdminColumn = {
   label: string;
@@ -65,6 +66,10 @@ export default function AdminTable({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const stickyHeader = useMastertableStickyHeader();
+  const mastertableStickyStackPx =
+    stickyHeader.mode === "mastertable" ? stickyHeader.stackPx : undefined;
+  const useFrozenThead = typeof mastertableStickyStackPx === "number";
 
   const [openMenu, setOpenMenu] = useState<number | null>(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
@@ -268,10 +273,18 @@ export default function AdminTable({
   const closeDropdown = () => setOpenMenu(null);
 
   return (
-    <div className="print-table relative w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+    <div
+      className={`print-table relative w-full rounded-2xl border border-zinc-200 bg-white shadow-sm ${
+        useFrozenThead ? "overflow-x-auto" : "overflow-hidden"
+      }`}
+    >
       <table className="w-full text-left text-sm">
         <thead className={headerClassName}>
-          <tr>
+          <tr
+            className={
+              useFrozenThead ? "border-b border-dotted border-zinc-400/80" : undefined
+            }
+          >
             {columns.map((column) => {
               const headerLabel = column.label;
               const noWrap = nowrapHeaders.has(headerLabel);
@@ -280,7 +293,16 @@ export default function AdminTable({
               return (
                 <th
                   key={`header-${column.index}`}
-                  className={`px-4 py-3 ${noWrap ? "whitespace-nowrap" : ""}`}
+                  className={`px-4 py-3 ${noWrap ? "whitespace-nowrap" : ""}${useFrozenThead ? " bg-black" : ""}`}
+                  style={
+                    useFrozenThead
+                      ? {
+                          position: "sticky",
+                          top: mastertableStickyStackPx,
+                          zIndex: 45,
+                        }
+                      : undefined
+                  }
                 >
                   <div className="flex items-center gap-2">
                     <span>{headerLabel}</span>
