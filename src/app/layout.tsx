@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GroceryShare and Company",
-  description: "GroceryShare and Company - Subscription account management",
+  title: "Grocery-Share.com",
+  description: "Grocery-Share.com — sign in, food categories, subscriptions, and grocery adventures.",
   icons: {
     icon: "/logos/Grocery-Share%20Logo.png",
     shortcut: "/logos/Grocery-Share%20Logo.png",

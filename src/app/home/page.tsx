@@ -119,7 +119,10 @@ function LoginForm() {
                 className="h-auto w-full"
               />
             </div>
-            <h1 className="text-3xl font-semibold">Welcome to Grocery-Share.com!</h1>
+            <h1 className="text-3xl font-semibold leading-tight">
+              <span className="block">Welcome to</span>
+              <span className="block">Grocery-Share.com!</span>
+            </h1>
             <p className="text-sm text-zinc-500">
               Sign in to unlock your grocery adventures.
             </p>
