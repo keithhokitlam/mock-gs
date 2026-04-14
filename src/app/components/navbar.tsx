@@ -25,6 +25,17 @@ export default function NavBar() {
   /** Login landing (/ and /home share the same page as /home) */
   const isLoginHomePath = pathname === "/home" || pathname === "/";
 
+  const isPublicInfoPage =
+    pathname === "/about" ||
+    pathname === "/pricing" ||
+    pathname === "/support" ||
+    pathname === "/contact" ||
+    pathname === "/faq";
+
+  /** Hide MASTER TABLE + FOOD CATEGORY on login, and on info pages when logged out */
+  const hideMasterTableAndFoodCategory =
+    isLoginHomePath || (!userEmail && isPublicInfoPage);
+
   const isExplicitCommercial =
     pathname === "/" ||
     pathname === "/home" ||
@@ -170,12 +181,12 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {userEmail && isCommercialPage && !isLoginHomePath && (
+            {userEmail && isCommercialPage && !hideMasterTableAndFoodCategory && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>
             )}
-            {!isLoginHomePath && (
+            {!hideMasterTableAndFoodCategory && (
               <Link
                 href={isConsumerPage ? "/consumer" : "/foodcategory"}
                 className="font-beckman hover:opacity-80"
