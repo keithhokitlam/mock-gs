@@ -119,9 +119,9 @@ function LoginForm() {
                 className="h-auto w-full"
               />
             </div>
-            <h1 className="text-3xl font-semibold">Welcome back!</h1>
+            <h1 className="text-3xl font-semibold">Welcome to Grocery-Share.com!</h1>
             <p className="text-sm text-zinc-500">
-              Sign in to unlock your grocery lists and food adventures.
+              Sign in to unlock your grocery adventures.
             </p>
           </div>
           <form className="space-y-5" onSubmit={handleSubmit}>
