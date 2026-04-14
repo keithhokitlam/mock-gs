@@ -38,18 +38,24 @@ export default function FoodCategoryPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <NavBar />
-      <main className="mx-auto w-full max-w-[67rem] px-4 py-12">
-        <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">
-          FOOD CATEGORY
-        </h1>
-        <SectionNav />
+      <header className="sticky top-0 z-50">
+        <NavBar />
+        <div className="border-b border-dotted border-zinc-300/80 bg-zinc-50 shadow-[0_6px_16px_-8px_rgba(0,0,0,0.12)]">
+          <div className="mx-auto w-full max-w-[67rem] px-4 pb-4 pt-8">
+            <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">
+              FOOD CATEGORY
+            </h1>
+            <SectionNav />
+          </div>
+        </div>
+      </header>
 
+      <main className="mx-auto w-full max-w-[67rem] px-4 pb-12 pt-8">
         {seafoodSlides.length > 0 && (
           <>
             <h2
               id="section-seafood"
-              className="mb-4 scroll-mt-24 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide"
+              className="mb-4 scroll-mt-52 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide"
             >
               FISH & SEAFOOD
             </h2>
@@ -71,7 +77,7 @@ export default function FoodCategoryPage() {
           </>
         )}
 
-        <h2 className="mb-4 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide">
+        <h2 className="mb-4 scroll-mt-52 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide">
           FRUITS & VEGETABLES
         </h2>
 
@@ -80,7 +86,7 @@ export default function FoodCategoryPage() {
             {fruitsAndVegetablesSlides.map((src, i) => (
               <div key={src} className="space-y-6">
                 {i === 1 && (
-                  <p id="section-fruits" className="scroll-mt-24 text-lg font-semibold text-zinc-800 font-beckman">
+                  <p id="section-fruits" className="scroll-mt-52 text-lg font-semibold text-zinc-800 font-beckman">
                     FRUITS (for complete list,{" "}
                     <Link href="/fruits" className="text-[#2B6B4A] hover:underline">
                       click here

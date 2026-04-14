@@ -49,7 +49,7 @@ export default function SectionNav() {
   const meatHasLink = false;
 
   return (
-    <div ref={containerRef} className="mb-6 flex flex-wrap gap-3">
+    <div ref={containerRef} className="flex flex-wrap gap-3">
       {/* FRUITS & VEGETABLES */}
       <div className="relative">
         <button
