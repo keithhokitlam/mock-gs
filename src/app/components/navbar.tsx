@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -19,6 +19,7 @@ export default function NavBar() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [navMode, setNavMode] = useState<"commercial" | "consumer">("consumer");
 
@@ -99,6 +100,18 @@ export default function NavBar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showDropdown]);
+
+  const handleSignOut = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+    } catch {
+      // Still clear UI if the request fails
+    }
+    setUserEmail(null);
+    setShowDropdown(false);
+    setShowChangePassword(false);
+    router.push("/home");
+  };
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -349,6 +362,16 @@ export default function NavBar() {
                       Stop Auto-Renewal (non-Alipay only)
                     </button>
                   )}
+
+                  <div className="border-t border-zinc-200 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => void handleSignOut()}
+                      className="w-full text-left text-sm font-semibold text-red-600 hover:underline"
+                    >
+                      Sign out
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
