@@ -62,7 +62,7 @@ export default function FoodCategoryGoToTop() {
         el.scrollTo({ top: 0, behavior: "smooth" });
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
-      className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 rounded-full border border-emerald-300/80 bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-900 shadow-lg transition hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+      className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 rounded-full border border-[#225a3d] bg-[#2B6B4A] px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#225a3d] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50"
       aria-label="Go to top of page"
     >
       <ArrowUp />
