@@ -84,9 +84,16 @@ export default function FoodCategoryPage() {
         {fruitsAndVegetablesSlides.length > 0 ? (
           <div className="space-y-6">
             {fruitsAndVegetablesSlides.map((src, i) => (
-              <div key={src} className="space-y-6">
+              <div
+                key={src}
+                id={i === 0 && fruitsAndVegetablesSlides.length === 1 ? "section-fruits" : undefined}
+                className={`space-y-6${i === 0 && fruitsAndVegetablesSlides.length === 1 ? " scroll-mt-52" : ""}`}
+              >
                 {i === 1 && (
-                  <p id="section-fruits" className="scroll-mt-52 text-lg font-semibold text-zinc-800 font-beckman">
+                  <p
+                    id={fruitsAndVegetablesSlides.length >= 2 ? "section-fruits" : undefined}
+                    className="scroll-mt-52 text-lg font-semibold text-zinc-800 font-beckman"
+                  >
                     FRUITS (for complete list,{" "}
                     <Link href="/fruits" className="text-[#2B6B4A] hover:underline">
                       click here

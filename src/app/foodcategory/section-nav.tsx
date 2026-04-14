@@ -1,7 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+
+function scrollToAnchor(id: string) {
+  requestAnimationFrame(() => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
 
 const ChevronDown = ({ open, muted }: { open: boolean; muted?: boolean }) => (
   <svg
@@ -62,13 +67,17 @@ export default function SectionNav() {
         </button>
         {openDropdown === "fruits" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <Link
+            <a
               href="#section-fruits"
-              onClick={() => setOpenDropdown(null)}
               className={dropdownItemLinked}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenDropdown(null);
+                scrollToAnchor("section-fruits");
+              }}
             >
               Fruits
-            </Link>
+            </a>
             <button type="button" className={dropdownItemUnlinked}>
               Vegetable
             </button>
@@ -91,13 +100,17 @@ export default function SectionNav() {
         </button>
         {openDropdown === "fish" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <Link
+            <a
               href="#section-seafood"
-              onClick={() => setOpenDropdown(null)}
               className={dropdownItemLinked}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenDropdown(null);
+                scrollToAnchor("section-seafood");
+              }}
             >
               Fish
-            </Link>
+            </a>
             <button type="button" className={dropdownItemUnlinked}>
               Shellfish
             </button>
