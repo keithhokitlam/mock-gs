@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NavBar from "../components/navbar";
 import SectionNav from "./section-nav";
+import FoodCategoryGoToTop from "./go-to-top-button";
 import fs from "fs";
 import path from "path";
 
@@ -114,6 +115,7 @@ export default function FoodCategoryPage() {
           </div>
         )}
       </main>
+      <FoodCategoryGoToTop />
     </div>
   );
 }

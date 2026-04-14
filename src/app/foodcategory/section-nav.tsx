@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
-const ChevronDown = ({ open }: { open: boolean }) => (
+const ChevronDown = ({ open, muted }: { open: boolean; muted?: boolean }) => (
   <svg
-    className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+    className={`h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""} ${muted ? "text-zinc-400" : "text-zinc-600"}`}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -14,9 +14,19 @@ const ChevronDown = ({ open }: { open: boolean }) => (
   </svg>
 );
 
-const buttonClass =
+const triggerClassActive =
   "flex items-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold uppercase tracking-wide text-zinc-900 shadow-sm transition-colors hover:bg-zinc-50 hover:border-zinc-300";
-const dropdownItemClass = "block w-full px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-100";
+
+const triggerClassMuted =
+  "flex items-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-sm font-semibold uppercase tracking-wide text-zinc-400 shadow-sm transition-colors hover:bg-zinc-100 hover:border-zinc-300";
+
+const dropdownItemLinked =
+  "block w-full px-4 py-2 text-left text-sm text-zinc-800 hover:bg-zinc-100";
+
+const dropdownItemUnlinked =
+  "block w-full cursor-default px-4 py-2 text-left text-sm text-zinc-400 hover:bg-transparent";
+
+const standaloneUnlinkedClass = triggerClassMuted;
 
 export default function SectionNav() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -34,6 +44,10 @@ export default function SectionNav() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openDropdown]);
 
+  const fruitsHasLink = true; // Fruits
+  const fishHasLink = true; // Fish → seafood
+  const meatHasLink = false;
+
   return (
     <div ref={containerRef} className="mb-6 flex flex-wrap gap-3">
       {/* FRUITS & VEGETABLES */}
@@ -41,22 +55,26 @@ export default function SectionNav() {
         <button
           type="button"
           onClick={() => setOpenDropdown(openDropdown === "fruits" ? null : "fruits")}
-          className={buttonClass}
+          className={fruitsHasLink ? triggerClassActive : triggerClassMuted}
         >
           FRUITS & VEGETABLES
-          <ChevronDown open={openDropdown === "fruits"} />
+          <ChevronDown open={openDropdown === "fruits"} muted={!fruitsHasLink} />
         </button>
         {openDropdown === "fruits" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
             <Link
               href="#section-fruits"
               onClick={() => setOpenDropdown(null)}
-              className={dropdownItemClass}
+              className={dropdownItemLinked}
             >
               Fruits
             </Link>
-            <button type="button" className={dropdownItemClass}>Vegetable</button>
-            <button type="button" className={dropdownItemClass}>Vegan</button>
+            <button type="button" className={dropdownItemUnlinked}>
+              Vegetable
+            </button>
+            <button type="button" className={dropdownItemUnlinked}>
+              Vegan
+            </button>
           </div>
         )}
       </div>
@@ -66,22 +84,26 @@ export default function SectionNav() {
         <button
           type="button"
           onClick={() => setOpenDropdown(openDropdown === "fish" ? null : "fish")}
-          className={buttonClass}
+          className={fishHasLink ? triggerClassActive : triggerClassMuted}
         >
           FISH & SEAFOOD
-          <ChevronDown open={openDropdown === "fish"} />
+          <ChevronDown open={openDropdown === "fish"} muted={!fishHasLink} />
         </button>
         {openDropdown === "fish" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
             <Link
               href="#section-seafood"
               onClick={() => setOpenDropdown(null)}
-              className={dropdownItemClass}
+              className={dropdownItemLinked}
             >
               Fish
             </Link>
-            <button type="button" className={dropdownItemClass}>Shellfish</button>
-            <button type="button" className={dropdownItemClass}>Other</button>
+            <button type="button" className={dropdownItemUnlinked}>
+              Shellfish
+            </button>
+            <button type="button" className={dropdownItemUnlinked}>
+              Other
+            </button>
           </div>
         )}
       </div>
@@ -91,26 +113,30 @@ export default function SectionNav() {
         <button
           type="button"
           onClick={() => setOpenDropdown(openDropdown === "meat" ? null : "meat")}
-          className={buttonClass}
+          className={meatHasLink ? triggerClassActive : triggerClassMuted}
         >
           MEAT
-          <ChevronDown open={openDropdown === "meat"} />
+          <ChevronDown open={openDropdown === "meat"} muted={!meatHasLink} />
         </button>
         {openDropdown === "meat" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <button type="button" className={dropdownItemClass}>Mammals</button>
-            <button type="button" className={dropdownItemClass}>Other</button>
+            <button type="button" className={dropdownItemUnlinked}>
+              Mammals
+            </button>
+            <button type="button" className={dropdownItemUnlinked}>
+              Other
+            </button>
           </div>
         )}
       </div>
 
-      {/* FOOD ADDICTIVES */}
-      <button type="button" className={buttonClass}>
+      {/* FOOD ADDICTIVES — no links */}
+      <button type="button" className={standaloneUnlinkedClass}>
         FOOD ADDICTIVES
       </button>
 
-      {/* PROCESSED FOOD */}
-      <button type="button" className={buttonClass}>
+      {/* PROCESSED FOOD — no links */}
+      <button type="button" className={standaloneUnlinkedClass}>
         PROCESSED FOOD
       </button>
     </div>
