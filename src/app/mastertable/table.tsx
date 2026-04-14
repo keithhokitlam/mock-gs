@@ -275,16 +275,24 @@ export default function AdminTable({
   return (
     <div
       className={`print-table relative w-full rounded-2xl border border-zinc-200 bg-white shadow-sm ${
-        useFrozenThead ? "overflow-x-auto" : "overflow-hidden"
+        /* overflow:auto on an ancestor breaks viewport sticky; page scroll handles wide tables */
+        useFrozenThead ? "overflow-visible" : "overflow-hidden"
       }`}
     >
       <table className="w-full text-left text-sm">
-        <thead className={headerClassName}>
-          <tr
-            className={
-              useFrozenThead ? "border-b border-dotted border-zinc-400/80" : undefined
-            }
-          >
+        <thead
+          className={`${headerClassName}${useFrozenThead ? " border-b border-dotted border-zinc-400/80" : ""}`}
+          style={
+            useFrozenThead
+              ? {
+                  position: "sticky",
+                  top: mastertableStickyStackPx,
+                  zIndex: 45,
+                }
+              : undefined
+          }
+        >
+          <tr>
             {columns.map((column) => {
               const headerLabel = column.label;
               const noWrap = nowrapHeaders.has(headerLabel);
@@ -293,16 +301,7 @@ export default function AdminTable({
               return (
                 <th
                   key={`header-${column.index}`}
-                  className={`px-4 py-3 ${noWrap ? "whitespace-nowrap" : ""}${useFrozenThead ? " bg-black" : ""}`}
-                  style={
-                    useFrozenThead
-                      ? {
-                          position: "sticky",
-                          top: mastertableStickyStackPx,
-                          zIndex: 45,
-                        }
-                      : undefined
-                  }
+                  className={`px-4 py-3 ${noWrap ? "whitespace-nowrap" : ""}`}
                 >
                   <div className="flex items-center gap-2">
                     <span>{headerLabel}</span>
