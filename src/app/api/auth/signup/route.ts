@@ -249,13 +249,13 @@ export async function POST(request: NextRequest) {
     const verifyLink = `${appUrl}/verify-email?token=${verificationToken}`;
     
     const emailSubject = isExistingUser 
-      ? "Verify your GroceryShare account - Subscription Renewed"
-      : "Verify your GroceryShare account";
+      ? "Verify your Grocery-Share account - Subscription Renewed"
+      : "Verify your Grocery-Share account";
     
     const emailMessage = isExistingUser
-      ? `<h1>Welcome back to GroceryShare!</h1>
+      ? `<h1>Welcome back to Grocery-Share!</h1>
          <p>Your subscription has been renewed. Please verify your email address by clicking the link below:</p>`
-      : `<h1>Welcome to GroceryShare!</h1>
+      : `<h1>Welcome to Grocery-Share!</h1>
          <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>`;
 
     // Check if Resend is configured
@@ -273,7 +273,7 @@ export async function POST(request: NextRequest) {
 
     const resend = getResend();
     // Use test domain if custom domain not verified, otherwise use custom
-    let fromEmail = process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>";
+    let fromEmail = process.env.RESEND_FROM_EMAIL || "Grocery-Share <onboarding@resend.dev>";
     
     // If custom domain is set but might not be verified, try it first, then fallback
     const useCustomDomain = fromEmail.includes("@grocery-share.com");
@@ -315,7 +315,7 @@ export async function POST(request: NextRequest) {
         
         if (isDomainError && useCustomDomain) {
           console.warn("Custom domain not verified, falling back to test domain");
-          fromEmail = "GroceryShare <onboarding@resend.dev>";
+          fromEmail = "Grocery-Share <onboarding@resend.dev>";
           
           // Retry with test domain
           emailResult = await resend.emails.send({
@@ -367,7 +367,7 @@ export async function POST(request: NextRequest) {
       if (isDomainErrorInException && useCustomDomain) {
         console.warn("Caught domain verification exception, retrying with test domain");
         try {
-          fromEmail = "GroceryShare <onboarding@resend.dev>";
+          fromEmail = "Grocery-Share <onboarding@resend.dev>";
           const retryResult = await resend.emails.send({
             from: fromEmail,
             to: email,

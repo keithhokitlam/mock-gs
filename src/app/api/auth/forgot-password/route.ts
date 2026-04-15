@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const resetLink = `${appUrl}/reset-password?token=${resetToken}`;
 
-    let fromEmail = process.env.RESEND_FROM_EMAIL || "GroceryShare <onboarding@resend.dev>";
+    let fromEmail = process.env.RESEND_FROM_EMAIL || "Grocery-Share <onboarding@resend.dev>";
     const useCustomDomain = fromEmail.includes("@grocery-share.com");
 
     try {
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
           emailResult?.error?.message?.includes("domain is not verified") &&
           useCustomDomain) {
         console.warn("Custom domain not verified, falling back to test domain for password reset");
-        fromEmail = "GroceryShare <onboarding@resend.dev>";
+        fromEmail = "Grocery-Share <onboarding@resend.dev>";
         
         // Retry with test domain
         emailResult = await getResend().emails.send({
