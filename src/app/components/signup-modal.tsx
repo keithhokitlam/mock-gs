@@ -184,8 +184,18 @@ export default function SignupModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 px-4 py-6 sm:py-10">
-      <div className="relative my-auto w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg">
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 px-4 py-6 sm:py-10"
+      role="presentation"
+      onClick={onClose}
+    >
+      <div
+        className="relative my-auto w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="signup-modal-title"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           type="button"
           onClick={onClose}
@@ -195,7 +205,10 @@ export default function SignupModal({
           X Close
         </button>
 
-        <h2 className="mb-6 pr-28 text-xl font-semibold whitespace-nowrap text-zinc-900">
+        <h2
+          id="signup-modal-title"
+          className="mb-6 pr-28 text-xl font-semibold whitespace-nowrap text-zinc-900"
+        >
           Join the Grocery-Share family!
         </h2>
 
