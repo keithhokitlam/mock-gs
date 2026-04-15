@@ -5,9 +5,23 @@ import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
+/** `subscriptionEndDate` from API: YYYY-MM-DD or null (no end date). */
+function formatSubscriptionEndDate(isoDate: string | null): string {
+  if (!isoDate) return "Unlimited";
+  const [y, m, d] = isoDate.split("-").map((x) => parseInt(x, 10));
+  if (!y || !m || !d) return isoDate;
+  const local = new Date(y, m - 1, d);
+  return local.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [accountType, setAccountType] = useState<"consumer" | "commercial" | "admin" | null>(null);
+  const [subscriptionEndDate, setSubscriptionEndDate] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -72,11 +86,17 @@ export default function NavBar() {
         if (data.email) {
           setUserEmail(data.email);
           setAccountType(data.accountType ?? null);
+          const end =
+            typeof data.subscriptionEndDate === "string"
+              ? data.subscriptionEndDate
+              : null;
+          setSubscriptionEndDate(end);
         } else {
           // If no user email and we're on an admin page, it's likely admin/admin
           const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
           setUserEmail(isAdminPage ? "ADMIN" : null);
           setAccountType(isAdminPage ? "admin" : null);
+          setSubscriptionEndDate(null);
         }
       })
       .catch((err) => {
@@ -85,6 +105,7 @@ export default function NavBar() {
         const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
         setUserEmail(isAdminPage ? "ADMIN" : null);
         setAccountType(isAdminPage ? "admin" : null);
+        setSubscriptionEndDate(null);
       });
   }, [pathname]);
 
@@ -113,6 +134,7 @@ export default function NavBar() {
     }
     setUserEmail(null);
     setAccountType(null);
+    setSubscriptionEndDate(null);
     setShowDropdown(false);
     setShowChangePassword(false);
     router.push("/home");
@@ -255,6 +277,14 @@ export default function NavBar() {
                         ? "Admin"
                         : "Commercial"}
                     </p>
+                    {!isAdmin && (
+                      <p className="mt-1 text-xs text-zinc-500">
+                        Subscription ends:{" "}
+                        <span className="font-medium text-zinc-700">
+                          {formatSubscriptionEndDate(subscriptionEndDate)}
+                        </span>
+                      </p>
+                    )}
                   </div>
 
                   {/* Change Password */}
