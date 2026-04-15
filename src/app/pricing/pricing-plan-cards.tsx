@@ -111,7 +111,11 @@ export default function PricingPlanCards() {
             {commercialPlan.description}
           </p>
           <div className="text-center mb-4">
-            <span className="text-lg font-bold text-zinc-900">{commercialPlan.durationLabel}</span>
+            <span
+              className={`text-lg font-bold text-zinc-900 ${commercialPlan.durationLabelStrikethrough ? "line-through decoration-2 decoration-zinc-400" : ""}`}
+            >
+              {commercialPlan.durationLabel}
+            </span>
           </div>
           <ul className="mb-4 space-y-2 text-sm text-zinc-600">
             {commercialPlan.features.map((feature) => (
@@ -122,7 +126,7 @@ export default function PricingPlanCards() {
             ))}
           </ul>
           <p className="mb-4 text-center">
-            <span className="inline-block rounded-full bg-yellow-200 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-[#2B6B4A] transition-colors animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]">
+            <span className="inline-block rounded-full bg-yellow-200 px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-[#2B6B4A] transition-colors animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]">
               {commercialPlan.trialBadgeLabel}
             </span>
           </p>

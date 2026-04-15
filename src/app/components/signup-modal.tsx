@@ -451,7 +451,11 @@ export default function SignupModal({
                     {commercialPlan.description}
                   </p>
                   <div className="mb-4 text-center">
-                    <span className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>{commercialPlan.durationLabel}</span>
+                    <span
+                      className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"} ${commercialPlan.durationLabelStrikethrough ? `line-through decoration-2 ${selectedPlan === "commercial" ? "decoration-white/70" : "decoration-zinc-400 group-hover:decoration-white/70"}` : ""}`}
+                    >
+                      {commercialPlan.durationLabel}
+                    </span>
                   </div>
                   <ul className={`mb-4 space-y-2 text-sm ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
                     {commercialPlan.features.map((feature) => (
@@ -463,7 +467,7 @@ export default function SignupModal({
                   </ul>
                   <p className="text-center">
                     <span
-                      className={`inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] transition-colors ${
+                      className={`inline-block rounded-full px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] transition-colors ${
                         selectedPlan === "commercial"
                           ? "bg-yellow-300 text-[#1f4d35]"
                           : "bg-yellow-200 text-[#2B6B4A] group-hover:bg-yellow-300 group-hover:text-[#1f4d35]"
