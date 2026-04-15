@@ -168,8 +168,8 @@ export default function SignupModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 overflow-y-auto">
-      <div className="relative w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg my-8">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 px-4 py-6 sm:py-10">
+      <div className="relative my-auto w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg">
         <button
           type="button"
           onClick={onClose}
