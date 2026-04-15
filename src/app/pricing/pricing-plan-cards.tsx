@@ -82,7 +82,7 @@ export default function PricingPlanCards() {
             <GoldResearchIcon />
           </div>
           <h3 className="text-xl font-bold mb-3 text-center">{consumerPlan.title}</h3>
-          <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
+          <p className="text-zinc-600 mb-4 text-xs leading-relaxed">
             {consumerPlan.description}
           </p>
           <ul className="space-y-2 mb-6 text-sm text-zinc-600">
