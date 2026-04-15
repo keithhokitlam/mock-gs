@@ -223,7 +223,7 @@ export default function NavBar() {
             )}
             {userEmail &&
               (accountType === "commercial" || accountType === "admin") &&
-              isCommercialPage &&
+              (accountType === "admin" || isCommercialPage) &&
               !hideMasterTableAndFoodCategory && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
