@@ -148,36 +148,39 @@ export default async function PricingPage() {
 
         {/* Free consumer + paid plan */}
         <div className="flex flex-col items-center gap-8 max-w-md w-full mx-auto">
-          {/* Free Consumer Subscription — food category tier; signup tags consumer_vs_commercial */}
-          <div className="w-full rounded-lg border border-zinc-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
+          {/* Free Consumer Subscription — greyed out */}
+          <div
+            className="w-full rounded-lg border border-dashed border-zinc-300 bg-zinc-100 p-6 shadow-none"
+            aria-disabled="true"
+          >
+            <div className="flex items-center justify-center mb-4 opacity-45 grayscale">
               <GoldResearchIcon />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-zinc-900">Free Consumer Subscription</h3>
-            <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-center text-zinc-500">Free Consumer Subscription</h3>
+            <p className="text-zinc-500 mb-4 text-sm leading-relaxed">
               Your digital food-savvy friend—full access to all category lists,
               quirky food facts, and kitchen inspiration!
             </p>
-            <ul className="space-y-2 mb-6 text-sm text-zinc-600">
+            <ul className="space-y-2 mb-6 text-sm text-zinc-500">
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-zinc-400 mr-2">✓</span>
                 <span>Full access to all food lists and tasty know-how</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-zinc-400 mr-2">✓</span>
                 <span>We&apos;ve got your back—priority support when you need us</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-zinc-400 mr-2">✓</span>
                 <span>Auto-renewal so you never miss a beat (except Alipay)</span>
               </li>
             </ul>
-            <Link
-              href="/home?account=consumer"
-              className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
+            <span
+              className="block w-full cursor-not-allowed rounded bg-zinc-300 px-4 py-2 text-center text-sm font-semibold text-zinc-500"
+              title="Not available yet"
             >
               Sign Up Here!
-            </Link>
+            </span>
           </div>
 
           {/* Standard / paid annual plan */}
