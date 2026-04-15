@@ -46,7 +46,8 @@ export default function NavBar() {
     pathname === "/pricing" ||
     pathname === "/support" ||
     pathname === "/contact" ||
-    pathname === "/faq";
+    pathname === "/faq" ||
+    pathname === "/legal";
 
   /** Hide MASTER TABLE + FOOD CATEGORY on login, and on info pages when logged out */
   const hideNavDestinations =

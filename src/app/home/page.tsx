@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense, useMemo } from "react";
 import SignupModal from "../components/signup-modal";
@@ -214,8 +215,30 @@ function LoginForm() {
               Don&apos;t have an account? Sign up
             </button>
           </div>
-          <p className="mt-6 text-center text-xs text-zinc-500">
-            By continuing, you agree to the terms and privacy policy.
+          <p className="mt-6 text-center text-xs leading-relaxed text-zinc-500">
+            By continuing, you agree to the{" "}
+            <Link href="/legal#privacy-policy" className="text-[#2B6B4A] underline hover:no-underline">
+              privacy policy
+            </Link>
+            ,{" "}
+            <Link href="/legal#terms-of-service" className="text-[#2B6B4A] underline hover:no-underline">
+              terms of service
+            </Link>
+            ,{" "}
+            <Link
+              href="/legal#disclaimer-consumer"
+              className="text-[#2B6B4A] underline hover:no-underline"
+            >
+              disclaimer for the consumer section
+            </Link>
+            , and{" "}
+            <Link
+              href="/legal#disclaimer-commercial"
+              className="text-[#2B6B4A] underline hover:no-underline"
+            >
+              disclaimer for the commercial section
+            </Link>{" "}
+            (if applicable).
           </p>
         </div>
       </main>

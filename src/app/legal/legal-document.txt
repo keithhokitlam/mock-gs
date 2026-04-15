@@ -1,0 +1,884 @@
+Privacy Policy 
+Last Updated: [April 15, 2026] 
+1. Introduction  
+Welcome to Sobie Grocery Share Ltd. (also known as Grocery-Share)! We are 
+committed to protecting your personal information and your right to privacy. This 
+Privacy Policy explains how we collect, use, disclose, and safeguard your 
+information when you visit our website [Grocery-Share.com] and use our services 
+(the "Services"). Please read this policy carefully. If you do not agree with our 
+policies and practices, please do not use our Services. By using Sobie Grocery 
+Share Ltd. (also known as Grocery-Share), you consent to the data practices 
+described in this policy. 
+2. Who We Are  
+Sobie Grocery Share Ltd. (also known as Grocery-Share) is an online platform 
+dedicated to sharing food knowledge, connecting users, and enhancing the grocery 
+shopping experience. Our principal place of business is in British Columbia, 
+Canada. 
+3. Information We Collect  
+We collect information that you provide directly to us and information collected 
+automatically.  
+A. Information You Provide: 
+● Account Information: Name, email address, username, password, and profile details 
+you choose to add (e.g., dietary preferences). 
+● User Content: Comments, posts, recipe submissions, reviews, questions, and any 
+other content you share on the platform. 
+
+● Communications: Records of your communication with us (e.g., support requests, 
+feedback). 
+● Optional Information: Information you provide for contests, surveys, or community 
+features as well as any information relating to our Services or Website. 
+B. Information Collected Automatically: 
+● Usage Data: Pages you view, links you click, time spent on the platform, and other 
+browsing behavior. 
+● Device & Log Data: IP address, browser type, operating system, device identifiers, 
+and approximate location (derived from IP). 
+● Cookies & Similar Technologies: We use cookies and similar tracking technologies 
+to enhance your experience, analyze trends, and administer the website. You can 
+control cookie settings through your browser. 
+4. How We Use Your Information  
+We use the information we collect for the following purposes: 
+● To provide, operate, maintain, and improve the Sobie Grocery Share Ltd. (also 
+known as Grocery-Share) Services. 
+● To create and manage your account. 
+● To communicate with you (e.g., service updates, responses to inquiries, newsletters 
+if opted-in). 
+● To personalize your experience, such as recommending relevant content. 
+● To monitor and analyze usage trends and preferences to improve our platform. 
+● To ensure the security and integrity of our platform and prevent fraud. 
+● To comply with legal obligations. 
+5. How We Share Your Information  
+We do not sell your personal information. We may share information in the following 
+situations: 
+
+● With Your Consent: For any other purpose disclosed to you with your permission. 
+● Service Providers: We engage trusted third-party companies (e.g., hosting, 
+analytics, email delivery) to perform services on our behalf. Our third-party 
+infrastructure providers include Supabase, GoDaddy, Vercel, and Resend. They are 
+contractually obligated to handle your data securely and only for the purposes we 
+specify. If any of your information is mishandled in any way, you agree we are 
+not legally liable for any of the third-parties’ mishandles. 
+● Legal Requirements: If required to do so by law or in response to valid legal 
+requests (e.g., court order, subpoena). 
+● Protection of Rights: To investigate potential violations of our Terms of Service, or to 
+protect the rights, property, and safety of Sobie Grocery Share Ltd. (also known as 
+Grocery-Share), our users, or the public. 
+● Business Transfers: In connection with a merger, sale of company assets, financing, 
+or acquisition of all or a portion of our business. 
+6. User-Generated Content: Please remember that any information you post in public 
+areas of Sobie Grocery Share Ltd. (also known as Grocery-Share) (e.g., comments, 
+community forums, user profiles) is publicly accessible and can be read, collected, 
+and used by others. We urge you to be careful about what you share publicly. 
+7. Data Security: We implement reasonable administrative, technical, and physical 
+security measures designed to protect your personal information. However, no 
+electronic transmission or storage method is 100% secure. We cannot guarantee 
+absolute security. 
+8. Data Retention: We retain your personal information only for as long as is 
+necessary for the purposes set out in this policy, or as required to comply with legal 
+obligations, resolve disputes, and enforce our agreements. 
+9. Your Privacy Rights (Canadian Users) Under Canadian privacy law (PIPEDA), you 
+have the right to: 
+● Access: Request access to the personal information we hold about you. 
+● Correction: Request correction of any inaccurate or incomplete personal 
+information. 
+
+● Withdraw Consent: Withdraw your consent to our collection, use, or disclosure of 
+your information, subject to legal or contractual restrictions. 
+● Complaint: Lodge a complaint with the Privacy Commissioner of Canada and/or 
+Privacy Commissioner of B.C,. To exercise these rights, please contact us using the 
+details in Section 12. 
+10. International Data Transfers  
+Our services are primarily hosted in Canada. However, some of our service 
+providers may process data in other countries. When we transfer your 
+information outside of Canada, we take reasonable steps to ensure it is 
+protected in accordance with this policy and applicable law. 
+11. Children's Privacy  
+Sobie Grocery Share Ltd. (also known as Grocery-Share) is not intended for 
+individuals under the age of 13. We do not knowingly collect personal information 
+from children under 13. If you believe we have done so, please contact us, and we 
+will delete such information. 
+12. Contact Us  
+If you have any questions, concerns, or requests regarding this Privacy Policy or 
+our data practices, please contact our Privacy Officer at: Email: 
+[support@grocery-share.com] 
+13. Changes to This Policy  
+We may update this Privacy Policy from time to time. We will notify you of any 
+changes by posting the new policy on this page and updating the "Last Updated" 
+date. We encourage you to review this policy periodically. 
+ 
+
+Terms of Service  
+Sobie Grocery Share Ltd. (also known as Grocery-Share)  
+Terms of Use  
+Last Updated: [April 15, 2026] 
+1. Acceptance of Terms  
+Welcome to Sobie Grocery Share Ltd. (also known as Grocery-Share) ("we," "us," 
+"our," or "the Platform"). By accessing or using our website located at 
+[Grocery-Share.com] (the "Site") and any related services, features, content, or 
+applications (collectively, the "Services"), you agree to be bound by these Terms of Use 
+("Terms"). If you do not agree to all of these Terms, you are not permitted to use our 
+Services. 
+2. Changes to Terms  
+We reserve the right to modify these Terms at any time. We will provide notice of 
+significant changes by posting the updated Terms on the Site and updating the "Last 
+Updated" date. Your continued use of the Services after such changes constitutes 
+your acceptance of the new Terms. It is your responsibility to review these Terms 
+periodically. 
+3. Eligibility  
+You must be at least 13 years old to use our Services. If you are under the age of 
+majority in your province of residence, you must have the consent of your parent or 
+guardian to use the Services, and they must agree to these Terms on your behalf. By 
+using the Services, you represent and warrant that you meet all eligibility requirements. 
+ 
+
+4. User Accounts & Security  
+You may be required to create an account. You agree to: 
+● Provide accurate, current, and complete information. 
+● Maintain and promptly update your account information. 
+● Keep your password secure and confidential. 
+● Accept responsibility for all activities that occur under your account. 
+● Notify us immediately of any unauthorized use of your account. We reserve the 
+right to suspend or terminate your account if any information provided it is 
+inaccurate, misleading, with hatred language or otherwise illegal. 
+5. User-Generated Content & Conduct  
+Sobie Grocery Share Ltd. (also known as Grocery-Share) allows you to post, share, 
+and submit content, including comments, articles, recipes, reviews, and photos 
+("User Content").  
+A. Your Responsibility: You are solely responsible for your User Content and its 
+legality, reliability, and appropriateness. You retain ownership of your User 
+Content, but you grant us a worldwide, non-exclusive, royalty-free, 
+sublicensable license to use, reproduce, modify, and display your User 
+Content in connection with operating and promoting the Services. 
+B. Prohibited Conduct  
+You agree not to post User Content or use the Services to: 
+1. Violate any applicable Canadian federal, provincial, or local law or regulation. 
+2. Infringe any patent, trademark, trade secret, copyright, or other intellectual property 
+rights. 
+3. Harass, abuse, insult, harm, defame, or intimidate others. 
+4. Post false, misleading, or deceptive information, particularly related to health, 
+nutrition, or food safety. 
+
+5. Distribute viruses, malware, or any other destructive code. 
+6. Engage in spam, advertising, or commercial solicitation without our prior written 
+consent. 
+7. Impersonate any person or entity. 
+No Professional Advice: All User Content, including food, nutrition, and 
+health information, is for informational and entertainment purposes only. It is 
+not a substitute for professional medical, nutritional, or dietary advice. Always 
+seek the advice of a qualified health provider. We do not endorse and are 
+not responsible for the accuracy or reliability of any User Content. 
+6. Intellectual Property Rights  
+The Services, including their original content, features, functionality, design, logos, 
+and trademarks, are owned by Sobie Grocery Share Ltd. (also known as 
+Grocery-Share) and its licensors and are protected by copyright and other 
+intellectual property laws. You may not copy, modify, create derivative works of, 
+publicly display, or exploit any part of the Services without our express prior 
+written permission. 
+7. Third-Party Links & Content  
+Our Services may contain links to third-party websites, advertisements, or services 
+that are not owned or controlled by Sobie Grocery Share Ltd. (also known as 
+Grocery-Share). Additionally, our platform utilizes third-party infrastructure including 
+Supabase, GoDaddy, Vercel, and Resend. We have no control over, and assume 
+no responsibility for, the content, privacy policies, or practices of any third-party 
+sites or infrastructure providers. You acknowledge and agree that Sobie Grocery 
+Share Ltd. (also known as Grocery-Share) shall not be responsible for any 
+damage or loss caused by your use of any third-party resource or service 
+provider. 
+8. Disclaimer of Warranties & Limitation of Liability  
+
+A. Disclaimer: YOUR USE OF THE SERVICES IS AT YOUR SOLE RISK. THE 
+SERVICES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS. SOBIE 
+GROCERY SHARE LTD. (ALSO KNOWN AS GROCERY-SHARE) EXPRESSLY 
+DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND 
+NON-INFRINGEMENT.  
+B. Limitation of Liability: TO THE MAXIMUM EXTENT PERMITTED BY 
+APPLICABLE LAW, SOBIE GROCERY SHARE LTD. (ALSO KNOWN AS 
+GROCERY-SHARE), ITS DIRECTORS, EMPLOYEES, OR AGENTS SHALL NOT 
+BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR 
+PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER 
+INCURRED DIRECTLY OR INDIRECTLY, ARISING FROM YOUR USE OF THE 
+SERVICES.  
+C. Consumer Protection: Some provinces do not allow the exclusion of certain 
+warranties or the limitation of liability for incidental or consequential damages. The 
+limitations above may not apply to you, as some jurisdictions provide legal rights to 
+consumers that cannot be waived by contract. 
+9. Indemnification  
+You agree to defend, indemnify, and hold harmless Sobie Grocery Share Ltd. 
+(also known as Grocery-Share) and its licensors, service providers, and 
+affiliates from and against any claims, damages, liabilities, losses, and 
+expenses (including reasonable legal fees) arising out of or relating to your 
+violation of these Terms or your use of the Services. 
+10. Termination  
+We may terminate or suspend your account and access to the Services 
+immediately, without prior notice or liability, for any reason, including if you breach 
+
+these Terms. Upon termination, your right to use the Services will cease 
+immediately. 
+11. Governing Law & Dispute Resolution  
+These Terms shall be governed by and construed in accordance with the laws of the 
+Province of British Columbia and the federal laws of Canada applicable therein. Any 
+legal action or proceeding shall be brought exclusively in the courts located in 
+Vancouver, British Columbia. 
+12. General Provisions  
+If any provision of these Terms is held to be invalid or unenforceable, the remaining 
+provisions will remain in full force. Our failure to enforce any right or provision of 
+these Terms will not be considered a waiver of those rights. 
+13. Contact Information  
+For questions about these Terms of Use, please contact us at: Email: 
+[support@grocery-share.com] 
+Disclaimer for Consumer Section
+  
+Sobie Grocery Share Ltd. (also known as Grocery-Share) General Disclaimer 
+Important: Please read this disclaimer carefully before using our platform. 
+1. No Professional Advice  
+All content provided on Sobie Grocery Share Ltd. (also known as 
+Grocery-Share)—including but not limited to articles, tips, guides, recipes, user 
+comments, and nutritional information—is for general informational and 
+entertainment purposes only. It is not intended as a substitute for professional 
+advice.  
+
+Health & Nutrition: Content related to food, diet, nutrition, or wellness is not medical 
+advice. Always consult a qualified healthcare professional, such as a doctor or 
+registered dietitian, before making any changes to your diet or health regimen, 
+especially if you have a medical condition.  
+Food Safety: We are not responsible for any foodborne illness or injury resulting 
+from the handling, preparation, storage, or consumption of foods based on 
+information found on our platform. You are solely responsible for following safe food 
+handling practices.  
+Allergies: Always check ingredient labels and be aware of potential allergens. 
+Recipes and product information may not account for all cross-contamination risks 
+or individual allergies. 
+2. Accuracy of Information  
+While we strive to provide accurate and up-to-date information, the food world is 
+constantly evolving. We do not guarantee the completeness, reliability, or absolute 
+accuracy of any content on Sobie Grocery Share Ltd. (also known as 
+Grocery-Share). Nutritional data, ingredient availability, and product formulations 
+can change. 
+3. User-Generated Content  
+Sobie Grocery Share Ltd. (also known as Grocery-Share) includes content created 
+by our community of users. We do not endorse, verify, or assume responsibility for 
+the accuracy, safety, or quality of user-submitted recipes, comments, or tips. Views 
+expressed by users are their own. 
+4. External Links & Third-Party Content  
+Our platform may contain links to external websites, products, or services for your 
+convenience. We do not endorse and are not responsible for the content, privacy 
+
+policies, or practices of any third-party sites. Your use of third-party resources is at 
+your own risk. 
+5. Outcomes Not Guaranteed  
+Individual results from applying any information on this platform will vary based on 
+personal circumstances. Sobie Grocery Share Ltd. (also known as Grocery-Share) 
+makes no guarantees regarding specific outcomes, such as health benefits, cost 
+savings, or cooking success. 
+6. Use at Your Own Risk  
+Your use of any information or materials on Sobie Grocery Share Ltd. (also known 
+as Grocery-Share) is entirely at your own risk. Sobie Grocery Share Ltd. (also 
+known as Grocery-Share), its creators, and contributors shall not be held liable for 
+any direct, indirect, incidental, or consequential damages arising from your use of 
+the platform or reliance on any content provided. 
+7. Acknowledgment  
+By using the Sobie Grocery Share Ltd. (also known as Grocery-Share) platform, 
+you acknowledge that you have read, understood, and agree to this disclaimer.  
+Disclaimer for Commercial Section
+  
+The author provides this guide for general informational purposes only and makes 
+no representations or warranties as to the accuracy, reliability, or completeness of 
+its content. This includes, but is not limited to, typographical errors, technical 
+inaccuracies, or omissions. The information should not be interpreted as 
+professional business, legal, or financial advice. Readers should seek independent 
+counsel from qualified legal, tax, or accounting professionals for specific guidance. 
+The author disclaims all liability for any loss or damage resulting from reliance on 
+this information. Content may be updated periodically, and the author does not 
+
+guarantee it reflects the most current developments. Monetary figures may not add 
+up exactly due to rounding differences, reporting variations, or timing discrepancies 
+in data releases. Most data were sourced from secondary providers, and all figures 
+should be considered indicative as of the time of writing—actual values may vary. 
+ 
+
+隐私政策和服务条款 (所有條款均以英文為主)  
+隐私政策 
+最后更新日期：[2026年4月15日] 
+ 
+1. 简介 
+欢迎使用 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）！我们致力于保护您的个人信息
+及隐私权。本隐私政策说明了当您浏览我们的网站 [Grocery-Share.com] 并使用我们的服务
+（下称“服务”）时，我们如何收集、使用、披露和保护您的信息。请仔细阅读本政策。如果您不同
+意我们的政策和做法，请勿使用我们的服务。使用 Sobie Grocery Share Ltd.（亦称
+“Grocery-Share”）即表示您同意本政策中描述的数据处理方式。 
+ 
+2. 我们是谁 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”）是一个在线平台，致力于分享食品知识、连
+接用户并提升购物体验。我们的主要营业地点位于加拿大不列颠哥伦比亚省。 
+ 
+3. 我们收集的信息 
+我们会收集您直接向我们提供的信息以及自动收集的信息。 
+ 
+A. 您提供的信息： 
+ 
+账户信息：姓名、电子邮箱地址、用户名、密码以及您选择添加的个人资料详情（例如饮食偏
+好）。 
+ 
+用户内容：评论、帖子、提交的食谱、评价、问题以及您在平台上分享的任何其他内容。 
+ 
+通讯记录：您与我们的沟通记录（例如支持请求、反馈）。 
+ 
+可选信息：您为参加竞赛、调查或社区功能提供的信息，以及与我们的服务或网站相关的任何
+信息。 
+ 
+B. 自动收集的信息： 
+ 
+使用数据：您浏览的页面、点击的链接、在平台上的停留时间及其他浏览行为。 
+
+ 
+设备与日志数据：IP地址、浏览器类型、操作系统、设备标识符及大致位置（通过IP地址推
+导）。 
+ 
+Cookies及类似技术：我们使用cookies和类似追踪技术来提升您的体验、分析趋势并管理网
+站。您可通过浏览器控制cookie设置。 
+ 
+4. 我们如何使用您的信息 
+我们将收集的信息用于以下目的： 
+ 
+提供、运营、维护和改进 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）服务。 
+ 
+创建和管理您的账户。 
+ 
+与您沟通（例如服务更新、回复咨询、若您订阅则发送新闻通讯）。 
+ 
+个性化您的体验，例如推荐相关内容。 
+ 
+监控和分析使用趋势及偏好，以改进平台。 
+ 
+确保平台的安全性和完整性，防止欺诈。 
+ 
+履行法律义务。 
+ 
+5. 我们如何分享您的信息 
+我们不会出售您的个人信息。我们可能在以下情况下分享信息： 
+ 
+经您同意：在获得您许可的前提下用于其他披露给您的目的。 
+ 
+服务提供商：我们委托可信的第三方公司（例如托管、分析、邮件发送）代表我们提供服务。我
+们的第三方基础设施提供商包括 Supabase、GoDaddy、Vercel 和 Resend。他们按合同义务
+安全处理您的数据，且仅用于我们指定的目的。如果您的任何信息被以任何方式不当处理，您
+同意我们不对任何第三方的处理不当承担法律责任。 
+ 
+法律要求：在法律要求或回应有效法律请求（例如法院命令、传票）时。 
+
+ 
+权利保护：调查可能违反我们服务条款的行为，或保护 Sobie Grocery Share Ltd.（亦称
+“Grocery-Share”）、我们的用户或公众的权利、财产和安全。 
+ 
+业务转让：涉及合并、公司资产出售、融资或收购我们全部或部分业务时。 
+ 
+6. 用户生成内容 
+请记住，您在 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）公共区域（例如评论、社区论
+坛、用户个人资料）发布的任何信息均可被他人公开浏览、收集和使用。我们强烈建议您谨慎
+选择公开分享的内容。 
+ 
+7. 数据安全 
+我们采取合理的行政、技术和物理安全措施来保护您的个人信息。然而，没有任何电子传输或
+存储方法是100%安全的。我们无法保证绝对安全。 
+ 
+8. 数据保留 
+我们仅在为实现本政策所述目的所需的时间内保留您的个人信息，或为履行法律义务、解决
+争议和执行协议所需的时间内保留。 
+ 
+9. 您的隐私权利（加拿大用户） 
+根据加拿大隐私法（PIPEDA），您享有以下权利： 
+ 
+存取：请求存取我们持有的关于您的个人信息。 
+ 
+更正：请求更正不准确或不完整的个人信息。 
+ 
+撤回同意：撤回您对我们收集、使用或披露您信息的同意，但可能受法律或合同限制。 
+ 
+投诉：向加拿大隐私专员和/或不列颠哥伦比亚省隐私专员提出投诉。如需行使这些权利，请
+通过第12节中的联系方式与我们联系。 
+ 
+10. 国际数据传输 
+我们的服务主要托管在加拿大。但部分服务提供商可能在其他国家处理数据。当我们将您的
+信息传输到加拿大境外时，我们会采取合理措施确保其按照本政策和适用法律得到保护。 
+
+ 
+11. 儿童隐私 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”）不适用于13岁以下的个人。我们不会故意
+收集13岁以下儿童的个人信息。如果您认为我们这样做了，请联系我们，我们将删除此类信
+息。 
+ 
+12. 联系我们 
+如果您对本隐私政策或我们的数据处理方式有任何疑问、顾虑或请求，请联系我们的隐私官： 
+电子邮箱：[support@grocery-share.com] 
+ 
+13. 本政策的变更 
+我们可能不时更新本隐私政策。我们将在本页面上发布新政策并更新“最后更新日期”以通知
+您任何变更。我们建议您定期查看本政策。 
+ 
+服务条款 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”） 
+使用条款 
+最后更新日期：[2026年4月15日] 
+ 
+1. 条款接受 
+欢迎使用 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）（下称“我们”、“我们的”或“本平
+台”）。通过访问或使用我们的网站 [Grocery-Share.com]（下称“本站点”）及任何相关服务、功
+能、内容或应用程序（统称“服务”），您同意受这些使用条款（下称“本条款”）的约束。如果您不
+同意所有条款，则不允许使用我们的服务。 
+ 
+2. 条款变更 
+我们保留随时修改本条款的权利。我们将在站点上发布更新后的条款并更新“最后更新日期”，
+以通知您重大变更。在此类变更后继续使用服务即表示您接受新条款。您有责任定期查看本
+条款。 
+ 
+3. 资格 
+
+您必须年满13岁才能使用我们的服务。如果您未达到您居住省份的法定成年年龄，您必须获
+得父母或监护人的同意才能使用服务，并且他们必须代表您同意本条款。使用服务即表示您
+声明并保证您符合所有资格要求。 
+ 
+4. 用户账户与安全 
+您可能需要创建一个账户。您同意： 
+ 
+提供准确、最新且完整的信息。 
+ 
+维护并及时更新您的账户信息。 
+ 
+确保密码安全且保密。 
+ 
+对您账户下发生的所有活动承担责任。 
+ 
+一旦发现未经授权使用您账户的情况，立即通知我们。如果您提供的任何信息不准确、具有
+误导性、包含仇恨言论或其他非法内容，我们保留暂停或终止您账户的权利。 
+ 
+5. 用户生成内容与行为规范 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”）允许您发布、分享和提交内容，包括评论、
+文章、食谱、评价和照片（“用户内容”）。 
+ 
+A. 您的责任：您对您的用户内容及其合法性、可靠性和适当性承担全部责任。您保留对用户内
+容的所有权，但授予我们一项全球性的、非独家的、免版税的、可再许可的执照，以在运营和
+推广服务中使用、复制、修改和展示您的用户内容。 
+ 
+B. 禁止行为 
+您同意不发布用户内容或使用服务进行以下行为： 
+ 
+违反任何适用的加拿大联邦、省级或地方法律法规。 
+ 
+侵犯任何专利、商标、商业秘密、版权或其他知识产权。 
+ 
+骚扰、辱骂、侮辱、伤害、诽谤或恐吓他人。 
+ 
+
+发布虚假、误导性或欺骗性信息，尤其是与健康、营养或食品安全相关的信息。 
+ 
+传播病毒、恶意软件或任何其他破坏性代码。 
+ 
+未经我们事先书面同意进行垃圾邮件、广告或商业招揽。 
+ 
+冒充任何个人或实体。 
+ 
+非专业建议：所有用户内容，包括食品、营养和健康信息，仅供信息和娱乐目的。不能替代专业
+的医疗、营养或饮食建议。请始终咨询合格的医疗保健提供者。我们不认可也不对任何用户
+内容的准确性或可靠性负责。 
+ 
+6. 知识产权 
+服务，包括其原创内容、功能、设计、标识和商标，归 Sobie Grocery Share Ltd.（亦称
+“Grocery-Share”）及其许可方所有，并受版权和其他知识产权法律保护。未经我们明确事先
+书面许可，您不得复制、修改、创作衍生作品、公开展示或利用服务的任何部分。 
+ 
+7. 第三方链接与内容 
+我们的服务可能包含指向非由 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）拥有或控制
+的第三方网站、广告或服务的链接。此外，我们的平台利用第三方基础设施，包括 Supabase、
+GoDaddy、Vercel 和 Resend。我们无法控制任何第三方网站或基础设施提供商的内容、隐私
+政策或做法，也不承担任何责任。您承认并同意，Sobie Grocery Share Ltd.（亦称
+“Grocery-Share”）对您因使用任何第三方资源或服务提供商而造成的任何损害或损失不承担
+责任。 
+ 
+8. 免责声明与责任限制 
+A. 免责声明：您使用服务的风险由您自行承担。服务按“现状”和“可用”提供。SOBIE 
+GROCERY SHARE LTD.（亦称“GROCERY-SHARE”）明确否认任何形式的保证，无论是明示
+还是暗示的，包括但不限于适销性、特定用途适用性和不侵权的暗示保证。 
+B. 责任限制：在适用法律允许的最大范围内，SOBIE GROCERY SHARE LTD.（亦称
+“GROCERY-SHARE”）及其董事、员工或代理人均不对因您使用服务而产生的任何间接、附
+带、特殊、后果性或惩罚性损害赔偿，或任何利润或收入损失承担责任，无论是直接还是间接
+产生的。 
+
+C. 消费者保护：某些省份不允许排除某些保证或限制附带或后果性损害的责任。上述限制可
+能不适用于您，因为某些司法管辖区提供消费者不能通过合同放弃的合法权利。 
+ 
+9. 赔偿 
+您同意为 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）及其许可方、服务提供商和关联
+公司辩护、赔偿并使其免受因您违反本条款或使用服务而产生或与之相关的任何索赔、损
+害、责任、损失和费用（包括合理的律师费）的损害。 
+ 
+10. 终止 
+我们可能出于任何原因（包括您违反本条款）立即终止或暂停您的账户和服务访问权，无需事
+先通知或承担责任。终止后，您使用服务的权利将立即终止。 
+ 
+11. 管辖法律与争议解决 
+本条款应受不列颠哥伦比亚省法律及其适用的加拿大联邦法律管辖并据其解释，不考虑法律
+冲突条款。任何法律诉讼或程序应独家提交至不列颠哥伦比亚省温哥华市的法院。 
+ 
+12. 一般规定 
+如果本条款的任何规定被认定为无效或不可执行，其余规定将继续完全有效。我们未能执行
+本条款的任何权利或规定不应视为放弃这些权利。 
+ 
+13. 联系方式 
+如对本使用条款有疑问，请通过以下方式联系我们： 
+电子邮箱：[support@grocery-share.com] 
+ 
+消费者部分免责声明 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”） 
+一般免责声明 
+重要提示：在使用我们的平台之前，请仔细阅读本免责声明。 
+ 
+1. 非专业建议 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”）上提供的所有内容（包括但不限于文章、提
+示、指南、食谱、用户评论和营养信息）仅供一般信息和娱乐目的。不能替代专业建议。 
+ 
+
+健康与营养：与食品、饮食、营养或健康相关的内容并非医疗建议。在改变您的饮食或健康方
+案之前（尤其是如果您有健康状况），请始终咨询合格的医疗保健专业人员（如医生或注册营养
+师）。 
+ 
+食品安全：对于因根据我们平台上的信息处理、准备、储存或食用食品而导致的任何食源性疾
+病或伤害，我们概不负责。您全权负责遵循安全的食品处理规范。 
+ 
+过敏：请务必检查成分标签并注意潜在过敏原。食谱和产品信息可能未考虑所有交叉污染风险
+或个人过敏情况。 
+ 
+2. 信息准确性 
+虽然我们努力提供准确和最新的信息，但食品世界不断变化。我们不保证 Sobie Grocery 
+Share Ltd.（亦称“Grocery-Share”）上任何内容的完整性、可靠性或绝对准确性。营养数据、成
+分可用性和产品配方可能发生变化。 
+ 
+3. 用户生成内容 
+Sobie Grocery Share Ltd.（亦称“Grocery-Share”）包含由我们社区用户创建的内容。我们不认
+可、验证也不对用户提交的食谱、评论或提示的准确性、安全性或质量承担任何责任。用户表
+达的观点仅代表其个人。 
+ 
+4. 外部链接与第三方内容 
+我们的平台可能包含指向外部网站、产品或服务的链接，以方便您使用。我们不认可也不对任
+何第三方网站的内容、隐私政策或做法承担责任。您使用第三方资源的风险由您自行承担。 
+ 
+5. 不保证结果 
+应用本平台任何信息后的个人结果会因个人情况而异。Sobie Grocery Share Ltd.（亦称
+“Grocery-Share”）不对具体结果（如健康益处、成本节约或烹饪成功）作任何保证。 
+ 
+6. 风险自负 
+您对 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）上任何信息或材料的使用完全由您自
+担风险。Sobie Grocery Share Ltd.（亦称“Grocery-Share”）、其创建者和贡献者均不对因您使
+用本平台或依赖任何提供的内容而引起的任何直接、间接、附带或后果性损害承担责任。 
+ 
+
+7. 确认 
+使用 Sobie Grocery Share Ltd.（亦称“Grocery-Share”）平台即表示您承认您已阅读、理解并
+同意本免责声明。 
+ 
+最后更新日期：[2026年4月15日] 
+联系方式：如对本免责声明有任何疑问，请通过以下方式联系我们：
+[support@grocery-share.com] 
+ 
+商业部分免责声明 
+作者提供本指南仅供一般信息参考，不对其内容的准确性、可靠性或完整性作任何陈述或保
+证，包括但不限于印刷错误、技术不准确或遗漏。该信息不应被解释为专业的商业、法律或
+财务建议。读者应就具体指导向合格的法律、税务或会计专业人士寻求独立意见。作者不对
+因依赖本信息而导致的任何损失或损害承担任何责任。内容可能定期更新，作者不保证其反
+映最新发展。由于数据发布中的四舍五入差异、报告差异或时间差异，货币数字可能无法精确
+相加。大部分数据来自二手提供商，所有数字应视为截至撰写时的指示性数据——实际数值
+可能有所不同。 
+ 
+ 
+ 
+
+隱私政策和服務條款 (所有條款均以英文為主) 
+隱私政策 
+最後更新日期：[2026年4月15日] 
+ 
+1. 簡介 
+歡迎使用 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）！我們致力於保護您的個人資訊
+及您的隱私權。本隱私政策說明了當您瀏覽我們的網站 [Grocery-Share.com] 並使用我們的
+服務（下稱「服務」）時，我們如何收集、使用、披露和保護您的資訊。請仔細閱讀本政策。如果
+您不同意我們的政策和做法，請勿使用我們的服務。使用 Sobie Grocery Share Ltd.（亦稱「
+Grocery-Share」）即表示您同意本政策中描述的資料處理方式。 
+ 
+2. 我們是誰 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）是一個線上平台，致力於分享食品知識、連
+接用戶並提升購物體驗。我們的主要營業地點位於加拿大卑詩省。 
+ 
+3. 我們收集的資訊 
+我們會收集您直接向我們提供的資訊以及自動收集的資訊。 
+ 
+A. 您提供的資訊： 
+ 
+帳戶資訊：姓名、電子郵件地址、使用者名稱、密碼以及您選擇添加的個人資料詳情（例如飲食
+偏好）。 
+ 
+使用者內容：評論、貼文、提交的食譜、評價、問題以及您在平台上分享的任何其他內容。 
+ 
+通訊記錄：您與我們的溝通記錄（例如支援請求、反饋）。 
+ 
+可選資訊：您為參加競賽、調查或社群功能提供的資訊，以及與我們的服務或網站相關的任何
+資訊。 
+ 
+B. 自動收集的資訊： 
+ 
+使用資料：您瀏覽的頁面、點擊的連結、在平台上的停留時間及其他瀏覽行為。 
+
+ 
+裝置與日誌資料：IP位址、瀏覽器類型、作業系統、裝置識別符及大致位置（透過IP位址推導）。 
+ 
+Cookies及類似技術：我們使用cookies和類似追蹤技術來提升您的體驗、分析趨勢並管理網
+站。您可透過瀏覽器控制cookie設定。 
+ 
+4. 我們如何使用您的資訊 
+我們將收集的資訊用於以下目的： 
+ 
+提供、營運、維護和改進 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）服務。 
+ 
+建立和管理您的帳戶。 
+ 
+與您溝通（例如服務更新、回覆諮詢、若您訂閱則發送新聞通訊）。 
+ 
+個人化您的體驗，例如推薦相關內容。 
+ 
+監控和分析使用趨勢及偏好，以改進平台。 
+ 
+確保平台的安全性和完整性，防止詐欺。 
+ 
+履行法律義務。 
+ 
+5. 我們如何分享您的資訊 
+我們不會出售您的個人資訊。我們可能在以下情況下分享資訊： 
+ 
+經您同意：在獲得您許可的前提下用於其他披露給您的目的。 
+ 
+服務提供商：我們委託可信的第三方公司（例如託管、分析、郵件發送）代表我們提供服務。我
+們的第三方基礎設施提供商包括 Supabase、GoDaddy、Vercel 和 Resend。他們按合約義務
+安全處理您的資料，且僅用於我們指定的目的。如果您的任何資訊被以任何方式不當處理，您
+同意我們不對任何第三方的不當處理承擔法律責任。 
+ 
+法律要求：在法律要求或回應有效法律請求（例如法院命令、傳票）時。 
+ 
+
+權利保護：調查可能違反我們服務條款的行為，或保護 Sobie Grocery Share Ltd.（亦稱「
+Grocery-Share」）、我們的使用者或公眾的權利、財產和安全。 
+ 
+業務轉讓：涉及合併、公司資產出售、融資或收購我們全部或部分業務時。 
+ 
+6. 使用者生成內容 
+請記住，您在 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）公共區域（例如評論、社群論
+壇、使用者個人資料）发布的任何資訊均可被他人公開瀏覽、收集和使用。我們強烈建議您謹
+慎選擇公開分享的內容。 
+ 
+7. 資料安全 
+我們採取合理的行政、技術和實體安全措施來保護您的個人資訊。然而，沒有任何電子傳輸或
+儲存方法是100%安全的。我們無法保證絕對安全。 
+ 
+8. 資料保留 
+我們僅在為實現本政策所述目的所需的時間內保留您的個人資訊，或為履行法律義務、解決
+爭議和執行協議所需的時間內保留。 
+ 
+9. 您的隱私權利（加拿大用戶） 
+根據加拿大隱私法（PIPEDA），您享有以下權利： 
+ 
+存取：請求存取我們持有的關於您的個人資訊。 
+ 
+更正：請求更正不準確或不完整的個人資訊。 
+ 
+撤回同意：撤回您對我們收集、使用或披露您資訊的同意，但可能受法律或合約限制。 
+ 
+投訴：向加拿大隱私專員及/或卑詩省隱私專員提出投訴。如需行使這些權利，請透過第12節
+中的聯繫方式與我們聯繫。 
+ 
+10. 國際資料傳輸 
+我們的服務主要託管在加拿大。但部分服務提供商可能在其他國家處理資料。當我們將您的
+資訊傳輸到加拿大境外時，我們會採取合理措施確保其按照本政策和適用法律得到保護。 
+ 
+
+11. 兒童隱私 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）不適用於13歲以下的個人。我們不會故意
+收集13歲以下兒童的個人資訊。如果您認為我們這樣做了，請聯繫我們，我們將刪除此類資
+訊。 
+ 
+12. 聯繫我們 
+如果您對本隱私政策或我們的資料處理方式有任何疑問、顧慮或請求，請聯繫我們的隱私官： 
+電子郵件：[support@grocery-share.com] 
+ 
+13. 本政策的變更 
+我們可能不時更新本隱私政策。我們將在本頁面上发布新政策並更新「最後更新日期」，以通
+知您任何變更。我們建議您定期查看本政策。 
+ 
+服務條款 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」） 
+使用條款 
+最後更新日期：[2026年4月15日] 
+ 
+1. 條款接受 
+歡迎使用 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）（下稱「我們」、「我們的」或「本平
+台」）。通過訪問或使用我們的網站 [Grocery-Share.com]（下稱「本站點」）及任何相關服務、功
+能、內容或應用程式（統稱「服務」），您同意受這些使用條款（下稱「本條款」）的約束。如果您不
+同意所有條款，則不允許使用我們的服務。 
+ 
+2. 條款變更 
+我們保留隨時修改本條款的權利。我們將在站點上发布更新後的條款並更新「最後更新日期」
+，以通知您重大變更。在此類變更後繼續使用服務即表示您接受新條款。您有責任定期查看本
+條款。 
+ 
+3. 資格 
+
+您必須年滿13歲才能使用我們的服務。如果您未達到您居住省份的法定成年年齡，您必須獲
+得父母或監護人的同意才能使用服務，並且他們必須代表您同意本條款。使用服務即表示您
+聲明並保證您符合所有資格要求。 
+ 
+4. 使用者帳戶與安全 
+您可能需要建立一個帳戶。您同意： 
+ 
+提供準確、最新且完整的資訊。 
+ 
+維護並及時更新您的帳戶資訊。 
+ 
+確保密碼安全且保密。 
+ 
+對您帳戶下發生的所有活動承擔責任。 
+ 
+一旦發現未經授權使用您帳戶的情況，立即通知我們。如果您提供的任何資訊不準確、具有誤
+導性、包含仇恨言論或其他非法內容，我們保留暫停或終止您帳戶的權利。 
+ 
+5. 使用者生成內容與行為規範 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）允許您发布、分享和提交內容，包括評論、
+文章、食譜、評價和照片（「使用者內容」）。 
+ 
+A. 您的責任：您對您的使用者內容及其合法性、可靠性和適當性承擔全部責任。您保留對使用
+者內容的所有權，但授予我們一項全球性的、非獨家的、免版稅的、可再許可的執照，以在營
+運和推廣服務中使用、複製、修改和展示您的使用者內容。 
+ 
+B. 禁止行為 
+您同意不发布使用者內容或使用服務進行以下行為： 
+ 
+違反任何適用的加拿大聯邦、省級或地方法律法規。 
+ 
+侵犯任何專利、商標、商業秘密、版權或其他知識產權。 
+ 
+騷擾、辱罵、侮辱、傷害、誹謗或恐嚇他人。 
+ 
+
+发布虛假、誤導性或欺騙性資訊，尤其是與健康、營養或食品安全相關的資訊。 
+ 
+傳播病毒、惡意軟體或任何其他破壞性程式碼。 
+ 
+未經我們事先書面同意進行垃圾郵件、廣告或商業招攬。 
+ 
+冒充任何個人或實體。 
+ 
+非專業建議：所有使用者內容，包括食品、營養和健康資訊，僅供資訊和娛樂目的。不能替代專
+業的醫療、營養或飲食建議。請始終諮詢合格的醫療保健提供者。我們不認可也不對任何使用
+者內容的準確性或可靠性負責。 
+ 
+6. 知識產權 
+服務，包括其原創內容、功能、設計、標誌和商標，歸 Sobie Grocery Share Ltd.（亦稱「
+Grocery-Share」）及其許可方所有，並受版權和其他知識產權法律保護。未經我們明確事先書
+面許可，您不得複製、修改、創作衍生作品、公開展示或利用服務的任何部分。 
+ 
+7. 第三方連結與內容 
+我們的服務可能包含指向非由 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）擁有或控制
+的第三方網站、廣告或服務的連結。此外，我們的平台利用第三方基礎設施，包括 Supabase、
+GoDaddy、Vercel 和 Resend。我們無法控制任何第三方網站或基礎設施提供商的內容、隱私
+政策或做法，也不承擔任何責任。您承認並同意，Sobie Grocery Share Ltd.（亦稱「
+Grocery-Share」）對您因使用任何第三方資源或服務提供商而造成的任何損害或損失不承擔
+責任。 
+ 
+8. 免責聲明與責任限制 
+A. 免責聲明：您使用服務的風險由您自行承擔。服務按「現狀」和「可用」提供。SOBIE 
+GROCERY SHARE LTD.（亦稱「GROCERY-SHARE」）明確否認任何形式的保證，無論是明
+示還是暗示的，包括但不限於適銷性、特定用途適用性和不侵權的暗示保證。 
+B. 責任限制：在適用法律允許的最大範圍內，SOBIE GROCERY SHARE LTD.（亦稱「
+GROCERY-SHARE」）及其董事、員工或代理人均不對因您使用服務而產生的任何間接、附
+帶、特殊、後果性或懲罰性損害賠償，或任何利潤或收入損失承擔責任，無論是直接還是間接
+產生的。 
+
+C. 消費者保護：某些省份不允許排除某些保證或限制附帶或後果性損害的責任。上述限制可
+能不適用於您，因為某些司法管轄區提供消費者不能通過合約放棄的合法權利。 
+ 
+9. 賠償 
+您同意為 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）及其許可方、服務提供商和關聯
+公司辯護、賠償並使其免受因您違反本條款或使用服務而產生或與之相關的任何索賠、損害、
+責任、損失和費用（包括合理的律師費）的損害。 
+ 
+10. 終止 
+我們可能出於任何原因（包括您違反本條款）立即終止或暫停您的帳戶和服務訪問權，無需事
+先通知或承擔責任。終止後，您使用服務的權利將立即終止。 
+ 
+11. 管轄法律與爭議解決 
+本條款應受卑詩省法律及其適用的加拿大聯邦法律管轄並據其解釋，不考慮法律衝突條款。
+任何法律訴訟或程序應獨家提交至卑詩省溫哥華市的法院。 
+ 
+12. 一般規定 
+如果本條款的任何規定被認定為無效或不可執行，其餘規定將繼續完全有效。我們未能執行
+本條款的任何權利或規定不應視為放棄這些權利。 
+ 
+13. 聯繫方式 
+如對本使用條款有疑問，請通過以下方式聯繫我們： 
+電子郵件：[support@grocery-share.com] 
+ 
+消費者部分免責聲明 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」） 
+一般免責聲明 
+重要提示：在使用我們的平台之前，請仔細閱讀本免責聲明。 
+ 
+1. 非專業建議 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）上提供的所有內容（包括但不限於文章、提
+示、指南、食譜、使用者評論和營養資訊）僅供一般資訊和娛樂目的。不能替代專業建議。 
+ 
+
+健康與營養：與食品、飲食、營養或健康相關的內容並非醫療建議。在改變您的飲食或健康方
+案之前（尤其是如果您有健康狀況），請始終諮詢合格的醫療保健專業人員（如醫生或註冊營養
+師）。 
+ 
+食品安全：對於因根據我們平台上的資訊處理、準備、儲存或食用食品而導致的任何食源性疾
+病或傷害，我們概不負責。您全權負責遵循安全的食品處理規範。 
+ 
+過敏：請務必檢查成分標籤並注意潛在過敏原。食譜和產品資訊可能未考慮所有交叉污染風險
+或個人過敏情況。 
+ 
+2. 資訊準確性 
+雖然我們努力提供準確和最新的資訊，但食品世界不斷變化。我們不保證 Sobie Grocery 
+Share Ltd.（亦稱「Grocery-Share」）上任何內容的完整性、可靠性或絕對準確性。營養數據、成
+分可用性和產品配方可能發生變化。 
+ 
+3. 使用者生成內容 
+Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）包含由我們社群用戶建立的内容。我們不
+認可、驗證也不對使用者提交的食譜、評論或提示的準確性、安全性或品質承擔任何責任。使
+用者表達的觀點僅代表其個人。 
+ 
+4. 外部連結與第三方內容 
+我們的平台可能包含指向外部網站、產品或服務的連結，以方便您使用。我們不認可也不對任
+何第三方網站的內容、隱私政策或做法承擔責任。您使用第三方資源的風險由您自行承擔。 
+ 
+5. 不保證結果 
+應用本平台任何資訊後的個人結果會因個人情況而異。Sobie Grocery Share Ltd.（亦稱「
+Grocery-Share」）不對具體結果（如健康益處、成本節約或烹飪成功）作任何保證。 
+ 
+6. 風險自負 
+您對 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）上任何資訊或材料的使用完全由您自
+擔風險。Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）、其建立者和貢獻者均不對因您使
+用本平台或依賴任何提供的內容而引起的任何直接、間接、附帶或後果性損害承擔責任。 
+ 
+
+7. 確認 
+使用 Sobie Grocery Share Ltd.（亦稱「Grocery-Share」）平台即表示您承認您已閱讀、理解並
+同意本免責聲明。 
+ 
+最後更新日期：[2026年4月15日] 
+聯繫方式：如對本免責聲明有任何疑問，請通過以下方式聯繫我們：
+[support@grocery-share.com] 
+ 
+商業部分免責聲明 
+作者提供本指南僅供一般資訊參考，不對其內容的準確性、可靠性或完整性作任何陳述或保
+證，包括但不限於印刷錯誤、技術不準確或遺漏。該資訊不應被解釋為專業的商業、法律或財
+務建議。讀者應就具體指導向合格的法律、稅務或會計專業人士尋求獨立意見。作者不對因依
+賴本資訊而導致的任何損失或損害承擔任何責任。內容可能定期更新，作者不保證其反映最
+新發展。由於資料發布中的四捨五入差異、報告差異或時間差異，貨幣數字可能無法精確相
+加。大部分資料來自二手提供商，所有數字應視為截至撰寫時的指示性資料——實際數值可
+能有所不同。
