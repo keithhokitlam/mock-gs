@@ -30,6 +30,32 @@ const GoldGroceryIcon = () => (
   </svg>
 );
 
+/** Document + magnifying glass — research / discovery vibe (consumer tier) */
+const GoldResearchIcon = () => (
+  <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <defs>
+      <linearGradient id="goldGradientResearchSignup" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" />
+        <stop offset="50%" stopColor="#FFA500" />
+        <stop offset="100%" stopColor="#FF8C00" />
+      </linearGradient>
+    </defs>
+    <path
+      d="M4 3h9l3 3v14a1.5 1.5 0 01-1.5 1.5H4A1.5 1.5 0 012.5 20V4.5A1.5 1.5 0 014 3z"
+      stroke="url(#goldGradientResearchSignup)"
+      strokeWidth="1.35"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <path d="M13 3v3h3" stroke="url(#goldGradientResearchSignup)" strokeWidth="1.2" strokeLinejoin="round" fill="none" />
+    <line x1="6" y1="9.5" x2="12" y2="9.5" stroke="url(#goldGradientResearchSignup)" strokeWidth="1.1" strokeLinecap="round" />
+    <line x1="6" y1="12" x2="11" y2="12" stroke="url(#goldGradientResearchSignup)" strokeWidth="1.1" strokeLinecap="round" />
+    <line x1="6" y1="14.5" x2="10" y2="14.5" stroke="url(#goldGradientResearchSignup)" strokeWidth="1.1" strokeLinecap="round" />
+    <circle cx="16.5" cy="16.5" r="3.25" stroke="url(#goldGradientResearchSignup)" strokeWidth="1.35" fill="none" />
+    <path d="M18.8 18.8L21.5 21.5" stroke="url(#goldGradientResearchSignup)" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
 const ExternalLinkIcon = () => (
   <svg
     className="w-3 h-3 shrink-0"
@@ -324,46 +350,73 @@ export default function SignupModal({
               </div>
             </div>
 
-            {/* Plan summary — matches consumer vs commercial signup intent */}
-            <div className="mt-4 rounded-lg border border-zinc-200 bg-zinc-50 p-4">
-              <div className="flex items-center justify-center mb-3">
-                <GoldGroceryIcon />
-              </div>
-
-              <h3 className="text-lg font-bold mb-2 text-center text-zinc-900">
-                {consumerVsCommercial === "consumer"
-                  ? "Free Consumer account"
-                  : "Standard Annual Subscription"}
-              </h3>
-
-              <p className="text-zinc-600 mb-3 text-xs leading-relaxed text-center">
-                {consumerVsCommercial === "consumer"
-                  ? "Your digital food-savvy friend—category lists, quirky food facts, and kitchen inspiration."
-                  : "Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen inspiration!"}
-              </p>
-
-              {consumerVsCommercial === "commercial" ? (
-                <div className="text-center mb-3">
-                  <span className="text-xl font-bold text-zinc-900">12 months of:</span>
+            {/* Pricing-style plan cards */}
+            <div className="mt-4 space-y-3">
+              <div
+                className="rounded-lg border border-dashed border-zinc-300 bg-zinc-100 p-4 shadow-none"
+                aria-disabled="true"
+              >
+                <div className="mb-3 flex items-center justify-center opacity-45 grayscale">
+                  <GoldResearchIcon />
                 </div>
-              ) : null}
-
-              <ul className="space-y-1.5 mb-3 text-sm text-zinc-600">
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
-                  <span>Full access to all food lists and tasty know-how</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
-                  <span>We&apos;ve got your back—priority support when you need us</span>
-                </li>
-                {consumerVsCommercial === "commercial" ? (
+                <h3 className="mb-2 text-center text-base font-bold text-zinc-500">
+                  Free Consumer Subscription
+                </h3>
+                <p className="mb-3 text-center text-xs leading-relaxed text-zinc-500">
+                  Your digital food-savvy friend—full access to all category lists,
+                  quirky food facts, and kitchen inspiration!
+                </p>
+                <ul className="space-y-1.5 text-sm text-zinc-500">
                   <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
+                    <span className="mr-2 text-zinc-400">✓</span>
+                    <span>Full access to all food lists and tasty know-how</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 text-zinc-400">✓</span>
+                    <span>We&apos;ve got your back—priority support when you need us</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 text-zinc-400">✓</span>
                     <span>Auto-renewal so you never miss a beat (except Alipay)</span>
                   </li>
-                ) : null}
-              </ul>
+                </ul>
+              </div>
+
+              <div
+                className={`rounded-lg border p-4 shadow-sm ${
+                  consumerVsCommercial === "commercial"
+                    ? "border-[#2B6B4A] bg-white"
+                    : "border-zinc-200 bg-white"
+                }`}
+              >
+                <div className="mb-3 flex items-center justify-center">
+                  <GoldGroceryIcon />
+                </div>
+                <h3 className="mb-2 text-center text-base font-bold text-zinc-900">
+                  Standard Annual Subscription
+                </h3>
+                <p className="mb-3 text-center text-xs leading-relaxed text-zinc-600">
+                  Your digital food-savvy friend—full access to all category lists,
+                  quirky food facts, and kitchen inspiration!
+                </p>
+                <div className="mb-3 text-center">
+                  <span className="text-lg font-bold text-zinc-900">12 months of:</span>
+                </div>
+                <ul className="space-y-1.5 text-sm text-zinc-600">
+                  <li className="flex items-start">
+                    <span className="mr-2 text-green-500">✓</span>
+                    <span>Full access to all food lists and tasty know-how</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 text-green-500">✓</span>
+                    <span>We&apos;ve got your back—priority support when you need us</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 text-green-500">✓</span>
+                    <span>Auto-renewal so you never miss a beat (except Alipay)</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <label className="flex gap-3 cursor-pointer">
