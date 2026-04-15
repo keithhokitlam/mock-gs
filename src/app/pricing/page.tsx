@@ -185,7 +185,7 @@ export default async function PricingPage() {
             <div className="flex items-center justify-center mb-4">
               <GoldGroceryIcon />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-center">{displayPlan.title}</h3>
+            <h3 className="text-xl font-bold mb-3 text-center">Standard Annual Subscription</h3>
             <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
               Your digital food-savvy friend—full access to all category lists,
               quirky food facts, and kitchen inspiration!
@@ -207,6 +207,9 @@ export default async function PricingPage() {
                 <span>Auto-renewal so you never miss a beat (except Alipay)</span>
               </li>
             </ul>
+            <p className="mb-4 text-center text-sm font-bold uppercase tracking-[0.15em] text-[#2B6B4A]">
+              TEMPORARY FREE TRIAL
+            </p>
             <Link
               href="/home"
               className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
