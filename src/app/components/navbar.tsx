@@ -49,8 +49,19 @@ export default function NavBar() {
     pathname === "/faq";
 
   /** Hide MASTER TABLE + FOOD CATEGORY on login, and on info pages when logged out */
-  const hideMasterTableAndFoodCategory =
+  const hideNavDestinations =
     isLoginHomePath || (!userEmail && isPublicInfoPage);
+
+  /** Signed-in accounts: always show these destinations (consumer → Food Category; commercial/admin → Food Category + Master Table). */
+  const showFoodCategoryNav =
+    (!!userEmail &&
+      (accountType === "consumer" ||
+        accountType === "commercial" ||
+        accountType === "admin")) ||
+    !hideNavDestinations;
+
+  const showMasterTableNav =
+    !!userEmail && (accountType === "commercial" || accountType === "admin");
 
   const isExplicitCommercial =
     pathname === "/" ||
@@ -198,6 +209,13 @@ export default function NavBar() {
   const isCommercialPage = isExplicitCommercial || (isSharedPage && navMode === "commercial");
   const isConsumerPage = !isCommercialPage;
 
+  /** Logged-out: consumer vs commercial landing; signed-in: always use full Food Category page. */
+  const foodCategoryHref = userEmail
+    ? "/foodcategory"
+    : isConsumerPage
+      ? "/consumer"
+      : "/foodcategory";
+
   return (
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
       <div className="flex w-full items-center justify-between gap-4 px-2 py-0">
@@ -221,19 +239,13 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {userEmail &&
-              (accountType === "commercial" || accountType === "admin") &&
-              (accountType === "admin" || isCommercialPage) &&
-              !hideMasterTableAndFoodCategory && (
+            {showMasterTableNav && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>
             )}
-            {!hideMasterTableAndFoodCategory && (
-              <Link
-                href={isConsumerPage ? "/consumer" : "/foodcategory"}
-                className="font-beckman hover:opacity-80"
-              >
+            {showFoodCategoryNav && (
+              <Link href={foodCategoryHref} className="font-beckman hover:opacity-80">
                 FOOD CATEGORY
               </Link>
             )}
