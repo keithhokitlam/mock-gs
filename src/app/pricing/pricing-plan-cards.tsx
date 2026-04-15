@@ -106,7 +106,7 @@ export default function PricingPlanCards() {
           <div className="flex items-center justify-center mb-4">
             <GoldGroceryIcon />
           </div>
-          <h3 className="mb-2 text-center text-base font-bold">{commercialPlan.title}</h3>
+          <h3 className="mb-3 text-center text-xl font-bold">{commercialPlan.title}</h3>
           <p className="mb-4 text-center text-xs leading-relaxed text-zinc-600">
             {commercialPlan.description}
           </p>
