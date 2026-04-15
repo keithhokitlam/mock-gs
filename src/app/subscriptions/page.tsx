@@ -30,6 +30,12 @@ function normalizeText(value: string) {
     .trim();
 }
 
+function formatConsumerCommercial(value: string | null | undefined): string {
+  if (value === "consumer") return "CONSUMER";
+  if (value === "commercial") return "COMMERCIAL";
+  return "";
+}
+
 export default async function SubscriptionsPage({
   searchParams,
 }: {
@@ -131,19 +137,36 @@ export default async function SubscriptionsPage({
   // Get check-in counts and dates for each user
   const userIds = (subscriptions || []).map(sub => sub.user_id).filter(Boolean);
   let checkInCounts: Map<string, number> = new Map();
-  
+  const userAccountTypeById = new Map<string, string>();
+
   if (userIds.length > 0) {
+    const uniqueUserIds = [...new Set(userIds as string[])];
+    const { data: usersForSubs, error: usersForSubsError } = await supabaseServer
+      .from("users")
+      .select("id, consumer_vs_commercial")
+      .in("id", uniqueUserIds);
+
+    if (usersForSubsError) {
+      console.error("Error fetching user account types for subscriptions:", usersForSubsError);
+    } else if (usersForSubs) {
+      usersForSubs.forEach((u) => {
+        if (u.id) {
+          userAccountTypeById.set(u.id, formatConsumerCommercial(u.consumer_vs_commercial));
+        }
+      });
+    }
+
     try {
       const { data: checkIns, error: checkInError } = await supabaseServer
         .from("check_ins")
         .select("user_id, checked_in_at")
         .in("user_id", userIds)
         .order("checked_in_at", { ascending: true });
-      
+
       if (!checkInError && checkIns) {
-        checkIns.forEach(checkIn => {
-          const userId = checkIn.user_id;
-          checkInCounts.set(userId, (checkInCounts.get(userId) || 0) + 1);
+        checkIns.forEach((checkIn) => {
+          const uid = checkIn.user_id;
+          checkInCounts.set(uid, (checkInCounts.get(uid) || 0) + 1);
         });
       }
     } catch (err) {
@@ -191,8 +214,11 @@ export default async function SubscriptionsPage({
       }
     }
 
+    const accountTypeCell = userId ? userAccountTypeById.get(userId) || "" : "";
+
     return [
       userId,
+      accountTypeCell,
       sub.email || "",
       sub.subscription_start_date || "",
       sub.subscription_end_date || "",
@@ -209,6 +235,7 @@ export default async function SubscriptionsPage({
 
   const headers = [
     "User ID",
+    "CONSUMER / COMMERCIAL",
     "Email",
     "Start Date",
     "End Date",
