@@ -176,7 +176,7 @@ export default async function PricingPage() {
               href="/home"
               className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
             >
-              Let&apos;s get started!
+              Sign Up Here!
             </Link>
           </div>
 
