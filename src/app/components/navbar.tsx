@@ -223,7 +223,7 @@ export default function NavBar() {
           <Link href="/" aria-label="Go to home">
             <Image
               src="/logos/Grocery-Share Logo.png"
-              alt="GroceryShare"
+              alt="Grocery-Share"
               width={48}
               height={48}
               className="h-12 w-auto translate-y-[2px]"

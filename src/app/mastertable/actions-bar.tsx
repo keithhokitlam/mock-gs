@@ -71,7 +71,7 @@ export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastert
     if (format === "excel") {
       downloadFile(
         buildExcelHtml(safeColumns, safeRows),
-        "groceryshare-export.xls",
+        "grocery-share-export.xls",
         "application/vnd.ms-excel"
       );
       return;
@@ -79,14 +79,14 @@ export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastert
     if (format === "csv") {
       downloadFile(
         buildCsv(safeColumns, safeRows),
-        "groceryshare-export.csv",
+        "grocery-share-export.csv",
         "text/csv"
       );
       return;
     }
     downloadFile(
       buildPlainText(safeColumns, safeRows),
-      "groceryshare-export.txt",
+      "grocery-share-export.txt",
       "text/plain"
     );
   };

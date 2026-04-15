@@ -1,6 +1,6 @@
 # Complete Step-by-Step Guide: Subscription Enablement Setup
 
-This guide will walk you through setting up user sign up, email verification, and password reset for your GroceryShare website. Follow each step carefully.
+This guide will walk you through setting up user sign up, email verification, and password reset for your Grocery-Share website. Follow each step carefully.
 
 ---
 
@@ -128,7 +128,7 @@ This guide will walk you through setting up user sign up, email verification, an
 2. **Click** "API Keys" in the left sidebar
 3. **Click** "Create API Key" button
 4. **Fill in:**
-   - **Name:** Type `GroceryShare`
+   - **Name:** Type `Grocery-Share`
    - **Permission:** Select "Full Access" (or "Sending" if available)
 5. **Click** "Add" or "Create"
 6. **Copy the API key** - It starts with `re_...`

@@ -166,7 +166,7 @@ Follow these steps in order:
 1. **Create New Sheet**
    - Go to: https://sheets.google.com
    - Click **"Blank"** to create new spreadsheet
-   - Rename it: `GroceryShare Subscriptions`
+   - Rename it: `Grocery-Share Subscriptions`
 
 2. **Set Up Header Row** (Row 1):
    - **Cell A1**: `User ID` (this is the user_id from Supabase - used to match rows)
@@ -208,7 +208,7 @@ Follow these steps in order:
 2. **Create New Project**
    - Click the project dropdown at the top
    - Click **"New Project"**
-   - **Project name**: `GroceryShare Subscriptions` (or any name)
+   - **Project name**: `Grocery-Share Subscriptions` (or any name)
    - Click **"Create"**
    - Wait for it to create, then make sure it's selected
 

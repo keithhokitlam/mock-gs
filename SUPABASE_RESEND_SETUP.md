@@ -58,7 +58,7 @@
 3. **Get API Key:**
    - In Resend dashboard, click **API Keys** in left sidebar
    - Click **Create API Key**
-   - **Name:** `GroceryShare`
+   - **Name:** `Grocery-Share`
    - **Permission:** Full Access (or just Sending access)
    - Click **Add**
    - **Copy the API key** (starts with `re_...`) - You won't see it again!

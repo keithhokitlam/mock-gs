@@ -120,7 +120,7 @@ function LoginForm() {
             <div className="mx-auto flex justify-center w-[17.5rem]">
               <Image
                 src="/logos/Grocery-Share Logo.png"
-                alt="GroceryShare"
+                alt="Grocery-Share"
                 width={560}
                 height={560}
                 priority

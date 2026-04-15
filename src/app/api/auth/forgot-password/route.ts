@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       let emailResult = await getResend().emails.send({
         from: fromEmail,
         to: email,
-        subject: "Reset your GroceryShare password",
+        subject: "Reset your Grocery-Share password",
         html: `
           <h1>Password Reset Request</h1>
           <p>You requested to reset your password. Click the link below to reset it:</p>
@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
         emailResult = await getResend().emails.send({
           from: fromEmail,
           to: email,
-          subject: "Reset your GroceryShare password",
+          subject: "Reset your Grocery-Share password",
           html: `
             <h1>Password Reset Request</h1>
             <p>You requested to reset your password. Click the link below to reset it:</p>

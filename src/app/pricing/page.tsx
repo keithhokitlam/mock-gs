@@ -45,7 +45,7 @@ export default async function PricingPage() {
       plan_type: planType,
       category: category,
       title: `${planType} Subscription`,
-      description: `Your digital food-savvy friend in your pocket—full access to all GroceryShare category lists, quirky food facts, and kitchen inspiration.`,
+      description: `Your digital food-savvy friend in your pocket—full access to all Grocery-Share category lists, quirky food facts, and kitchen inspiration.`,
       duration_months: 12,
     });
   });
@@ -58,7 +58,7 @@ export default async function PricingPage() {
         plan_type: "standard",
         category: "default",
         title: "Standard Annual Subscription",
-        description: "Our standard annual subscription plan with full access to all GroceryShare category lists.",
+        description: "Our standard annual subscription plan with full access to all Grocery-Share category lists.",
         duration_months: 12,
       },
     ];

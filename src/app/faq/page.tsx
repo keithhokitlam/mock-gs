@@ -43,7 +43,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "What do I get with my subscription?",
-    answer: "Full access to all GroceryShare category lists—your digital food-savvy friend! Think part encyclopedia, part comedy show, and 100% your cheerleader in eating well. Learning about food should be as fun as eating it!",
+    answer: "Full access to all Grocery-Share category lists—your digital food-savvy friend! Think part encyclopedia, part comedy show, and 100% your cheerleader in eating well. Learning about food should be as fun as eating it!",
   },
 ];
 
