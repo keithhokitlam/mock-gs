@@ -32,7 +32,7 @@ export async function getCurrentUser() {
 
   const { data, error } = await supabaseServer
     .from("users")
-    .select("id, email, email_verified")
+    .select("id, email, email_verified, consumer_vs_commercial")
     .eq("id", userId)
     .single();
 

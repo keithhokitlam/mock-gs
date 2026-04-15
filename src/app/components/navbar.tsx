@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [accountType, setAccountType] = useState<"consumer" | "commercial" | "admin" | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -70,10 +71,12 @@ export default function NavBar() {
       .then((data) => {
         if (data.email) {
           setUserEmail(data.email);
+          setAccountType(data.accountType ?? null);
         } else {
           // If no user email and we're on an admin page, it's likely admin/admin
           const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
           setUserEmail(isAdminPage ? "ADMIN" : null);
+          setAccountType(isAdminPage ? "admin" : null);
         }
       })
       .catch((err) => {
@@ -81,6 +84,7 @@ export default function NavBar() {
         // On error, check if we're on admin page
         const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
         setUserEmail(isAdminPage ? "ADMIN" : null);
+        setAccountType(isAdminPage ? "admin" : null);
       });
   }, [pathname]);
 
@@ -108,6 +112,7 @@ export default function NavBar() {
       // Still clear UI if the request fails
     }
     setUserEmail(null);
+    setAccountType(null);
     setShowDropdown(false);
     setShowChangePassword(false);
     router.push("/home");
@@ -239,6 +244,14 @@ export default function NavBar() {
                   <div>
                     <h3 className="text-sm font-semibold text-zinc-900 mb-2">Account Details</h3>
                     <p className="text-sm text-zinc-600">{isAdmin ? "ADMIN" : userEmail}</p>
+                    <p className="mt-1 text-xs text-zinc-500">
+                      Account Type:{" "}
+                      {accountType === "consumer"
+                        ? "Consumer"
+                        : accountType === "admin"
+                        ? "Admin"
+                        : "Commercial"}
+                    </p>
                   </div>
 
                   {/* Change Password */}
