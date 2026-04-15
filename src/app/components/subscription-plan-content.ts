@@ -14,7 +14,7 @@ export const SUBSCRIPTION_PLAN_CONTENT: Record<ConsumerVsCommercial, PlanContent
     description:
       "Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen inspiration!",
     features: [
-      "Full access to all food lists and tasty know-how",
+      "Full access to grocery content you'll love—smart lists, tasty facts, and kitchen inspo in one place",
       "We've got your back—priority support when you need us",
       "Auto-renewal so you never miss a beat (except Alipay)",
     ],
@@ -24,6 +24,7 @@ export const SUBSCRIPTION_PLAN_CONTENT: Record<ConsumerVsCommercial, PlanContent
     description:
       "Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen inspiration!",
     features: [
+      "Full access to grocery content",
       "Full access to all food lists and tasty know-how",
       "We've got your back—priority support when you need us",
       "Auto-renewal so you never miss a beat (except Alipay)",
