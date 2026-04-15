@@ -18,6 +18,14 @@ function parseConsumerVsCommercial(value: unknown): "consumer" | "commercial" {
   return "commercial";
 }
 
+/** PostgREST: column missing from schema cache (migration not applied yet). */
+function isUnknownUserColumnError(error: { code?: string; message?: string } | null): boolean {
+  if (!error) return false;
+  if (error.code === "PGRST204") return true;
+  const m = error.message ?? "";
+  return m.includes("schema cache") && m.includes("column");
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -40,11 +48,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-    const { data: existingUser } = await supabaseServer
+    const { data: existingUser, error: existingLookupError } = await supabaseServer
       .from("users")
       .select("id")
       .eq("email", email.toLowerCase())
-      .single();
+      .maybeSingle();
+
+    if (existingLookupError) {
+      console.error("Signup: lookup user by email failed:", existingLookupError);
+      return NextResponse.json(
+        { error: "Database error. Please try again." },
+        { status: 500 }
+      );
+    }
 
     let user;
     let isExistingUser = false;
@@ -83,12 +99,30 @@ export async function POST(request: NextRequest) {
       if (company) userUpdate.company = company;
       userUpdate.consumer_vs_commercial = consumerVsCommercial;
 
-      const { data: updatedUser, error: updateError } = await supabaseServer
+      let { data: updatedUser, error: updateError } = await supabaseServer
         .from("users")
         .update(userUpdate)
         .eq("id", existingUser.id)
         .select()
         .single();
+
+      if ((updateError || !updatedUser) && updateError && isUnknownUserColumnError(updateError)) {
+        console.warn(
+          "Signup: retrying user update without profile columns — run supabase/migrations/20260415120000_add_users_profile_columns.sql"
+        );
+        const minimalUpdate: Record<string, unknown> = {
+          password_hash: passwordHash,
+          email_verified: false,
+          verification_token: verificationToken,
+          consumer_vs_commercial: consumerVsCommercial,
+        };
+        ({ data: updatedUser, error: updateError } = await supabaseServer
+          .from("users")
+          .update(minimalUpdate)
+          .eq("id", existingUser.id)
+          .select()
+          .single());
+      }
 
       if (updateError || !updatedUser) {
         console.error("Failed to update existing user:", updateError);
@@ -116,18 +150,36 @@ export async function POST(request: NextRequest) {
       if (company) userInsert.company = company;
       userInsert.consumer_vs_commercial = consumerVsCommercial;
 
-      const { data: newUser, error: insertError } = await supabaseServer
+      let { data: newUser, error: insertError } = await supabaseServer
         .from("users")
         .insert(userInsert)
         .select()
         .single();
 
+      if ((insertError || !newUser) && insertError && isUnknownUserColumnError(insertError)) {
+        console.warn(
+          "Signup: retrying user insert without profile columns — run supabase/migrations/20260415120000_add_users_profile_columns.sql"
+        );
+        const minimalInsert: Record<string, unknown> = {
+          email: email.toLowerCase(),
+          password_hash: passwordHash,
+          email_verified: false,
+          verification_token: verificationToken,
+          consumer_vs_commercial: consumerVsCommercial,
+        };
+        ({ data: newUser, error: insertError } = await supabaseServer
+          .from("users")
+          .insert(minimalInsert)
+          .select()
+          .single());
+      }
+
       if (insertError || !newUser) {
         console.error("Failed to create user:", insertError);
         return NextResponse.json(
-          { 
+          {
             error: "Failed to create account",
-            details: process.env.NODE_ENV === "development" ? insertError?.message : undefined
+            details: process.env.NODE_ENV === "development" ? insertError?.message : undefined,
           },
           { status: 500 }
         );
