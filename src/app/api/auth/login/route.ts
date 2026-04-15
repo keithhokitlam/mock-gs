@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     try {
       const result = await supabaseServer
         .from("users")
-        .select("id, email, password_hash, email_verified")
+        .select("id, email, password_hash, email_verified, first_name, last_name, company")
         .eq("email", email.toLowerCase())
         .limit(1);
       
@@ -165,6 +165,9 @@ export async function POST(request: NextRequest) {
             user_id: user.id,
             email: user.email,
             checked_in_at: new Date().toISOString(),
+            first_name: user.first_name ?? null,
+            last_name: user.last_name ?? null,
+            company: user.company ?? null,
           });
         console.log(`✅ Recorded check-in for user ${user.email}`);
       } catch (checkInError: any) {

@@ -26,6 +26,25 @@ function isUnknownUserColumnError(error: { code?: string; message?: string } | n
   return m.includes("schema cache") && m.includes("column");
 }
 
+/** Snapshot for subscriptions / denormalized profile (nullable text). */
+function profileSnapshotForRelatedTables(
+  firstName: unknown,
+  lastName: unknown,
+  company: unknown,
+  userRow: Record<string, unknown> | null | undefined
+): { first_name: string | null; last_name: string | null; company: string | null } {
+  const pick = (fromBody: unknown, fromRow: unknown): string | null => {
+    if (fromBody != null && String(fromBody).trim() !== "") return String(fromBody).trim();
+    if (fromRow != null && String(fromRow).trim() !== "") return String(fromRow).trim();
+    return null;
+  };
+  return {
+    first_name: pick(firstName, userRow?.first_name),
+    last_name: pick(lastName, userRow?.last_name),
+    company: pick(company, userRow?.company),
+  };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -197,6 +216,13 @@ export async function POST(request: NextRequest) {
     const endDate = new Date();
     endDate.setFullYear(endDate.getFullYear() + 1); // Add 1 year
     
+    const profileSnap = profileSnapshotForRelatedTables(
+      firstName,
+      lastName,
+      company,
+      user as Record<string, unknown>
+    );
+
     const { error: subscriptionError } = await supabaseServer
       .from("subscriptions")
       .insert({
@@ -205,6 +231,9 @@ export async function POST(request: NextRequest) {
         subscription_start_date: startDate.toISOString().split("T")[0],
         subscription_end_date: endDate.toISOString().split("T")[0],
         status: "active",
+        first_name: profileSnap.first_name,
+        last_name: profileSnap.last_name,
+        company: profileSnap.company,
       });
 
     if (subscriptionError) {

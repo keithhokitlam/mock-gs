@@ -44,6 +44,12 @@ export async function POST(request: NextRequest) {
     const startDateStr = startDate.toISOString().split("T")[0];
     const endDateStr = endDate.toISOString().split("T")[0];
 
+    const { data: userProfile } = await supabaseServer
+      .from("users")
+      .select("first_name, last_name, company")
+      .eq("id", userId)
+      .maybeSingle();
+
     // Create subscription
     const { data: subscription, error } = await supabaseServer
       .from("subscriptions")
@@ -54,6 +60,9 @@ export async function POST(request: NextRequest) {
         subscription_end_date: endDateStr,
         status: "active",
         plan_type: plan_type || null,
+        first_name: userProfile?.first_name ?? null,
+        last_name: userProfile?.last_name ?? null,
+        company: userProfile?.company ?? null,
       })
       .select()
       .single();
