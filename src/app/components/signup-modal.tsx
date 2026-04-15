@@ -74,7 +74,7 @@ const ExternalLinkIcon = () => (
 );
 
 export type ConsumerVsCommercial = "consumer" | "commercial";
-const CONSUMER_SIGNUP_ENABLED = false;
+const CONSUMER_SIGNUP_ENABLED = true;
 
 type SignupModalProps = {
   isOpen: boolean;
