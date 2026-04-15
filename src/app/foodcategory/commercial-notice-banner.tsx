@@ -53,7 +53,7 @@ function CommercialNoticeInner() {
           id="commercial-notice-title"
           className="mt-10 text-center text-sm leading-relaxed text-zinc-800 sm:mt-11"
         >
-          This requires Commercial subscription. You can{" "}
+          This requires a Standard Annual Subscription. You can{" "}
           <Link
             href="/pricing"
             className="font-semibold text-[#2B6B4A] underline hover:no-underline"
