@@ -179,8 +179,8 @@ export default function SignupModal({
           X Close
         </button>
 
-        <h2 className="mb-6 text-2xl font-semibold text-zinc-900">
-          Join the GroceryShare family!
+        <h2 className="mb-6 pr-28 text-2xl font-semibold text-zinc-900">
+          Join the Grocery-Share family!
         </h2>
 
         {success ? (
