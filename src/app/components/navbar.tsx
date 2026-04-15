@@ -281,7 +281,9 @@ export default function NavBar() {
                       <p className="mt-1 text-xs text-zinc-500">
                         Subscription ends:{" "}
                         <span className="font-medium text-zinc-700">
-                          {formatSubscriptionEndDate(subscriptionEndDate)}
+                          {accountType === "consumer"
+                            ? "free"
+                            : formatSubscriptionEndDate(subscriptionEndDate)}
                         </span>
                       </p>
                     )}
