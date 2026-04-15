@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import NavBar from "../components/navbar";
 import ActionsBar from "../mastertable/actions-bar";
 import AdminTable, { type AdminColumn } from "../mastertable/table";
 import fruitsData from "@/data/fruits.json";
+import { getCurrentUser } from "@/lib/auth";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 type FilterValue = string | string[];
@@ -36,6 +38,11 @@ export default async function FruitsPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  const user = await getCurrentUser();
+  if (user?.consumer_vs_commercial === "consumer") {
+    redirect("/foodcategory?need_commercial=1");
+  }
+
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const headers = rows[0] || [];
   const dataRows = rows.slice(1);

@@ -118,7 +118,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
     // Free Consumer accounts: Food Category only (no Master Table)
     if (user.consumer_vs_commercial === "consumer") {
-      redirect("/foodcategory");
+      redirect("/foodcategory?need_commercial=1");
     }
 
     // Check if user has an active subscription

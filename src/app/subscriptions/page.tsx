@@ -69,7 +69,7 @@ export default async function SubscriptionsPage({
 
     // Consumer tier: admin subscriptions UI is for Standard (commercial) only
     if (user.consumer_vs_commercial === "consumer") {
-      redirect("/foodcategory");
+      redirect("/foodcategory?need_commercial=1");
     }
 
     // Check if user has an active subscription
