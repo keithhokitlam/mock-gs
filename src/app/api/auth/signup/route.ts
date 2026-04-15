@@ -12,10 +12,17 @@ function getResend() {
   return new Resend(apiKey);
 }
 
+function parseConsumerVsCommercial(value: unknown): "consumer" | "commercial" {
+  if (value === "consumer") return "consumer";
+  if (value === "commercial") return "commercial";
+  return "commercial";
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { email, password, firstName, lastName, company } = body;
+    const consumerVsCommercial = parseConsumerVsCommercial(body.consumer_vs_commercial);
 
     // Validation
     if (!email || !password) {
@@ -74,6 +81,7 @@ export async function POST(request: NextRequest) {
       if (firstName) userUpdate.first_name = firstName;
       if (lastName) userUpdate.last_name = lastName;
       if (company) userUpdate.company = company;
+      userUpdate.consumer_vs_commercial = consumerVsCommercial;
 
       const { data: updatedUser, error: updateError } = await supabaseServer
         .from("users")
@@ -106,6 +114,7 @@ export async function POST(request: NextRequest) {
       if (firstName) userInsert.first_name = firstName;
       if (lastName) userInsert.last_name = lastName;
       if (company) userInsert.company = company;
+      userInsert.consumer_vs_commercial = consumerVsCommercial;
 
       const { data: newUser, error: insertError } = await supabaseServer
         .from("users")

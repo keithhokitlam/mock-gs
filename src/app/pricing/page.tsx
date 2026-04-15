@@ -214,7 +214,7 @@ export default async function PricingPage() {
               TEMPORARY FREE TRIAL
             </p>
             <Link
-              href="/home"
+              href="/home?account=commercial"
               className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
             >
               Sign Up Here!

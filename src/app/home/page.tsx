@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useMemo } from "react";
 import SignupModal from "../components/signup-modal";
 import ForgotPasswordModal from "../components/forgot-password-modal";
 import NavBar from "../components/navbar";
@@ -16,6 +16,12 @@ function LoginForm() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const consumerVsCommercial = useMemo(() => {
+    const a = searchParams.get("account");
+    if (a === "consumer") return "consumer" as const;
+    return "commercial" as const;
+  }, [searchParams]);
 
   // Check for error messages in URL parameters (from redirects)
   useEffect(() => {
@@ -211,7 +217,11 @@ function LoginForm() {
           </p>
         </div>
       </main>
-      <SignupModal isOpen={showSignup} onClose={() => setShowSignup(false)} />
+      <SignupModal
+        isOpen={showSignup}
+        onClose={() => setShowSignup(false)}
+        consumerVsCommercial={consumerVsCommercial}
+      />
       <ForgotPasswordModal
         isOpen={showForgotPassword}
         onClose={() => setShowForgotPassword(false)}

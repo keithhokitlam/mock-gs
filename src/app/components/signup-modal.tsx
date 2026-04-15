@@ -47,12 +47,20 @@ const ExternalLinkIcon = () => (
   </svg>
 );
 
+export type ConsumerVsCommercial = "consumer" | "commercial";
+
 type SignupModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  /** From /home?account=consumer | commercial — stored on the user row in Supabase */
+  consumerVsCommercial?: ConsumerVsCommercial;
 };
 
-export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
+export default function SignupModal({
+  isOpen,
+  onClose,
+  consumerVsCommercial = "commercial",
+}: SignupModalProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -106,6 +114,7 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
           company: company || undefined,
           email,
           password,
+          consumer_vs_commercial: consumerVsCommercial,
         }),
       });
 
@@ -315,32 +324,30 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
               </div>
             </div>
 
-            {/* Subscription Plan Box */}
+            {/* Plan summary — matches consumer vs commercial signup intent */}
             <div className="mt-4 rounded-lg border border-zinc-200 bg-zinc-50 p-4">
-              {/* Gold Icon */}
               <div className="flex items-center justify-center mb-3">
                 <GoldGroceryIcon />
               </div>
 
-              {/* Title */}
               <h3 className="text-lg font-bold mb-2 text-center text-zinc-900">
-                Standard Annual Subscription
+                {consumerVsCommercial === "consumer"
+                  ? "Free Consumer account"
+                  : "Standard Annual Subscription"}
               </h3>
 
-              {/* Description */}
               <p className="text-zinc-600 mb-3 text-xs leading-relaxed text-center">
-                Your digital food-savvy friend—full access to all category lists,
-                quirky food facts, and kitchen inspiration!
+                {consumerVsCommercial === "consumer"
+                  ? "Your digital food-savvy friend—category lists, quirky food facts, and kitchen inspiration."
+                  : "Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen inspiration!"}
               </p>
 
-              {/* Duration */}
-              <div className="text-center mb-3">
-                <span className="text-xl font-bold text-zinc-900">
-                  12 months of:
-                </span>
-              </div>
+              {consumerVsCommercial === "commercial" ? (
+                <div className="text-center mb-3">
+                  <span className="text-xl font-bold text-zinc-900">12 months of:</span>
+                </div>
+              ) : null}
 
-              {/* Features - same as /pricing */}
               <ul className="space-y-1.5 mb-3 text-sm text-zinc-600">
                 <li className="flex items-start">
                   <span className="text-green-500 mr-2">✓</span>
@@ -350,10 +357,12 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   <span className="text-green-500 mr-2">✓</span>
                   <span>We&apos;ve got your back—priority support when you need us</span>
                 </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
-                  <span>Auto-renewal so you never miss a beat (except Alipay)</span>
-                </li>
+                {consumerVsCommercial === "commercial" ? (
+                  <li className="flex items-start">
+                    <span className="text-green-500 mr-2">✓</span>
+                    <span>Auto-renewal so you never miss a beat (except Alipay)</span>
+                  </li>
+                ) : null}
               </ul>
             </div>
 
