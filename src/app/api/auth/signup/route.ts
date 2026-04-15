@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
+import { uploadSignupSignaturePng } from "@/lib/google-drive";
 import bcrypt from "bcryptjs";
 import { Resend } from "resend";
 import crypto from "crypto";
@@ -16,6 +17,26 @@ function parseConsumerVsCommercial(value: unknown): "consumer" | "commercial" {
   if (value === "consumer") return "consumer";
   if (value === "commercial") return "commercial";
   return "commercial";
+}
+
+function decodeSignaturePngBase64(
+  raw: unknown
+): { ok: true; buffer: Buffer } | { ok: false; message: string } {
+  if (typeof raw !== "string" || raw.trim() === "") {
+    return { ok: false, message: "A digital signature is required to sign up." };
+  }
+  const trimmed = raw.trim();
+  const payload = trimmed.includes(",") ? trimmed.slice(trimmed.indexOf(",") + 1) : trimmed;
+  let buffer: Buffer;
+  try {
+    buffer = Buffer.from(payload, "base64");
+  } catch {
+    return { ok: false, message: "Invalid signature data." };
+  }
+  if (buffer.length < 1200) {
+    return { ok: false, message: "Please draw your signature in the signature box." };
+  }
+  return { ok: true, buffer };
 }
 
 /** PostgREST: column missing from schema cache (migration not applied yet). */
@@ -85,7 +106,6 @@ export async function POST(request: NextRequest) {
     let isExistingUser = false;
 
     if (existingUser) {
-      // User exists - check if they have an active subscription
       const { data: activeSubscriptions } = await supabaseServer
         .from("subscriptions")
         .select("id")
@@ -93,7 +113,6 @@ export async function POST(request: NextRequest) {
         .eq("status", "active");
 
       if (activeSubscriptions && activeSubscriptions.length > 0) {
-        // Email exists and has active subscription - block signup, force Forgot Password
         return NextResponse.json(
           {
             error: "An account with this email already exists and has an active subscription. Please use the Forgot Password button on the Sign In page to access your account.",
@@ -101,8 +120,29 @@ export async function POST(request: NextRequest) {
           { status: 409 }
         );
       }
+    }
 
-      // No active subscription - allow re-signup (update password and create new subscription)
+    const sigDecoded = decodeSignaturePngBase64(body.signaturePngBase64);
+    if (!sigDecoded.ok) {
+      return NextResponse.json({ error: sigDecoded.message }, { status: 400 });
+    }
+
+    try {
+      await uploadSignupSignaturePng(sigDecoded.buffer, String(email).toLowerCase());
+    } catch (driveErr: unknown) {
+      console.error("Signup: Google Drive signature upload failed:", driveErr);
+      const message = driveErr instanceof Error ? driveErr.message : String(driveErr);
+      return NextResponse.json(
+        {
+          error:
+            "We couldn't save your signature right now. Please try again in a moment, or contact support if this keeps happening.",
+          details: process.env.NODE_ENV === "development" ? message : undefined,
+        },
+        { status: 503 }
+      );
+    }
+
+    if (existingUser) {
       isExistingUser = true;
       const passwordHash = await bcrypt.hash(password, 10);
       

@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import SignupSignaturePad, {
+  type SignupSignaturePadHandle,
+} from "./signup-signature-pad";
 import {
   SUBSCRIPTION_PLAN_CONTENT,
   type ConsumerVsCommercial,
@@ -60,23 +63,6 @@ const GoldResearchIcon = () => (
   </svg>
 );
 
-const ExternalLinkIcon = () => (
-  <svg
-    className="w-3 h-3 shrink-0"
-    viewBox="0 0 12 12"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <path d="M10 6V9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3" />
-    <path d="M7 1h4v4" />
-    <path d="M11 1 5 7" />
-  </svg>
-);
-
 const CONSUMER_SIGNUP_ENABLED = true;
 
 type SignupModalProps = {
@@ -99,7 +85,8 @@ export default function SignupModal({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [hasSignature, setHasSignature] = useState(false);
+  const signaturePadRef = useRef<SignupSignaturePadHandle>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -125,8 +112,9 @@ export default function SignupModal({
       return;
     }
 
-    if (!agreeToTerms) {
-      setError("You must agree to the Terms of Use and Privacy Policy to create an account");
+    const signatureDataUrl = signaturePadRef.current?.toDataURL();
+    if (!signatureDataUrl) {
+      setError("Please draw your signature in the box below to continue.");
       return;
     }
 
@@ -158,6 +146,7 @@ export default function SignupModal({
           email,
           password,
           consumer_vs_commercial: selectedPlan,
+          signaturePngBase64: signatureDataUrl,
         }),
       });
 
@@ -176,7 +165,8 @@ export default function SignupModal({
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      setAgreeToTerms(false);
+      setHasSignature(false);
+      signaturePadRef.current?.clear();
     } catch (err) {
       setError("An error occurred. Please try again.");
     } finally {
@@ -480,48 +470,51 @@ export default function SignupModal({
               </button>
             </div>
 
-            <label className="flex gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={agreeToTerms}
-                onChange={(e) => setAgreeToTerms(e.target.checked)}
-                className="mt-1 h-4 w-4 rounded border-zinc-300 text-[#2B6B4A] focus:ring-[#2B6B4A]"
+            <div className="space-y-2">
+              <p className="text-xs leading-relaxed text-zinc-700">
+                I will digitally sign to confirm that I have read and agree to the{" "}
+                <Link
+                  href="/legal#privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[#2B6B4A] underline hover:no-underline"
+                >
+                  privacy policy
+                </Link>
+                ,{" "}
+                <Link
+                  href="/legal#terms-of-service"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[#2B6B4A] underline hover:no-underline"
+                >
+                  terms of service
+                </Link>
+                ,{" "}
+                <Link
+                  href="/legal#disclaimer-consumer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[#2B6B4A] underline hover:no-underline"
+                >
+                  disclaimer for the consumer section
+                </Link>
+                , and{" "}
+                <Link
+                  href="/legal#disclaimer-commercial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[#2B6B4A] underline hover:no-underline"
+                >
+                  disclaimer for the commercial section
+                </Link>{" "}
+                (if applicable).
+              </p>
+              <SignupSignaturePad
+                ref={signaturePadRef}
+                onHasDrawingChange={setHasSignature}
               />
-              <span className="text-xs text-zinc-700 leading-relaxed">
-                I agree to the{" "}
-                <Link
-                  href="/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#2B6B4A] underline hover:text-[#1f4d35] inline-flex items-center gap-0.5"
-                >
-                  Terms of Use
-                  <ExternalLinkIcon />
-                </Link>{" "}
-                and{" "}
-                <Link
-                  href="/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#2B6B4A] underline hover:text-[#1f4d35] inline-flex items-center gap-0.5"
-                >
-                  Privacy Policy
-                  <ExternalLinkIcon />
-                </Link>{" "}
-                and declare that I have read the information that is required in
-                accordance with{" "}
-                <a
-                  href="https://gdpr-info.eu/art-13-gdpr/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#2B6B4A] underline hover:text-[#1f4d35] inline-flex items-center gap-0.5"
-                >
-                  Article 13 of the GDPR
-                  <ExternalLinkIcon />
-                </a>
-                .
-              </span>
-            </label>
+            </div>
 
             {error && (
               <p className="text-sm text-red-600" role="alert">
@@ -531,7 +524,7 @@ export default function SignupModal({
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !hasSignature}
               className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300 disabled:opacity-50"
             >
               {loading ? "Creating account..." : "Sign up"}
