@@ -79,14 +79,14 @@ const CONSUMER_SIGNUP_ENABLED = true;
 type SignupModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  /** From /home?account=consumer | commercial — stored on the user row in Supabase */
-  consumerVsCommercial?: ConsumerVsCommercial;
+  /** When the modal opens, pre-select this plan (pricing buttons, /home?account=). Null = user chooses. */
+  defaultSelectedPlan?: ConsumerVsCommercial | null;
 };
 
 export default function SignupModal({
   isOpen,
   onClose,
-  consumerVsCommercial = "commercial",
+  defaultSelectedPlan = null,
 }: SignupModalProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -104,8 +104,8 @@ export default function SignupModal({
 
   useEffect(() => {
     if (!isOpen) return;
-    setSelectedPlan(null);
-  }, [isOpen, consumerVsCommercial]);
+    setSelectedPlan(defaultSelectedPlan ?? null);
+  }, [isOpen, defaultSelectedPlan]);
 
   if (!isOpen) return null;
 

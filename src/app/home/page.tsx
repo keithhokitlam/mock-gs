@@ -17,10 +17,12 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const consumerVsCommercial = useMemo(() => {
+  /** Pre-select signup plan only when /home?account=consumer|commercial (not for plain /home). */
+  const defaultSelectedPlan = useMemo(() => {
     const a = searchParams.get("account");
     if (a === "consumer") return "consumer" as const;
-    return "commercial" as const;
+    if (a === "commercial") return "commercial" as const;
+    return null;
   }, [searchParams]);
 
   // Check for error messages in URL parameters (from redirects)
@@ -220,7 +222,7 @@ function LoginForm() {
       <SignupModal
         isOpen={showSignup}
         onClose={() => setShowSignup(false)}
-        consumerVsCommercial={consumerVsCommercial}
+        defaultSelectedPlan={defaultSelectedPlan}
       />
       <ForgotPasswordModal
         isOpen={showForgotPassword}
