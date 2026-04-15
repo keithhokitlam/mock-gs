@@ -477,8 +477,16 @@ export default function SignupModal({
                       <span>Auto-renewal so you never miss a beat (except Alipay)</span>
                     </li>
                   </ul>
-                  <p className={`text-center text-xs font-bold uppercase tracking-[0.15em] ${selectedPlan === "commercial" ? "text-white" : "text-[#2B6B4A] group-hover:text-white"}`}>
-                    TEMPORARY FREE TRIAL
+                  <p className="text-center">
+                    <span
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] transition-colors ${
+                        selectedPlan === "commercial"
+                          ? "bg-yellow-300 text-[#1f4d35]"
+                          : "bg-yellow-200 text-[#2B6B4A] group-hover:bg-yellow-300 group-hover:text-[#1f4d35]"
+                      } animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]`}
+                    >
+                      LIMITED TIME FREE TRIAL
+                    </span>
                   </p>
                 </div>
               </button>
