@@ -116,6 +116,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       redirect("/home");
     }
 
+    // Free Consumer accounts: Food Category only (no Master Table)
+    if (user.consumer_vs_commercial === "consumer") {
+      redirect("/foodcategory");
+    }
+
     // Check if user has an active subscription
     const { data: subscriptions, error: subscriptionError } = await supabaseServer
       .from("subscriptions")

@@ -199,7 +199,10 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {userEmail && isCommercialPage && !hideMasterTableAndFoodCategory && (
+            {userEmail &&
+              (accountType === "commercial" || accountType === "admin") &&
+              isCommercialPage &&
+              !hideMasterTableAndFoodCategory && (
               <Link href="/mastertable" className="font-beckman hover:opacity-80">
                 MASTER TABLE
               </Link>

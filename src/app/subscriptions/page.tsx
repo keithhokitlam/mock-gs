@@ -61,6 +61,11 @@ export default async function SubscriptionsPage({
       redirect("/home");
     }
 
+    // Consumer tier: admin subscriptions UI is for Standard (commercial) only
+    if (user.consumer_vs_commercial === "consumer") {
+      redirect("/foodcategory");
+    }
+
     // Check if user has an active subscription
     const { data: subscriptions, error: subscriptionError } = await supabaseServer
       .from("subscriptions")
