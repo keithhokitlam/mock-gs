@@ -88,10 +88,6 @@ export default function SignupModal({
   onClose,
   consumerVsCommercial = "commercial",
 }: SignupModalProps) {
-  const initialPlan: ConsumerVsCommercial =
-    consumerVsCommercial === "consumer" && !CONSUMER_SIGNUP_ENABLED
-      ? "commercial"
-      : consumerVsCommercial;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -104,11 +100,12 @@ export default function SignupModal({
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<ConsumerVsCommercial>(initialPlan);
+  const [selectedPlan, setSelectedPlan] = useState<ConsumerVsCommercial | null>(null);
 
   useEffect(() => {
-    setSelectedPlan(initialPlan);
-  }, [isOpen, initialPlan]);
+    if (!isOpen) return;
+    setSelectedPlan(null);
+  }, [isOpen, consumerVsCommercial]);
 
   if (!isOpen) return null;
 
@@ -135,6 +132,11 @@ export default function SignupModal({
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      return;
+    }
+
+    if (!selectedPlan) {
+      setError("Please select Free Consumer Subscription or Standard Annual Subscription");
       return;
     }
 
@@ -368,12 +370,12 @@ export default function SignupModal({
                   onClick={() => setSelectedPlan("consumer")}
                   className={`group relative block w-full rounded-lg border p-4 text-left shadow-sm transition-colors ${
                     selectedPlan === "consumer"
-                      ? "border-[#2B6B4A] bg-green-50"
+                      ? "border-[#2B6B4A] bg-[#2B6B4A]"
                       : "border-zinc-200 bg-white hover:border-[#2B6B4A] hover:bg-[#2B6B4A]"
                   }`}
                 >
                   {selectedPlan === "consumer" && (
-                    <span className="pointer-events-none absolute inset-0 flex items-center justify-center text-4xl font-black tracking-[0.2em] text-[#2B6B4A]/10">
+                    <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-5xl font-black tracking-[0.2em] text-white/35 [transform:rotate(-24deg)]">
                       SELECTED
                     </span>
                   )}
@@ -381,24 +383,24 @@ export default function SignupModal({
                     <div className="mb-3 flex items-center justify-center">
                       <GoldResearchIcon />
                     </div>
-                    <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "consumer" ? "text-[#2B6B4A]" : "text-zinc-900 group-hover:text-white"}`}>
+                    <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "consumer" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
                       Free Consumer Subscription
                     </h3>
-                    <p className={`mb-3 text-center text-xs leading-relaxed ${selectedPlan === "consumer" ? "text-zinc-700" : "text-zinc-600 group-hover:text-white/90"}`}>
+                    <p className={`mb-3 text-center text-xs leading-relaxed ${selectedPlan === "consumer" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
                       Your digital food-savvy friend—full access to all category lists,
                       quirky food facts, and kitchen inspiration!
                     </p>
-                    <ul className={`space-y-1.5 text-sm ${selectedPlan === "consumer" ? "text-zinc-700" : "text-zinc-600 group-hover:text-white/90"}`}>
+                    <ul className={`space-y-1.5 text-sm ${selectedPlan === "consumer" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
                       <li className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-[#2B6B4A]" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                         <span>Full access to all food lists and tasty know-how</span>
                       </li>
                       <li className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-[#2B6B4A]" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                         <span>We&apos;ve got your back—priority support when you need us</span>
                       </li>
                       <li className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-[#2B6B4A]" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                         <span>Auto-renewal so you never miss a beat (except Alipay)</span>
                       </li>
                     </ul>
@@ -438,12 +440,12 @@ export default function SignupModal({
                 onClick={() => setSelectedPlan("commercial")}
                 className={`group relative block w-full rounded-lg border p-4 text-left shadow-sm transition-colors ${
                   selectedPlan === "commercial"
-                    ? "border-[#2B6B4A] bg-green-50"
+                    ? "border-[#2B6B4A] bg-[#2B6B4A]"
                     : "border-zinc-200 bg-white hover:border-[#2B6B4A] hover:bg-[#2B6B4A]"
                 }`}
               >
                 {selectedPlan === "commercial" && (
-                  <span className="pointer-events-none absolute inset-0 flex items-center justify-center text-4xl font-black tracking-[0.2em] text-[#2B6B4A]/10">
+                  <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-5xl font-black tracking-[0.2em] text-white/35 [transform:rotate(-24deg)]">
                     SELECTED
                   </span>
                 )}
@@ -451,31 +453,31 @@ export default function SignupModal({
                   <div className="mb-3 flex items-center justify-center">
                     <GoldGroceryIcon />
                   </div>
-                  <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "commercial" ? "text-[#2B6B4A]" : "text-zinc-900 group-hover:text-white"}`}>
+                  <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
                     Standard Annual Subscription
                   </h3>
-                  <p className={`mb-4 text-center text-xs leading-relaxed ${selectedPlan === "commercial" ? "text-zinc-700" : "text-zinc-600 group-hover:text-white/90"}`}>
+                  <p className={`mb-4 text-center text-xs leading-relaxed ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
                     Your digital food-savvy friend—full access to all category lists,
                     quirky food facts, and kitchen inspiration!
                   </p>
                   <div className="mb-4 text-center">
-                    <span className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-zinc-900" : "text-zinc-900 group-hover:text-white"}`}>12 months of:</span>
+                    <span className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>12 months of:</span>
                   </div>
-                  <ul className={`mb-4 space-y-2 text-sm ${selectedPlan === "commercial" ? "text-zinc-700" : "text-zinc-600 group-hover:text-white/90"}`}>
+                  <ul className={`mb-4 space-y-2 text-sm ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
                     <li className="flex items-start">
-                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-[#2B6B4A]" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                       <span>Full access to all food lists and tasty know-how</span>
                     </li>
                     <li className="flex items-start">
-                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-[#2B6B4A]" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                       <span>We&apos;ve got your back—priority support when you need us</span>
                     </li>
                     <li className="flex items-start">
-                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-[#2B6B4A]" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                       <span>Auto-renewal so you never miss a beat (except Alipay)</span>
                     </li>
                   </ul>
-                  <p className={`text-center text-xs font-bold uppercase tracking-[0.15em] ${selectedPlan === "commercial" ? "text-[#2B6B4A]" : "text-[#2B6B4A] group-hover:text-white"}`}>
+                  <p className={`text-center text-xs font-bold uppercase tracking-[0.15em] ${selectedPlan === "commercial" ? "text-white" : "text-[#2B6B4A] group-hover:text-white"}`}>
                     TEMPORARY FREE TRIAL
                   </p>
                 </div>
