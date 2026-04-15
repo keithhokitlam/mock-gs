@@ -395,14 +395,14 @@ export default function SignupModal({
                 <h3 className="mb-2 text-center text-base font-bold text-zinc-900">
                   Standard Annual Subscription
                 </h3>
-                <p className="mb-3 text-center text-xs leading-relaxed text-zinc-600">
+                <p className="mb-4 text-center text-xs leading-relaxed text-zinc-600">
                   Your digital food-savvy friend—full access to all category lists,
                   quirky food facts, and kitchen inspiration!
                 </p>
-                <div className="mb-3 text-center">
+                <div className="mb-4 text-center">
                   <span className="text-lg font-bold text-zinc-900">12 months of:</span>
                 </div>
-                <ul className="space-y-1.5 text-sm text-zinc-600">
+                <ul className="mb-4 space-y-2 text-sm text-zinc-600">
                   <li className="flex items-start">
                     <span className="mr-2 text-green-500">✓</span>
                     <span>Full access to all food lists and tasty know-how</span>
@@ -416,6 +416,9 @@ export default function SignupModal({
                     <span>Auto-renewal so you never miss a beat (except Alipay)</span>
                   </li>
                 </ul>
+                <p className="text-center text-xs font-bold uppercase tracking-[0.15em] text-[#2B6B4A]">
+                  TEMPORARY FREE TRIAL
+                </p>
               </div>
             </div>
 
