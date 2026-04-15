@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {
+  SUBSCRIPTION_PLAN_CONTENT,
+  type ConsumerVsCommercial,
+} from "./subscription-plan-content";
 
 // Gold grocery icon SVG (shopping basket with groceries)
 const GoldGroceryIcon = () => (
@@ -73,7 +77,6 @@ const ExternalLinkIcon = () => (
   </svg>
 );
 
-export type ConsumerVsCommercial = "consumer" | "commercial";
 const CONSUMER_SIGNUP_ENABLED = true;
 
 type SignupModalProps = {
@@ -88,6 +91,8 @@ export default function SignupModal({
   onClose,
   defaultSelectedPlan = null,
 }: SignupModalProps) {
+  const consumerPlan = SUBSCRIPTION_PLAN_CONTENT.consumer;
+  const commercialPlan = SUBSCRIPTION_PLAN_CONTENT.commercial;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -384,25 +389,18 @@ export default function SignupModal({
                       <GoldResearchIcon />
                     </div>
                     <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "consumer" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
-                      Free Consumer Subscription
+                      {consumerPlan.title}
                     </h3>
                     <p className={`mb-3 text-center text-xs leading-relaxed ${selectedPlan === "consumer" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                      Your digital food-savvy friend—full access to all category lists,
-                      quirky food facts, and kitchen inspiration!
+                      {consumerPlan.description}
                     </p>
                     <ul className={`space-y-1.5 text-sm ${selectedPlan === "consumer" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                      <li className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
-                        <span>Full access to all food lists and tasty know-how</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
-                        <span>We&apos;ve got your back—priority support when you need us</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
-                        <span>Auto-renewal so you never miss a beat (except Alipay)</span>
-                      </li>
+                      {consumerPlan.features.map((feature) => (
+                        <li key={feature} className="flex items-start">
+                          <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </button>
@@ -412,25 +410,18 @@ export default function SignupModal({
                     <GoldResearchIcon />
                   </div>
                   <h3 className="mb-2 text-center text-base font-bold text-zinc-500">
-                    Free Consumer Subscription
+                    {consumerPlan.title}
                   </h3>
                   <p className="mb-3 text-center text-xs leading-relaxed text-zinc-500">
-                    Your digital food-savvy friend—full access to all category lists,
-                    quirky food facts, and kitchen inspiration!
+                    {consumerPlan.description}
                   </p>
                   <ul className="space-y-1.5 text-sm text-zinc-500">
-                    <li className="flex items-start">
-                      <span className="mr-2 text-zinc-400">✓</span>
-                      <span>Full access to all food lists and tasty know-how</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-zinc-400">✓</span>
-                      <span>We&apos;ve got your back—priority support when you need us</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-zinc-400">✓</span>
-                      <span>Auto-renewal so you never miss a beat (except Alipay)</span>
-                    </li>
+                    {consumerPlan.features.map((feature) => (
+                      <li key={feature} className="flex items-start">
+                        <span className="mr-2 text-zinc-400">✓</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )}
@@ -454,28 +445,21 @@ export default function SignupModal({
                     <GoldGroceryIcon />
                   </div>
                   <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
-                    Standard Annual Subscription
+                    {commercialPlan.title}
                   </h3>
                   <p className={`mb-4 text-center text-xs leading-relaxed ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                    Your digital food-savvy friend—full access to all category lists,
-                    quirky food facts, and kitchen inspiration!
+                    {commercialPlan.description}
                   </p>
                   <div className="mb-4 text-center">
-                    <span className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>12 months of:</span>
+                    <span className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>{commercialPlan.durationLabel}</span>
                   </div>
                   <ul className={`mb-4 space-y-2 text-sm ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                    <li className="flex items-start">
-                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
-                      <span>Full access to all food lists and tasty know-how</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
-                      <span>We&apos;ve got your back—priority support when you need us</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
-                      <span>Auto-renewal so you never miss a beat (except Alipay)</span>
-                    </li>
+                    {commercialPlan.features.map((feature) => (
+                      <li key={feature} className="flex items-start">
+                        <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                   <p className="text-center">
                     <span
@@ -485,7 +469,7 @@ export default function SignupModal({
                           : "bg-yellow-200 text-[#2B6B4A] group-hover:bg-yellow-300 group-hover:text-[#1f4d35]"
                       } animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]`}
                     >
-                      LIMITED TIME FREE TRIAL
+                      {commercialPlan.trialBadgeLabel}
                     </span>
                   </p>
                 </div>

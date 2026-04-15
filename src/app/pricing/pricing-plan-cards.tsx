@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import SignupModal, { type ConsumerVsCommercial } from "../components/signup-modal";
+import SignupModal from "../components/signup-modal";
+import {
+  SUBSCRIPTION_PLAN_CONTENT,
+  type ConsumerVsCommercial,
+} from "../components/subscription-plan-content";
 
 // Gold grocery icon SVG (shopping basket with groceries)
 const GoldGroceryIcon = () => (
@@ -62,6 +66,8 @@ const GoldResearchIcon = () => (
 export default function PricingPlanCards() {
   const [signupOpen, setSignupOpen] = useState(false);
   const [defaultSelectedPlan, setDefaultSelectedPlan] = useState<ConsumerVsCommercial | null>(null);
+  const consumerPlan = SUBSCRIPTION_PLAN_CONTENT.consumer;
+  const commercialPlan = SUBSCRIPTION_PLAN_CONTENT.commercial;
 
   const openSignup = (plan: ConsumerVsCommercial) => {
     setDefaultSelectedPlan(plan);
@@ -75,24 +81,17 @@ export default function PricingPlanCards() {
           <div className="flex items-center justify-center mb-4">
             <GoldResearchIcon />
           </div>
-          <h3 className="text-xl font-bold mb-3 text-center">Free Consumer Subscription</h3>
+          <h3 className="text-xl font-bold mb-3 text-center">{consumerPlan.title}</h3>
           <p className="text-zinc-600 mb-4 text-sm leading-relaxed">
-            Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen
-            inspiration!
+            {consumerPlan.description}
           </p>
           <ul className="space-y-2 mb-6 text-sm text-zinc-600">
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span>Full access to all food lists and tasty know-how</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span>We&apos;ve got your back—priority support when you need us</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span>Auto-renewal so you never miss a beat (except Alipay)</span>
-            </li>
+            {consumerPlan.features.map((feature) => (
+              <li key={feature} className="flex items-start">
+                <span className="text-green-500 mr-2">✓</span>
+                <span>{feature}</span>
+              </li>
+            ))}
           </ul>
           <button
             type="button"
@@ -107,31 +106,24 @@ export default function PricingPlanCards() {
           <div className="flex items-center justify-center mb-4">
             <GoldGroceryIcon />
           </div>
-          <h3 className="mb-2 text-center text-base font-bold">Standard Annual Subscription</h3>
+          <h3 className="mb-2 text-center text-base font-bold">{commercialPlan.title}</h3>
           <p className="mb-4 text-center text-xs leading-relaxed text-zinc-600">
-            Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen
-            inspiration!
+            {commercialPlan.description}
           </p>
           <div className="text-center mb-4">
-            <span className="text-lg font-bold text-zinc-900">12 months of:</span>
+            <span className="text-lg font-bold text-zinc-900">{commercialPlan.durationLabel}</span>
           </div>
           <ul className="mb-4 space-y-2 text-sm text-zinc-600">
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span>Full access to all food lists and tasty know-how</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span>We&apos;ve got your back—priority support when you need us</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span>Auto-renewal so you never miss a beat (except Alipay)</span>
-            </li>
+            {commercialPlan.features.map((feature) => (
+              <li key={feature} className="flex items-start">
+                <span className="text-green-500 mr-2">✓</span>
+                <span>{feature}</span>
+              </li>
+            ))}
           </ul>
           <p className="mb-4 text-center">
             <span className="inline-block rounded-full bg-yellow-200 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-[#2B6B4A] transition-colors animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]">
-              LIMITED TIME FREE TRIAL
+              {commercialPlan.trialBadgeLabel}
             </span>
           </p>
           <button
