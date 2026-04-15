@@ -23,7 +23,7 @@ export default function AboutPage() {
                 people.
               </p>
               <p>
-                GroceryShare is your digital food-savvy friend. We&apos;re here
+                Grocery-Share is your digital food-savvy friend. We&apos;re here
                 to crack the code on confusing labels, share the quirky tales
                 behind everyday ingredients.
               </p>
@@ -52,7 +52,7 @@ export default function AboutPage() {
                 有机&quot;的选择？没错，你就是我们要找的同道中人。
               </p>
               <p>
-                GroceryShare [杂货真闻共享] 是你数字化的美食智友。我们在这里为你破解令人困惑的食品标签密码，分享日常食材背后的趣闻轶事（你知道吗？加拿大有一条&quot;芥菜籽带&quot;！），并提供真正实用的厨房妙招。
+                Grocery-Share [杂货真闻共享] 是你数字化的美食智友。我们在这里为你破解令人困惑的食品标签密码，分享日常食材背后的趣闻轶事（你知道吗？加拿大有一条&quot;芥菜籽带&quot;！），并提供真正实用的厨房妙招。
               </p>
               <p>
                 可以把我们看作一半是百科全书，一半是喜剧秀，同时100%是你健康饮食的啦啦队长。我们庆祝加拿大的饮食季节，从采摘浆果到享用根茎蔬菜的暖心时刻，并探索我们多元文化货架上发现的全球风味。学习食物知识应该和享用美食一样快乐。让我们一起，变得美味又博学吧。
@@ -74,7 +74,7 @@ export default function AboutPage() {
                 有機」的選擇？沒錯，你就是我們要找的同道中人。
               </p>
               <p>
-                GroceryShare [雜貨真聞共享] 是你數位化的美食智友。我們在這裡為你破解令人困惑的食品標籤密碼，分享日常食材背後的趣聞軼事（你知道嗎？加拿大有一條「芥菜籽帶」！），並提供真正實用的廚房妙招。
+                Grocery-Share [雜貨真聞共享] 是你數位化的美食智友。我們在這裡為你破解令人困惑的食品標籤密碼，分享日常食材背後的趣聞軼事（你知道嗎？加拿大有一條「芥菜籽帶」！），並提供真正實用的廚房妙招。
               </p>
               <p>
                 可以把我們看作一半是百科全書，一半是喜劇秀，同時100%是你健康飲食的啦啦隊長。我們慶祝加拿大的飲食季節，從採摘漿果到享用根莖蔬菜的暖心時刻，並探索我們多元文化貨架上發現的全球風味。學習食物知識應該和享用美食一樣快樂。讓我們一起，變得美味又博學吧。
