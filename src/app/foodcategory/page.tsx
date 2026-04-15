@@ -39,9 +39,9 @@ export default function FoodCategoryPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
+      <CommercialNoticeBanner />
       <header className="sticky top-0 z-50">
         <NavBar />
-        <CommercialNoticeBanner />
         <div className="border-b border-dotted border-zinc-300/80 bg-zinc-50 shadow-[0_6px_16px_-8px_rgba(0,0,0,0.12)]">
           <div className="mx-auto w-full max-w-[67rem] px-4 pb-4 pt-8">
             <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">

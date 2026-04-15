@@ -2,37 +2,66 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 function CommercialNoticeInner() {
   const searchParams = useSearchParams();
   const [dismissed, setDismissed] = useState(false);
   const show = searchParams.get("need_commercial") === "1";
 
+  useEffect(() => {
+    if (!show || dismissed) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDismissed(true);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [show, dismissed]);
+
   if (!show || dismissed) return null;
 
+  const close = () => setDismissed(true);
+
   return (
-    <div className="mx-auto w-full max-w-[67rem] px-4 pt-4">
+    <>
+      <button
+        type="button"
+        className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[1px]"
+        aria-label="Close dialog backdrop"
+        onClick={close}
+      />
       <div
-        className="flex flex-col gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950 shadow-sm sm:flex-row sm:items-center sm:justify-between"
-        role="status"
+        className="fixed left-1/2 top-1/2 z-[101] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-amber-200 bg-amber-50 px-5 pb-6 pt-12 shadow-2xl"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="commercial-notice-title"
       >
-        <p>
+        <button
+          type="button"
+          onClick={close}
+          className="absolute right-3 top-3 rounded-md border border-[#2B6B4A] bg-[#2B6B4A] px-2.5 py-1 text-xs font-semibold text-white shadow-sm hover:bg-[#225a3d]"
+          aria-label="Close"
+        >
+          X Close
+        </button>
+        <p id="commercial-notice-title" className="text-center text-sm leading-relaxed text-amber-950">
           This requires Commercial subscription. You can{" "}
-          <Link href="/pricing" className="font-semibold text-[#2B6B4A] underline hover:no-underline">
+          <Link
+            href="/pricing"
+            className="font-semibold text-[#2B6B4A] underline hover:no-underline"
+            onClick={close}
+          >
             sign up here
           </Link>
           !
         </p>
-        <button
-          type="button"
-          onClick={() => setDismissed(true)}
-          className="shrink-0 text-xs font-semibold uppercase tracking-wide text-amber-900/80 hover:text-amber-950"
-        >
-          Dismiss
-        </button>
       </div>
-    </div>
+    </>
   );
 }
 
