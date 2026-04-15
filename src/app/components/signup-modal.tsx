@@ -173,10 +173,10 @@ export default function SignupModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-8 text-zinc-400 hover:text-zinc-600"
+          className="absolute right-4 top-6 rounded px-2 py-1 text-sm font-semibold text-[#2B6B4A] hover:bg-green-50 hover:text-[#225a3d]"
           aria-label="Close"
         >
-          ✕
+          X Close
         </button>
 
         <h2 className="mb-6 text-2xl font-semibold text-zinc-900">
