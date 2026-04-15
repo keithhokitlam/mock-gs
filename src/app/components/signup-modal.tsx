@@ -212,6 +212,9 @@ export default function SignupModal({
                   className="text-sm font-medium text-zinc-700"
                   htmlFor="signup-firstname"
                 >
+                  <span className="text-red-600" aria-hidden>
+                    *
+                  </span>{" "}
                   First Name
                 </label>
                 <input
@@ -229,6 +232,9 @@ export default function SignupModal({
                   className="text-sm font-medium text-zinc-700"
                   htmlFor="signup-lastname"
                 >
+                  <span className="text-red-600" aria-hidden>
+                    *
+                  </span>{" "}
                   Last Name
                 </label>
                 <input
@@ -265,6 +271,9 @@ export default function SignupModal({
                 className="text-sm font-medium text-zinc-700"
                 htmlFor="signup-email"
               >
+                <span className="text-red-600" aria-hidden>
+                  *
+                </span>{" "}
                 Email
               </label>
               <input
@@ -283,6 +292,9 @@ export default function SignupModal({
                 className="text-sm font-medium text-zinc-700"
                 htmlFor="signup-password"
               >
+                <span className="text-red-600" aria-hidden>
+                  *
+                </span>{" "}
                 Password
               </label>
               <p className="text-xs text-zinc-500">
@@ -324,6 +336,9 @@ export default function SignupModal({
                 className="text-sm font-medium text-zinc-700"
                 htmlFor="signup-confirm"
               >
+                <span className="text-red-600" aria-hidden>
+                  *
+                </span>{" "}
                 Confirm Password
               </label>
               <div className="relative">
