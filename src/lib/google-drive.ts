@@ -69,6 +69,56 @@ export function getGoogleDriveErrorDetail(err: unknown): string {
   return s.length > 400 ? `${s.slice(0, 397)}...` : s;
 }
 
+/** True when all three OAuth env vars are set (Vercel / server). */
+export function isGoogleDriveOAuthConfigured(): boolean {
+  const refresh = process.env.GOOGLE_DRIVE_REFRESH_TOKEN?.trim();
+  const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID?.trim();
+  const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET?.trim();
+  return !!(refresh && clientId && clientSecret);
+}
+
+/** Google’s “service account has no Drive quota” response. */
+export function isGoogleDriveServiceAccountStorageQuotaError(message: string): boolean {
+  const t = message.toLowerCase();
+  return (
+    t.includes("service accounts do not have storage quota") ||
+    (t.includes("403") && t.includes("storage quota") && t.includes("service account"))
+  );
+}
+
+/**
+ * User-facing signup error when Drive upload fails.
+ * If OAuth is not configured and Google returned the SA quota error, explain Vercel env vars clearly.
+ */
+export function signupDriveFailureResponse(full: string, detail?: string): {
+  error: string;
+  details?: string;
+} {
+  const text = (full || detail || "").trim();
+  if (!isGoogleDriveOAuthConfigured() && isGoogleDriveServiceAccountStorageQuotaError(text)) {
+    return {
+      error: [
+        "Google blocked the signature upload because the live site is still using a “service account” for Drive—and Google does not give those accounts personal storage.",
+        "",
+        "Fix (recommended): In Vercel → your project → Settings → Environment Variables, add all three:",
+        "• GOOGLE_DRIVE_CLIENT_ID",
+        "• GOOGLE_DRIVE_CLIENT_SECRET",
+        "• GOOGLE_DRIVE_REFRESH_TOKEN",
+        "",
+        "Use Google OAuth 2.0 Playground (click the gear, “Use your own OAuth credentials”, authorize Drive, exchange for tokens) to get the refresh token. Use the same Google account that owns—or has Editor on—your signatures folder.",
+        "",
+        "Then Redeploy the project so those variables load.",
+      ].join("\n"),
+      details: text.length > 600 ? `${text.slice(0, 597)}...` : text,
+    };
+  }
+  return {
+    error:
+      "We couldn't save your signature right now. Please try again in a moment, or contact support if this keeps happening.",
+    details: text || undefined,
+  };
+}
+
 /** Drive file name: email as title + `.png` (only characters unsafe for Drive names are stripped). */
 export function signatureDriveFilenameFromEmail(email: string): string {
   const e = email.trim().toLowerCase();
@@ -87,6 +137,13 @@ function createDriveContext(): DriveContext {
   const refresh = process.env.GOOGLE_DRIVE_REFRESH_TOKEN?.trim();
   const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID?.trim();
   const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET?.trim();
+
+  const oauthPieces = [refresh, clientId, clientSecret].filter(Boolean).length;
+  if (oauthPieces > 0 && oauthPieces < 3) {
+    throw new Error(
+      "Incomplete Google Drive OAuth: set ALL of GOOGLE_DRIVE_REFRESH_TOKEN, GOOGLE_DRIVE_CLIENT_ID, and GOOGLE_DRIVE_CLIENT_SECRET on Vercel (or remove partial entries). Then redeploy."
+    );
+  }
 
   if (refresh && clientId && clientSecret) {
     const redirectUri =
@@ -132,6 +189,12 @@ export async function uploadSignupSignaturePng(
 ): Promise<{ fileId: string; name: string }> {
   const folderId =
     process.env.GOOGLE_DRIVE_SIGNATURES_FOLDER_ID || DEFAULT_SIGNATURES_FOLDER_ID;
+
+  console.log(
+    "[signup-signature-drive] auth=%s folder=%s",
+    isGoogleDriveOAuthConfigured() ? "oauth" : "service_account",
+    folderId
+  );
 
   const { drive, accessHint } = createDriveContext();
 

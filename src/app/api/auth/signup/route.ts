@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
-import { getGoogleDriveErrorDetail, uploadSignupSignaturePng } from "@/lib/google-drive";
+import { getGoogleDriveErrorDetail, signupDriveFailureResponse, uploadSignupSignaturePng } from "@/lib/google-drive";
 import bcrypt from "bcryptjs";
 import { Resend } from "resend";
 import crypto from "crypto";
@@ -136,14 +136,8 @@ export async function POST(request: NextRequest) {
           ? driveErr.message
           : detail;
       console.error("Signup: Google Drive signature upload failed:", full, driveErr);
-      return NextResponse.json(
-        {
-          error:
-            "We couldn't save your signature right now. Please try again in a moment, or contact support if this keeps happening.",
-          details: full || detail || undefined,
-        },
-        { status: 503 }
-      );
+      const body = signupDriveFailureResponse(full, detail);
+      return NextResponse.json(body, { status: 503 });
     }
 
     if (existingUser) {
