@@ -108,8 +108,10 @@ export function signupDriveFailureResponse(full: string, detail?: string): {
         "Use Google OAuth 2.0 Playground (click the gear, “Use your own OAuth credentials”, authorize Drive, exchange for tokens) to get the refresh token. Use the same Google account that owns—or has Editor on—your signatures folder.",
         "",
         "Then Redeploy the project so those variables load.",
+        "",
+        "Tip: Each variable can be scoped to Production or Preview in Vercel—turn on **Production** for all three, save, then redeploy (old deployments never pick up new env values).",
       ].join("\n"),
-      details: text.length > 600 ? `${text.slice(0, 597)}...` : text,
+      // Full technical message stays in server logs (signup route); UI already explains the fix.
     };
   }
   return {
