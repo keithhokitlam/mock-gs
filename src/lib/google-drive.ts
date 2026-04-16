@@ -4,9 +4,18 @@ import { Readable } from "stream";
 /** Default folder: share this folder with the service account email (Editor) from `GOOGLE_SHEETS_CREDENTIALS`. */
 const DEFAULT_SIGNATURES_FOLDER_ID = "1NYrbiVC8fMhXftEIvsDLjwz9fb0307B8";
 
+/** Drive file name: email as title + `.png` (only characters unsafe for Drive names are stripped). */
+export function signatureDriveFilenameFromEmail(email: string): string {
+  const e = email.trim().toLowerCase();
+  const safe = e.replace(/[/\\:*?"<>|]+/g, "_").replace(/\s+/g, "_");
+  if (!safe) return "signature-unknown.png";
+  return safe.endsWith(".png") ? safe : `${safe}.png`;
+}
+
 /**
  * Upload a PNG signature to Google Drive (same service account as Sheets).
- * Folder must be shared with that service account as Editor.
+ * The file name is the signer email + `.png`. Folder must be shared with that service account as Editor.
+ * Uses full Drive scope so uploads to a shared folder work reliably (narrow `drive.file` often 403s here).
  */
 export async function uploadSignupSignaturePng(
   pngBuffer: Buffer,
@@ -29,15 +38,11 @@ export async function uploadSignupSignaturePng(
 
   const auth = new google.auth.GoogleAuth({
     credentials,
-    scopes: ["https://www.googleapis.com/auth/drive.file"],
+    scopes: ["https://www.googleapis.com/auth/drive"],
   });
 
   const drive = google.drive({ version: "v3", auth });
-  const safe = email
-    .toLowerCase()
-    .replace(/@/g, "_at_")
-    .replace(/[^a-z0-9._+-]+/g, "_");
-  const name = `signature_${safe}_${Date.now()}.png`;
+  const name = signatureDriveFilenameFromEmail(email);
 
   const res = await drive.files.create({
     requestBody: {
@@ -50,6 +55,7 @@ export async function uploadSignupSignaturePng(
       body: Readable.from(pngBuffer),
     },
     fields: "id,name",
+    supportsAllDrives: true,
   });
 
   const fileId = res.data.id;
