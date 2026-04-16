@@ -162,7 +162,12 @@ export default function SignupModal({
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Failed to create account");
+        const base = data.error || "Failed to create account";
+        const detail =
+          typeof data.details === "string" && data.details.trim() !== ""
+            ? `\n\n${data.details.trim()}`
+            : "";
+        setError(`${base}${detail}`);
         setLoading(false);
         return;
       }
@@ -559,7 +564,7 @@ export default function SignupModal({
             </div>
 
             {error && (
-              <p className="text-sm text-red-600" role="alert">
+              <p className="whitespace-pre-line text-sm text-red-600" role="alert">
                 {error}
               </p>
             )}
