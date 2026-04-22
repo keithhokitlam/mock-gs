@@ -218,7 +218,7 @@ export default function NavBar() {
       : "/foodcategory";
 
   return (
-    <nav className="w-full bg-gradient-to-r from-[#0D47A1] via-[#1976D2] to-[#42A5F5]">
+    <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
       <div className="flex w-full items-center justify-between gap-4 px-2 py-0">
         <div className="flex items-center gap-4">
           <Link href="/" aria-label="Go to home">
