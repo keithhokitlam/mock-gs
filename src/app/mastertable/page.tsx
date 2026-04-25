@@ -118,8 +118,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
     // Essential accounts get an upgrade prompt instead of the full FMCG Industry Page.
     if (
-      user.consumer_vs_commercial !== "essential" &&
-      user.consumer_vs_commercial !== "consumer"
+      user.essential_vs_premium !== "essential" &&
+      user.essential_vs_premium !== "consumer"
     ) {
       // Check if user has an active subscription
       const { data: subscriptions, error: subscriptionError } = await supabaseServer
@@ -190,8 +190,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   }
 
   if (
-    user?.consumer_vs_commercial === "essential" ||
-    user?.consumer_vs_commercial === "consumer"
+    user?.essential_vs_premium === "essential" ||
+    user?.essential_vs_premium === "consumer"
   ) {
     return (
       <div className="min-h-screen bg-zinc-50 text-zinc-900">

@@ -70,7 +70,9 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { email, password, firstName, lastName, company } = body;
-    const membershipTier = parseMembershipTier(body.consumer_vs_commercial);
+    const membershipTier = parseMembershipTier(
+      body.essential_vs_premium ?? body.consumer_vs_commercial
+    );
 
     // Validation
     if (!email || !password) {
@@ -154,7 +156,7 @@ export async function POST(request: NextRequest) {
       if (firstName) userUpdate.first_name = firstName;
       if (lastName) userUpdate.last_name = lastName;
       if (company) userUpdate.company = company;
-      userUpdate.consumer_vs_commercial = membershipTier;
+      userUpdate.essential_vs_premium = membershipTier;
 
       let { data: updatedUser, error: updateError } = await supabaseServer
         .from("users")
@@ -171,7 +173,7 @@ export async function POST(request: NextRequest) {
           password_hash: passwordHash,
           email_verified: false,
           verification_token: verificationToken,
-          consumer_vs_commercial: membershipTier,
+          essential_vs_premium: membershipTier,
         };
         ({ data: updatedUser, error: updateError } = await supabaseServer
           .from("users")
@@ -205,7 +207,7 @@ export async function POST(request: NextRequest) {
       if (firstName) userInsert.first_name = firstName;
       if (lastName) userInsert.last_name = lastName;
       if (company) userInsert.company = company;
-      userInsert.consumer_vs_commercial = membershipTier;
+      userInsert.essential_vs_premium = membershipTier;
 
       let { data: newUser, error: insertError } = await supabaseServer
         .from("users")
@@ -222,7 +224,7 @@ export async function POST(request: NextRequest) {
           password_hash: passwordHash,
           email_verified: false,
           verification_token: verificationToken,
-          consumer_vs_commercial: membershipTier,
+          essential_vs_premium: membershipTier,
         };
         ({ data: newUser, error: insertError } = await supabaseServer
           .from("users")

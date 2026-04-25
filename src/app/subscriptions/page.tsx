@@ -69,8 +69,8 @@ export default async function SubscriptionsPage({
 
     // Essential tier: admin subscriptions UI is for Premium only
     if (
-      user.consumer_vs_commercial === "essential" ||
-      user.consumer_vs_commercial === "consumer"
+      user.essential_vs_premium === "essential" ||
+      user.essential_vs_premium === "consumer"
     ) {
       redirect("/foodcategory?need_commercial=1");
     }
@@ -146,7 +146,7 @@ export default async function SubscriptionsPage({
     const uniqueUserIds = [...new Set(userIds as string[])];
     const { data: usersForSubs, error: usersForSubsError } = await supabaseServer
       .from("users")
-      .select("id, consumer_vs_commercial")
+      .select("id, essential_vs_premium")
       .in("id", uniqueUserIds);
 
     if (usersForSubsError) {
@@ -154,7 +154,7 @@ export default async function SubscriptionsPage({
     } else if (usersForSubs) {
       usersForSubs.forEach((u) => {
         if (u.id) {
-          userAccountTypeById.set(u.id, formatConsumerCommercial(u.consumer_vs_commercial));
+          userAccountTypeById.set(u.id, formatConsumerCommercial(u.essential_vs_premium));
         }
       });
     }

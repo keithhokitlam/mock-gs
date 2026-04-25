@@ -42,24 +42,16 @@ const GoldResearchIcon = () => (
         <stop offset="100%" stopColor="#FF8C00" />
       </linearGradient>
     </defs>
-    <path
-      d="M4 3h9l3 3v14a1.5 1.5 0 01-1.5 1.5H4A1.5 1.5 0 012.5 20V4.5A1.5 1.5 0 014 3z"
-      stroke="url(#goldGradientResearchPricing)"
-      strokeWidth="1.35"
-      strokeLinejoin="round"
-      fill="none"
-    />
-    <path d="M13 3v3h3" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.2" strokeLinejoin="round" fill="none" />
-    <line x1="6" y1="9.5" x2="12" y2="9.5" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.1" strokeLinecap="round" />
-    <line x1="6" y1="12" x2="11" y2="12" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.1" strokeLinecap="round" />
-    <line x1="6" y1="14.5" x2="10" y2="14.5" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.1" strokeLinecap="round" />
-    <circle cx="16.5" cy="16.5" r="3.25" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.35" fill="none" />
-    <path
-      d="M18.8 18.8L21.5 21.5"
-      stroke="url(#goldGradientResearchPricing)"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
+    <rect x="3" y="4" width="14" height="16" rx="2" fill="url(#goldGradientResearchPricing)" opacity="0.2" />
+    <path d="M6 2.8h8.5L18 6.3V19a2 2 0 01-2 2H6a2 2 0 01-2-2V4.8a2 2 0 012-2z" fill="url(#goldGradientResearchPricing)" opacity="0.12" />
+    <path d="M6 2.8h8.5L18 6.3V19a2 2 0 01-2 2H6a2 2 0 01-2-2V4.8a2 2 0 012-2z" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.35" strokeLinejoin="round" />
+    <path d="M14.5 2.8v3.5H18" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.25" strokeLinejoin="round" />
+    <rect x="6.4" y="8" width="5.4" height="6.8" rx="0.8" fill="url(#goldGradientResearchPricing)" opacity="0.85" />
+    <rect x="12.6" y="10.2" width="2.4" height="4.6" rx="0.6" fill="url(#goldGradientResearchPricing)" opacity="0.65" />
+    <rect x="15.7" y="7.8" width="2.2" height="7" rx="0.6" fill="url(#goldGradientResearchPricing)" opacity="0.45" />
+    <path d="M6.4 17h7.3" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.15" strokeLinecap="round" />
+    <circle cx="16.6" cy="16.8" r="3.1" fill="#fff7d6" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.4" />
+    <path d="M18.8 19l2.2 2.2" stroke="url(#goldGradientResearchPricing)" strokeWidth="1.7" strokeLinecap="round" />
   </svg>
 );
 
