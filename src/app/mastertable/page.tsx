@@ -116,52 +116,50 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       redirect("/home");
     }
 
-    // Free Consumer accounts: Food Category only (no Master Table)
-    if (user.consumer_vs_commercial === "consumer") {
-      redirect("/foodcategory?need_commercial=1");
-    }
+    // Consumer accounts can access the FMCG Industry Page without a commercial subscription.
+    if (user.consumer_vs_commercial !== "consumer") {
+      // Check if user has an active subscription
+      const { data: subscriptions, error: subscriptionError } = await supabaseServer
+        .from("subscriptions")
+        .select("id, status, subscription_end_date")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1);
 
-    // Check if user has an active subscription
-    const { data: subscriptions, error: subscriptionError } = await supabaseServer
-      .from("subscriptions")
-      .select("id, status, subscription_end_date")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(1);
-
-    if (subscriptionError) {
-      console.error("Error checking subscription:", subscriptionError);
-      // Don't block access if we can't check subscription - log error but allow
-    } else if (subscriptions && subscriptions.length > 0) {
-      const subscription = subscriptions[0];
-      
-      // Check if subscription is inactive or cancelled
-      if (subscription.status === "inactive" || subscription.status === "cancelled") {
-        redirect("/home?error=subscription_inactive");
-      }
-
-      // Also check if subscription has expired (even if status hasn't been updated yet)
-      // If subscription_end_date is null, subscription is indefinite/active forever
-      if (subscription.subscription_end_date) {
-        const endDate = new Date(subscription.subscription_end_date);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        endDate.setHours(0, 0, 0, 0);
+      if (subscriptionError) {
+        console.error("Error checking subscription:", subscriptionError);
+        // Don't block access if we can't check subscription - log error but allow
+      } else if (subscriptions && subscriptions.length > 0) {
+        const subscription = subscriptions[0];
         
-        if (endDate < today && subscription.status !== "cancelled") {
-          // Subscription has expired - mark as inactive and redirect
-          await supabaseServer
-            .from("subscriptions")
-            .update({ status: "inactive" })
-            .eq("id", subscription.id);
-          
-          redirect("/home?error=subscription_expired");
+        // Check if subscription is inactive or cancelled
+        if (subscription.status === "inactive" || subscription.status === "cancelled") {
+          redirect("/home?error=subscription_inactive");
         }
+
+        // Also check if subscription has expired (even if status hasn't been updated yet)
+        // If subscription_end_date is null, subscription is indefinite/active forever
+        if (subscription.subscription_end_date) {
+          const endDate = new Date(subscription.subscription_end_date);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          endDate.setHours(0, 0, 0, 0);
+          
+          if (endDate < today && subscription.status !== "cancelled") {
+            // Subscription has expired - mark as inactive and redirect
+            await supabaseServer
+              .from("subscriptions")
+              .update({ status: "inactive" })
+              .eq("id", subscription.id);
+            
+            redirect("/home?error=subscription_expired");
+          }
+        }
+        // If subscription_end_date is null, subscription is active indefinitely - allow access
+      } else {
+        // No subscription found - redirect to login
+        redirect("/home?error=no_subscription");
       }
-      // If subscription_end_date is null, subscription is active indefinitely - allow access
-    } else {
-      // No subscription found - redirect to login
-      redirect("/home?error=no_subscription");
     }
   }
   // If no user, assume admin/admin login was used (bypasses auth)
@@ -275,7 +273,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <NavBar />
             <div className="w-full px-4 pt-4">
               <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
-                MASTER TABLE
+                FMCG Industry Page
               </h1>
               {isAdmin && (
                 <div className="p-4 bg-white rounded-lg shadow mb-4">
@@ -311,6 +309,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               <ActionsBar
                 columns={columns.map((column) => column.label)}
                 rows={visibleRows}
+                clearFiltersHref="/fmcgindustrypage"
               />
             </div>
           </>
@@ -325,7 +324,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           sortDirection={sortDirection === "desc" ? "desc" : "asc"}
         />
       </MastertableStickyLayout>
-      <GoToTopButton paths={["/mastertable"]} matchNested />
+      <GoToTopButton paths={["/fmcgindustrypage", "/mastertable"]} matchNested />
     </div>
   );
 }

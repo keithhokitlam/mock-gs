@@ -49,11 +49,11 @@ export default function NavBar() {
     pathname === "/faq" ||
     pathname === "/legal";
 
-  /** Hide MASTER TABLE + FOOD CATEGORY on login, and on info pages when logged out */
+  /** Hide FMCG Industry Page + FOOD CATEGORY on login, and on info pages when logged out */
   const hideNavDestinations =
     isLoginHomePath || (!userEmail && isPublicInfoPage);
 
-  /** Signed-in accounts: always show these destinations (consumer → Food Category; commercial/admin → Food Category + Master Table). */
+  /** Signed-in accounts: show FMCG Industry Page and Food Category to all membership types. */
   const showFoodCategoryNav =
     (!!userEmail &&
       (accountType === "consumer" ||
@@ -61,16 +61,17 @@ export default function NavBar() {
         accountType === "admin")) ||
     !hideNavDestinations;
 
-  const showMasterTableNav =
-    !!userEmail && (accountType === "commercial" || accountType === "admin");
+  const showFmcgIndustryNav =
+    !!userEmail &&
+    (accountType === "consumer" ||
+      accountType === "commercial" ||
+      accountType === "admin");
 
   const isExplicitCommercial =
     pathname === "/" ||
     pathname === "/home" ||
     pathname === "/commercialhome" ||
     pathname === "/pricing" ||
-    pathname === "/mastertable" ||
-    pathname.startsWith("/mastertable/") ||
     pathname === "/subscriptions" ||
     pathname.startsWith("/subscriptions/");
   const isExplicitConsumer = pathname === "/consumer";
@@ -105,7 +106,10 @@ export default function NavBar() {
           setSubscriptionEndDate(end);
         } else {
           // If no user email and we're on an admin page, it's likely admin/admin
-          const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
+          const isAdminPage =
+            pathname === "/mastertable" ||
+            pathname === "/fmcgindustrypage" ||
+            pathname === "/subscriptions";
           setUserEmail(isAdminPage ? "ADMIN" : null);
           setAccountType(isAdminPage ? "admin" : null);
           setSubscriptionEndDate(null);
@@ -114,7 +118,10 @@ export default function NavBar() {
       .catch((err) => {
         console.error("Error fetching user email:", err);
         // On error, check if we're on admin page
-        const isAdminPage = pathname === "/mastertable" || pathname === "/subscriptions";
+        const isAdminPage =
+          pathname === "/mastertable" ||
+          pathname === "/fmcgindustrypage" ||
+          pathname === "/subscriptions";
         setUserEmail(isAdminPage ? "ADMIN" : null);
         setAccountType(isAdminPage ? "admin" : null);
         setSubscriptionEndDate(null);
@@ -240,9 +247,9 @@ export default function NavBar() {
                 Pricing
               </Link>
             )}
-            {showMasterTableNav && (
-              <Link href="/mastertable" className="font-beckman hover:opacity-80">
-                MASTER TABLE
+            {showFmcgIndustryNav && (
+              <Link href="/fmcgindustrypage" className="font-beckman hover:opacity-80">
+                FMCG Industry Page
               </Link>
             )}
             {showFoodCategoryNav && (
