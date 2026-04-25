@@ -204,7 +204,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               href="/pricing"
               className="mt-6 inline-flex rounded-md bg-[#2B6B4A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#225a3d]"
             >
-              Sign up here!
+              Sign for Premium Membership here!
             </Link>
           </section>
         </main>
