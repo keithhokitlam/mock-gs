@@ -116,8 +116,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       redirect("/home");
     }
 
-    // Consumer accounts get an upgrade prompt instead of the full FMCG Industry Page.
-    if (user.consumer_vs_commercial !== "consumer") {
+    // Essential accounts get an upgrade prompt instead of the full FMCG Industry Page.
+    if (
+      user.consumer_vs_commercial !== "essential" &&
+      user.consumer_vs_commercial !== "consumer"
+    ) {
       // Check if user has an active subscription
       const { data: subscriptions, error: subscriptionError } = await supabaseServer
         .from("subscriptions")
@@ -186,7 +189,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               userEmailLower === "admin@grocery-share.com";
   }
 
-  if (user?.consumer_vs_commercial === "consumer") {
+  if (
+    user?.consumer_vs_commercial === "essential" ||
+    user?.consumer_vs_commercial === "consumer"
+  ) {
     return (
       <div className="min-h-screen bg-zinc-50 text-zinc-900">
         <NavBar />

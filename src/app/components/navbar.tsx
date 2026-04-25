@@ -20,7 +20,7 @@ function formatSubscriptionEndDate(isoDate: string | null): string {
 
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [accountType, setAccountType] = useState<"consumer" | "commercial" | "admin" | null>(null);
+  const [accountType, setAccountType] = useState<"essential" | "premium" | "admin" | null>(null);
   const [subscriptionEndDate, setSubscriptionEndDate] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -56,15 +56,15 @@ export default function NavBar() {
   /** Signed-in accounts: show FMCG Industry Page and Food Category to all membership types. */
   const showFoodCategoryNav =
     (!!userEmail &&
-      (accountType === "consumer" ||
-        accountType === "commercial" ||
+      (accountType === "essential" ||
+        accountType === "premium" ||
         accountType === "admin")) ||
     !hideNavDestinations;
 
   const showFmcgIndustryNav =
     !!userEmail &&
-    (accountType === "consumer" ||
-      accountType === "commercial" ||
+    (accountType === "essential" ||
+      accountType === "premium" ||
       accountType === "admin");
 
   const isExplicitCommercial =
@@ -291,17 +291,17 @@ export default function NavBar() {
                     <p className="text-sm text-zinc-600">{isAdmin ? "ADMIN" : userEmail}</p>
                     <p className="mt-1 text-xs text-zinc-500">
                       Account Type:{" "}
-                      {accountType === "consumer"
-                        ? "Consumer"
+                      {accountType === "essential"
+                        ? "Essential"
                         : accountType === "admin"
                         ? "Admin"
-                        : "Commercial"}
+                        : "Premium"}
                     </p>
                     {!isAdmin && (
                       <p className="mt-1 text-xs text-zinc-500">
                         Subscription ends:{" "}
                         <span className="font-medium text-zinc-700">
-                          {accountType === "consumer"
+                          {accountType === "essential"
                             ? "free"
                             : formatSubscriptionEndDate(subscriptionEndDate)}
                         </span>

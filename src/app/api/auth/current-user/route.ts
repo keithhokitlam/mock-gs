@@ -29,7 +29,10 @@ export async function GET(request: NextRequest) {
         {
           email: user.email,
           accountType:
-            user.consumer_vs_commercial === "consumer" ? "consumer" : "commercial",
+            user.consumer_vs_commercial === "essential" ||
+            user.consumer_vs_commercial === "consumer"
+              ? "essential"
+              : "premium",
           subscriptionEndDate,
         },
         { status: 200 }

@@ -53,7 +53,7 @@ function CommercialNoticeInner() {
           id="commercial-notice-title"
           className="mt-10 flex flex-col gap-2 text-center text-sm leading-relaxed text-zinc-800 sm:mt-11"
         >
-          <p className="m-0">This requires a Standard Annual Subscription.</p>
+          <p className="m-0">This requires a Premium Membership.</p>
           <p className="m-0">
             You can{" "}
             <Link

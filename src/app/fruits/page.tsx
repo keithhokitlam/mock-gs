@@ -39,7 +39,10 @@ export default async function FruitsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const user = await getCurrentUser();
-  if (user?.consumer_vs_commercial === "consumer") {
+  if (
+    user?.consumer_vs_commercial === "essential" ||
+    user?.consumer_vs_commercial === "consumer"
+  ) {
     redirect("/foodcategory?need_commercial=1");
   }
 

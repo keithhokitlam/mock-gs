@@ -56,7 +56,7 @@ async function main() {
       password_hash: passwordHash,
       email_verified: true,
       verification_token: null,
-      consumer_vs_commercial: "commercial",
+      consumer_vs_commercial: "premium",
     })
     .select("id, email")
     .single();

@@ -4,7 +4,7 @@ import { useState } from "react";
 import SignupModal from "../components/signup-modal";
 import {
   SUBSCRIPTION_PLAN_CONTENT,
-  type ConsumerVsCommercial,
+  type MembershipTier,
 } from "../components/subscription-plan-content";
 
 // Gold grocery icon SVG (shopping basket with groceries)
@@ -32,7 +32,7 @@ const GoldGroceryIcon = () => (
   </svg>
 );
 
-/** Document + magnifying glass — research / discovery vibe (consumer tier) */
+/** Document + magnifying glass — research / discovery vibe (essential tier) */
 const GoldResearchIcon = () => (
   <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
     <defs>
@@ -65,11 +65,11 @@ const GoldResearchIcon = () => (
 
 export default function PricingPlanCards() {
   const [signupOpen, setSignupOpen] = useState(false);
-  const [defaultSelectedPlan, setDefaultSelectedPlan] = useState<ConsumerVsCommercial | null>(null);
-  const consumerPlan = SUBSCRIPTION_PLAN_CONTENT.consumer;
-  const commercialPlan = SUBSCRIPTION_PLAN_CONTENT.commercial;
+  const [defaultSelectedPlan, setDefaultSelectedPlan] = useState<MembershipTier | null>(null);
+  const essentialPlan = SUBSCRIPTION_PLAN_CONTENT.essential;
+  const premiumPlan = SUBSCRIPTION_PLAN_CONTENT.premium;
 
-  const openSignup = (plan: ConsumerVsCommercial) => {
+  const openSignup = (plan: MembershipTier) => {
     setDefaultSelectedPlan(plan);
     setSignupOpen(true);
   };
@@ -81,12 +81,12 @@ export default function PricingPlanCards() {
           <div className="flex items-center justify-center mb-4">
             <GoldResearchIcon />
           </div>
-          <h3 className="text-xl font-bold mb-3 text-center">{consumerPlan.title}</h3>
+          <h3 className="text-xl font-bold mb-3 text-center">{essentialPlan.title}</h3>
           <p className="text-zinc-600 mb-4 text-xs leading-relaxed">
-            {consumerPlan.description}
+            {essentialPlan.description}
           </p>
           <ul className="space-y-2 mb-6 text-sm text-zinc-600">
-            {consumerPlan.features.map((feature) => (
+            {essentialPlan.features.map((feature) => (
               <li key={feature} className="flex items-start">
                 <span className="text-green-500 mr-2">✓</span>
                 <span>{feature}</span>
@@ -95,7 +95,7 @@ export default function PricingPlanCards() {
           </ul>
           <button
             type="button"
-            onClick={() => openSignup("consumer")}
+            onClick={() => openSignup("essential")}
             className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
           >
             Sign Up Here!
@@ -106,19 +106,19 @@ export default function PricingPlanCards() {
           <div className="flex items-center justify-center mb-4">
             <GoldGroceryIcon />
           </div>
-          <h3 className="mb-3 text-center text-xl font-bold">{commercialPlan.title}</h3>
+          <h3 className="mb-3 text-center text-xl font-bold">{premiumPlan.title}</h3>
           <p className="mb-4 text-center text-xs leading-relaxed text-zinc-600">
-            {commercialPlan.description}
+            {premiumPlan.description}
           </p>
           <div className="text-center mb-4">
             <span
-              className={`text-lg font-bold text-zinc-900 ${commercialPlan.durationLabelStrikethrough ? "line-through decoration-2 decoration-zinc-400" : ""}`}
+              className={`text-lg font-bold text-zinc-900 ${premiumPlan.durationLabelStrikethrough ? "line-through decoration-2 decoration-zinc-400" : ""}`}
             >
-              {commercialPlan.durationLabel}
+              {premiumPlan.durationLabel}
             </span>
           </div>
           <ul className="mb-4 space-y-2 text-sm text-zinc-600">
-            {commercialPlan.features.map((feature) => (
+            {premiumPlan.features.map((feature) => (
               <li key={feature} className="flex items-start">
                 <span className="text-green-500 mr-2">✓</span>
                 <span>{feature}</span>
@@ -127,12 +127,12 @@ export default function PricingPlanCards() {
           </ul>
           <p className="mb-4 text-center">
             <span className="inline-block rounded-full bg-yellow-200 px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-[#2B6B4A] transition-colors animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]">
-              {commercialPlan.trialBadgeLabel}
+              {premiumPlan.trialBadgeLabel}
             </span>
           </p>
           <button
             type="button"
-            onClick={() => openSignup("commercial")}
+            onClick={() => openSignup("premium")}
             className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
           >
             Sign Up Here!

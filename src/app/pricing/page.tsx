@@ -57,7 +57,7 @@ export default async function PricingPage() {
         id: "plan-standard",
         plan_type: "standard",
         category: "default",
-        title: "Standard Annual Subscription",
+        title: "Premium Membership",
         description: "Our standard annual subscription plan with full access to all Grocery-Share category lists.",
         duration_months: 12,
       },

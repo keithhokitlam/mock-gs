@@ -7,7 +7,7 @@ import SignupSignaturePad, {
 } from "./signup-signature-pad";
 import {
   SUBSCRIPTION_PLAN_CONTENT,
-  type ConsumerVsCommercial,
+  type MembershipTier,
 } from "./subscription-plan-content";
 
 // Gold grocery icon SVG (shopping basket with groceries)
@@ -37,7 +37,7 @@ const GoldGroceryIcon = () => (
   </svg>
 );
 
-/** Document + magnifying glass — research / discovery vibe (consumer tier) */
+/** Document + magnifying glass — research / discovery vibe (essential tier) */
 const GoldResearchIcon = () => (
   <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
     <defs>
@@ -69,7 +69,7 @@ type SignupModalProps = {
   isOpen: boolean;
   onClose: () => void;
   /** When the modal opens, pre-select this plan (pricing buttons, /home?account=). Null = user chooses. */
-  defaultSelectedPlan?: ConsumerVsCommercial | null;
+  defaultSelectedPlan?: MembershipTier | null;
 };
 
 export default function SignupModal({
@@ -77,8 +77,8 @@ export default function SignupModal({
   onClose,
   defaultSelectedPlan = null,
 }: SignupModalProps) {
-  const consumerPlan = SUBSCRIPTION_PLAN_CONTENT.consumer;
-  const commercialPlan = SUBSCRIPTION_PLAN_CONTENT.commercial;
+  const essentialPlan = SUBSCRIPTION_PLAN_CONTENT.essential;
+  const premiumPlan = SUBSCRIPTION_PLAN_CONTENT.premium;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -92,7 +92,7 @@ export default function SignupModal({
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<ConsumerVsCommercial | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<MembershipTier | null>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -138,7 +138,7 @@ export default function SignupModal({
     }
 
     if (!selectedPlan) {
-      setError("Please select Free Consumer Subscription or Standard Annual Subscription");
+      setError("Please select Essential Membership or Premium Membership");
       return;
     }
 
@@ -409,14 +409,14 @@ export default function SignupModal({
               {CONSUMER_SIGNUP_ENABLED ? (
                 <button
                   type="button"
-                  onClick={() => setSelectedPlan("consumer")}
+                  onClick={() => setSelectedPlan("essential")}
                   className={`group relative block w-full rounded-lg border p-4 text-left shadow-sm transition-colors ${
-                    selectedPlan === "consumer"
+                    selectedPlan === "essential"
                       ? "border-[#2B6B4A] bg-[#2B6B4A]"
                       : "border-zinc-200 bg-white hover:border-[#2B6B4A] hover:bg-[#2B6B4A]"
                   }`}
                 >
-                  {selectedPlan === "consumer" && (
+                  {selectedPlan === "essential" && (
                     <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-5xl font-black tracking-[0.2em] text-white/35 [transform:rotate(-24deg)]">
                       SELECTED
                     </span>
@@ -425,16 +425,16 @@ export default function SignupModal({
                     <div className="mb-3 flex items-center justify-center">
                       <GoldResearchIcon />
                     </div>
-                    <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "consumer" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
-                      {consumerPlan.title}
+                    <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "essential" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
+                      {essentialPlan.title}
                     </h3>
-                    <p className={`mb-3 text-center text-xs leading-relaxed ${selectedPlan === "consumer" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                      {consumerPlan.description}
+                    <p className={`mb-3 text-center text-xs leading-relaxed ${selectedPlan === "essential" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
+                      {essentialPlan.description}
                     </p>
-                    <ul className={`space-y-1.5 text-sm ${selectedPlan === "consumer" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                      {consumerPlan.features.map((feature) => (
+                    <ul className={`space-y-1.5 text-sm ${selectedPlan === "essential" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
+                      {essentialPlan.features.map((feature) => (
                         <li key={feature} className="flex items-start">
-                          <span className={`mr-2 ${selectedPlan === "consumer" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                          <span className={`mr-2 ${selectedPlan === "essential" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -447,13 +447,13 @@ export default function SignupModal({
                     <GoldResearchIcon />
                   </div>
                   <h3 className="mb-2 text-center text-base font-bold text-zinc-500">
-                    {consumerPlan.title}
+                    {essentialPlan.title}
                   </h3>
                   <p className="mb-3 text-center text-xs leading-relaxed text-zinc-500">
-                    {consumerPlan.description}
+                    {essentialPlan.description}
                   </p>
                   <ul className="space-y-1.5 text-sm text-zinc-500">
-                    {consumerPlan.features.map((feature) => (
+                    {essentialPlan.features.map((feature) => (
                       <li key={feature} className="flex items-start">
                         <span className="mr-2 text-zinc-400">✓</span>
                         <span>{feature}</span>
@@ -465,14 +465,14 @@ export default function SignupModal({
 
               <button
                 type="button"
-                onClick={() => setSelectedPlan("commercial")}
+                onClick={() => setSelectedPlan("premium")}
                 className={`group relative block w-full rounded-lg border p-4 text-left shadow-sm transition-colors ${
-                  selectedPlan === "commercial"
+                  selectedPlan === "premium"
                     ? "border-[#2B6B4A] bg-[#2B6B4A]"
                     : "border-zinc-200 bg-white hover:border-[#2B6B4A] hover:bg-[#2B6B4A]"
                 }`}
               >
-                {selectedPlan === "commercial" && (
+                {selectedPlan === "premium" && (
                   <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-5xl font-black tracking-[0.2em] text-white/35 [transform:rotate(-24deg)]">
                     SELECTED
                   </span>
@@ -481,23 +481,23 @@ export default function SignupModal({
                   <div className="mb-3 flex items-center justify-center">
                     <GoldGroceryIcon />
                   </div>
-                  <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
-                    {commercialPlan.title}
+                  <h3 className={`mb-2 text-center text-base font-bold ${selectedPlan === "premium" ? "text-white" : "text-zinc-900 group-hover:text-white"}`}>
+                    {premiumPlan.title}
                   </h3>
-                  <p className={`mb-4 text-center text-xs leading-relaxed ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                    {commercialPlan.description}
+                  <p className={`mb-4 text-center text-xs leading-relaxed ${selectedPlan === "premium" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
+                    {premiumPlan.description}
                   </p>
                   <div className="mb-4 text-center">
                     <span
-                      className={`text-lg font-bold ${selectedPlan === "commercial" ? "text-white" : "text-zinc-900 group-hover:text-white"} ${commercialPlan.durationLabelStrikethrough ? `line-through decoration-2 ${selectedPlan === "commercial" ? "decoration-white/70" : "decoration-zinc-400 group-hover:decoration-white/70"}` : ""}`}
+                      className={`text-lg font-bold ${selectedPlan === "premium" ? "text-white" : "text-zinc-900 group-hover:text-white"} ${premiumPlan.durationLabelStrikethrough ? `line-through decoration-2 ${selectedPlan === "premium" ? "decoration-white/70" : "decoration-zinc-400 group-hover:decoration-white/70"}` : ""}`}
                     >
-                      {commercialPlan.durationLabel}
+                      {premiumPlan.durationLabel}
                     </span>
                   </div>
-                  <ul className={`mb-4 space-y-2 text-sm ${selectedPlan === "commercial" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
-                    {commercialPlan.features.map((feature) => (
+                  <ul className={`mb-4 space-y-2 text-sm ${selectedPlan === "premium" ? "text-white" : "text-zinc-600 group-hover:text-white/90"}`}>
+                    {premiumPlan.features.map((feature) => (
                       <li key={feature} className="flex items-start">
-                        <span className={`mr-2 ${selectedPlan === "commercial" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
+                        <span className={`mr-2 ${selectedPlan === "premium" ? "text-white" : "text-green-500 group-hover:text-white"}`}>✓</span>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -505,12 +505,12 @@ export default function SignupModal({
                   <p className="text-center">
                     <span
                       className={`inline-block rounded-full px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] transition-colors ${
-                        selectedPlan === "commercial"
+                        selectedPlan === "premium"
                           ? "bg-yellow-300 text-[#1f4d35]"
                           : "bg-yellow-200 text-[#2B6B4A] group-hover:bg-yellow-300 group-hover:text-[#1f4d35]"
                       } animate-pulse shadow-[0_0_20px_rgba(253,224,71,0.95)]`}
                     >
-                      {commercialPlan.trialBadgeLabel}
+                      {premiumPlan.trialBadgeLabel}
                     </span>
                   </p>
                 </div>

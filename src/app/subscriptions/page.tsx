@@ -31,8 +31,8 @@ function normalizeText(value: string) {
 }
 
 function formatConsumerCommercial(value: string | null | undefined): string {
-  if (value === "consumer") return "CONSUMER";
-  if (value === "commercial") return "COMMERCIAL";
+  if (value === "essential" || value === "consumer") return "ESSENTIAL";
+  if (value === "premium" || value === "commercial") return "PREMIUM";
   return "";
 }
 
@@ -67,8 +67,11 @@ export default async function SubscriptionsPage({
       redirect("/home");
     }
 
-    // Consumer tier: admin subscriptions UI is for Standard (commercial) only
-    if (user.consumer_vs_commercial === "consumer") {
+    // Essential tier: admin subscriptions UI is for Premium only
+    if (
+      user.consumer_vs_commercial === "essential" ||
+      user.consumer_vs_commercial === "consumer"
+    ) {
       redirect("/foodcategory?need_commercial=1");
     }
 
@@ -235,7 +238,7 @@ export default async function SubscriptionsPage({
 
   const headers = [
     "User ID",
-    "CONSUMER / COMMERCIAL",
+    "ESSENTIAL / PREMIUM",
     "Email",
     "Start Date",
     "End Date",

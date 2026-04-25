@@ -18,11 +18,11 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  /** Pre-select signup plan only when /home?account=consumer|commercial (not for plain /home). */
+  /** Pre-select signup plan only when /home?account=essential|premium (legacy consumer|commercial also supported). */
   const defaultSelectedPlan = useMemo(() => {
     const a = searchParams.get("account");
-    if (a === "consumer") return "consumer" as const;
-    if (a === "commercial") return "commercial" as const;
+    if (a === "essential" || a === "consumer") return "essential" as const;
+    if (a === "premium" || a === "commercial") return "premium" as const;
     return null;
   }, [searchParams]);
 

@@ -1,4 +1,4 @@
-export type ConsumerVsCommercial = "consumer" | "commercial";
+export type MembershipTier = "essential" | "premium";
 
 type PlanContent = {
   title: string;
@@ -10,19 +10,19 @@ type PlanContent = {
   trialBadgeLabel?: string;
 };
 
-export const SUBSCRIPTION_PLAN_CONTENT: Record<ConsumerVsCommercial, PlanContent> = {
-  consumer: {
-    title: "Free Consumer Subscription",
+export const SUBSCRIPTION_PLAN_CONTENT: Record<MembershipTier, PlanContent> = {
+  essential: {
+    title: "Essential Membership",
     description:
       "Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen inspiration!",
     features: [
-      "Full access to consumer grocery content",
+      "Full access to essential grocery content",
       "We've got your back—priority support when you need us",
       "Auto-renewal so you never miss a beat (except Alipay)",
     ],
   },
-  commercial: {
-    title: "Standard Annual Subscription",
+  premium: {
+    title: "Premium Membership",
     description:
       "Your digital food-savvy friend—full access to all category lists, quirky food facts, and kitchen inspiration!",
     features: [

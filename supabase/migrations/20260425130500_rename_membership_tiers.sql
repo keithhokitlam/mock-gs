@@ -1,9 +1,15 @@
--- Account intent: Essential vs Premium membership.
-ALTER TABLE users
-ADD COLUMN IF NOT EXISTS consumer_vs_commercial text;
-
 ALTER TABLE users
 DROP CONSTRAINT IF EXISTS users_consumer_vs_commercial_check;
+
+-- Rename persisted account tiers:
+-- consumer -> essential, commercial -> premium.
+UPDATE users
+SET consumer_vs_commercial = 'essential'
+WHERE consumer_vs_commercial = 'consumer';
+
+UPDATE users
+SET consumer_vs_commercial = 'premium'
+WHERE consumer_vs_commercial = 'commercial';
 
 ALTER TABLE users
 ADD CONSTRAINT users_consumer_vs_commercial_check
