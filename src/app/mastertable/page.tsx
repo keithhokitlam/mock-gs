@@ -116,7 +116,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       redirect("/home");
     }
 
-    // Consumer accounts can access the FMCG Industry Page without a commercial subscription.
+    // Consumer accounts get an upgrade prompt instead of the full FMCG Industry Page.
     if (user.consumer_vs_commercial !== "consumer") {
       // Check if user has an active subscription
       const { data: subscriptions, error: subscriptionError } = await supabaseServer
@@ -184,6 +184,32 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     isAdmin = userEmailLower === adminEmailLower || 
               userEmailLower === "admin" ||
               userEmailLower === "admin@grocery-share.com";
+  }
+
+  if (user?.consumer_vs_commercial === "consumer") {
+    return (
+      <div className="min-h-screen bg-zinc-50 text-zinc-900">
+        <NavBar />
+        <main className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-3xl items-center px-6 py-16">
+          <section className="w-full rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
+            <h1 className="font-beckman text-3xl font-semibold text-zinc-900">
+              FMCG Industry Page
+            </h1>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-zinc-700">
+              Full FMCG industry details are available with a Premium membership account.
+              Upgrade anytime to unlock the complete page, including deeper market and
+              category insights.
+            </p>
+            <Link
+              href="/pricing"
+              className="mt-6 inline-flex rounded-md bg-[#2B6B4A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#225a3d]"
+            >
+              Sign up here!
+            </Link>
+          </section>
+        </main>
+      </div>
+    );
   }
   
 
