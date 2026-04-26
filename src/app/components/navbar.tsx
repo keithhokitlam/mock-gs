@@ -5,13 +5,97 @@ import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
+type NavLocale = "en" | "zh";
+
+const NAV_COPY = {
+  en: {
+    homeLabel: "Go to home",
+    about: "About",
+    pricing: "Pricing",
+    fmcgIndustryPage: "FMCG Industry Page",
+    foodCategory: "FOOD CATEGORY",
+    recipes: "RECIPES",
+    quizzes: "QUIZZES",
+    support: "Support",
+    contact: "Contact",
+    faq: "FAQ",
+    accountDetails: "Account Details",
+    accountType: "Account Type:",
+    admin: "Admin",
+    essential: "Essential",
+    premium: "Premium",
+    subscriptionEnds: "Subscription ends:",
+    free: "free",
+    unlimited: "Unlimited",
+    changePassword: "Change Password",
+    currentPassword: "Current Password",
+    newPassword: "New Password",
+    confirmNewPassword: "Confirm New Password",
+    hide: "Hide",
+    show: "Show",
+    changing: "Changing...",
+    cancel: "Cancel",
+    stopAutoRenewal: "Stop Auto-Renewal (non-Alipay only)",
+    stopAutoRenewalAlert:
+      "Stop Auto-Renewal feature will be available after Stripe integration",
+    signOut: "Sign out",
+    allFieldsRequired: "All fields are required",
+    passwordMin: "New password must be at least 6 characters",
+    passwordMismatch: "New passwords do not match",
+    passwordChanged: "Password changed successfully!",
+    passwordChangeFailed: "Failed to change password",
+    genericError: "An error occurred. Please try again.",
+  },
+  zh: {
+    homeLabel: "返回首页",
+    about: "关于我们",
+    pricing: "价格方案",
+    fmcgIndustryPage: "快消品行业页面",
+    foodCategory: "食品分类",
+    recipes: "食谱",
+    quizzes: "趣味测验",
+    support: "支持",
+    contact: "联系我们",
+    faq: "常见问题",
+    accountDetails: "账户信息",
+    accountType: "账户类型：",
+    admin: "管理员",
+    essential: "Essential 基础会员",
+    premium: "Premium 高级会员",
+    subscriptionEnds: "会员到期日：",
+    free: "免费",
+    unlimited: "不限期",
+    changePassword: "修改密码",
+    currentPassword: "当前密码",
+    newPassword: "新密码",
+    confirmNewPassword: "确认新密码",
+    hide: "隐藏",
+    show: "显示",
+    changing: "正在修改...",
+    cancel: "取消",
+    stopAutoRenewal: "停止自动续费（不含 Alipay）",
+    stopAutoRenewalAlert: "停止自动续费功能将在 Stripe 集成后开放",
+    signOut: "退出登录",
+    allFieldsRequired: "请填写所有字段",
+    passwordMin: "新密码至少需要 6 个字符",
+    passwordMismatch: "两次输入的新密码不一致",
+    passwordChanged: "密码已成功修改！",
+    passwordChangeFailed: "修改密码失败",
+    genericError: "发生错误，请再试一次。",
+  },
+} as const;
+
 /** `subscriptionEndDate` from API: YYYY-MM-DD or null (no end date). */
-function formatSubscriptionEndDate(isoDate: string | null): string {
-  if (!isoDate) return "Unlimited";
+function formatSubscriptionEndDate(
+  isoDate: string | null,
+  locale: NavLocale,
+  unlimitedLabel: string
+): string {
+  if (!isoDate) return unlimitedLabel;
   const [y, m, d] = isoDate.split("-").map((x) => parseInt(x, 10));
   if (!y || !m || !d) return isoDate;
   const local = new Date(y, m - 1, d);
-  return local.toLocaleDateString(undefined, {
+  return local.toLocaleDateString(locale === "zh" ? "zh-CN" : undefined, {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -37,9 +121,11 @@ export default function NavBar() {
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [navMode, setNavMode] = useState<"commercial" | "consumer">("consumer");
+  const locale: NavLocale = pathname === "/zh" || pathname.startsWith("/zh/") ? "zh" : "en";
+  const copy = NAV_COPY[locale];
 
   /** Login landing (/ and /home share the same page as /home) */
-  const isLoginHomePath = pathname === "/home" || pathname === "/";
+  const isLoginHomePath = pathname === "/home" || pathname === "/" || pathname === "/zh/home";
 
   const isPublicInfoPage =
     pathname === "/about" ||
@@ -47,7 +133,8 @@ export default function NavBar() {
     pathname === "/support" ||
     pathname === "/contact" ||
     pathname === "/faq" ||
-    pathname === "/legal";
+    pathname === "/legal" ||
+    pathname === "/zh/home";
 
   /** Hide FMCG Industry Page + FOOD CATEGORY on login, and on info pages when logged out */
   const hideNavDestinations =
@@ -165,17 +252,17 @@ export default function NavBar() {
     setPasswordSuccess("");
 
     if (!currentPassword || !newPassword || !confirmPassword) {
-      setPasswordError("All fields are required");
+      setPasswordError(copy.allFieldsRequired);
       return;
     }
 
     if (newPassword.length < 6) {
-      setPasswordError("New password must be at least 6 characters");
+      setPasswordError(copy.passwordMin);
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setPasswordError("New passwords do not match");
+      setPasswordError(copy.passwordMismatch);
       return;
     }
 
@@ -191,12 +278,12 @@ export default function NavBar() {
       const data = await response.json();
 
       if (!response.ok) {
-        setPasswordError(data.error || "Failed to change password");
+        setPasswordError(data.error || copy.passwordChangeFailed);
         setPasswordLoading(false);
         return;
       }
 
-      setPasswordSuccess("Password changed successfully!");
+      setPasswordSuccess(copy.passwordChanged);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -208,7 +295,7 @@ export default function NavBar() {
         setPasswordSuccess("");
       }, 2000);
     } catch (err) {
-      setPasswordError("An error occurred. Please try again.");
+      setPasswordError(copy.genericError);
       setPasswordLoading(false);
     }
   };
@@ -228,7 +315,7 @@ export default function NavBar() {
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
       <div className="flex w-full items-center justify-between gap-4 px-2 py-0">
         <div className="flex items-center gap-4">
-          <Link href="/" aria-label="Go to home">
+          <Link href={locale === "zh" ? "/zh/home" : "/"} aria-label={copy.homeLabel}>
             <Image
               src="/logos/Grocery-Share Logo.png"
               alt="Grocery-Share"
@@ -240,37 +327,37 @@ export default function NavBar() {
           </Link>
           <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
             <Link href="/about" className="font-beckman hover:opacity-80">
-              About
+              {copy.about}
             </Link>
             {isCommercialPage && (
               <Link href="/pricing" className="font-beckman hover:opacity-80">
-                Pricing
+                {copy.pricing}
               </Link>
             )}
             {showFmcgIndustryNav && (
               <Link href="/fmcgindustrypage" className="font-beckman hover:opacity-80">
-                FMCG Industry Page
+                {copy.fmcgIndustryPage}
               </Link>
             )}
             {showFoodCategoryNav && (
               <Link href={foodCategoryHref} className="font-beckman hover:opacity-80">
-                FOOD CATEGORY
+                {copy.foodCategory}
               </Link>
             )}
             {isConsumerPage && (
               <>
-                <span className="font-beckman cursor-default">RECIPES</span>
-                <span className="font-beckman cursor-default">QUIZZES</span>
+                <span className="font-beckman cursor-default">{copy.recipes}</span>
+                <span className="font-beckman cursor-default">{copy.quizzes}</span>
               </>
             )}
             <Link href="/support" className="font-beckman hover:opacity-80">
-              Support
+              {copy.support}
             </Link>
             <Link href="/contact" className="font-beckman hover:opacity-80">
-              Contact
+              {copy.contact}
             </Link>
             <Link href="/faq" className="font-beckman hover:opacity-80">
-              FAQ
+              {copy.faq}
             </Link>
           </div>
         </div>
@@ -287,23 +374,23 @@ export default function NavBar() {
                 <div className="space-y-4">
                   {/* Account Details */}
                   <div>
-                    <h3 className="text-sm font-semibold text-zinc-900 mb-2">Account Details</h3>
+                    <h3 className="text-sm font-semibold text-zinc-900 mb-2">{copy.accountDetails}</h3>
                     <p className="text-sm text-zinc-600">{isAdmin ? "ADMIN" : userEmail}</p>
                     <p className="mt-1 text-xs text-zinc-500">
-                      Account Type:{" "}
+                      {copy.accountType}{" "}
                       {accountType === "essential"
-                        ? "Essential"
+                        ? copy.essential
                         : accountType === "admin"
-                        ? "Admin"
-                        : "Premium"}
+                        ? copy.admin
+                        : copy.premium}
                     </p>
                     {!isAdmin && (
                       <p className="mt-1 text-xs text-zinc-500">
-                        Subscription ends:{" "}
+                        {copy.subscriptionEnds}{" "}
                         <span className="font-medium text-zinc-700">
                           {accountType === "essential"
-                            ? "free"
-                            : formatSubscriptionEndDate(subscriptionEndDate)}
+                            ? copy.free
+                            : formatSubscriptionEndDate(subscriptionEndDate, locale, copy.unlimited)}
                         </span>
                       </p>
                     )}
@@ -317,14 +404,14 @@ export default function NavBar() {
                           onClick={() => setShowChangePassword(true)}
                           className="w-full text-left text-sm text-[#2B6B4A] hover:underline"
                         >
-                          Change Password
+                          {copy.changePassword}
                         </button>
                       ) : (
                         <div className="space-y-3">
-                          <h4 className="text-sm font-semibold text-zinc-900">Change Password</h4>
+                          <h4 className="text-sm font-semibold text-zinc-900">{copy.changePassword}</h4>
                           <form onSubmit={handleChangePassword} className="space-y-3">
                             <div>
-                              <label className="text-xs text-zinc-700 mb-1 block">Current Password</label>
+                              <label className="text-xs text-zinc-700 mb-1 block">{copy.currentPassword}</label>
                               <div className="relative">
                                 <input
                                   type={showCurrentPassword ? "text" : "password"}
@@ -338,12 +425,12 @@ export default function NavBar() {
                                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                                   className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500"
                                 >
-                                  {showCurrentPassword ? "Hide" : "Show"}
+                                  {showCurrentPassword ? copy.hide : copy.show}
                                 </button>
                               </div>
                             </div>
                             <div>
-                              <label className="text-xs text-zinc-700 mb-1 block">New Password</label>
+                              <label className="text-xs text-zinc-700 mb-1 block">{copy.newPassword}</label>
                               <div className="relative">
                                 <input
                                   type={showNewPassword ? "text" : "password"}
@@ -358,12 +445,12 @@ export default function NavBar() {
                                   onClick={() => setShowNewPassword(!showNewPassword)}
                                   className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500"
                                 >
-                                  {showNewPassword ? "Hide" : "Show"}
+                                  {showNewPassword ? copy.hide : copy.show}
                                 </button>
                               </div>
                             </div>
                             <div>
-                              <label className="text-xs text-zinc-700 mb-1 block">Confirm New Password</label>
+                              <label className="text-xs text-zinc-700 mb-1 block">{copy.confirmNewPassword}</label>
                               <div className="relative">
                                 <input
                                   type={showConfirmPassword ? "text" : "password"}
@@ -378,7 +465,7 @@ export default function NavBar() {
                                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                   className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500"
                                 >
-                                  {showConfirmPassword ? "Hide" : "Show"}
+                                  {showConfirmPassword ? copy.hide : copy.show}
                                 </button>
                               </div>
                             </div>
@@ -394,7 +481,7 @@ export default function NavBar() {
                                 disabled={passwordLoading}
                                 className="flex-1 rounded bg-[#2B6B4A] px-3 py-2 text-sm text-white hover:bg-[#225a3d] disabled:opacity-50"
                               >
-                                {passwordLoading ? "Changing..." : "Change Password"}
+                                {passwordLoading ? copy.changing : copy.changePassword}
                               </button>
                               <button
                                 type="button"
@@ -408,7 +495,7 @@ export default function NavBar() {
                                 }}
                                 className="rounded border border-zinc-300 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
                               >
-                                Cancel
+                                {copy.cancel}
                               </button>
                             </div>
                           </form>
@@ -423,11 +510,11 @@ export default function NavBar() {
                       type="button"
                       onClick={() => {
                         // Placeholder - will be implemented with Stripe integration
-                        alert("Stop Auto-Renewal feature will be available after Stripe integration");
+                        alert(copy.stopAutoRenewalAlert);
                       }}
                       className="w-full text-left text-sm text-[#2B6B4A] hover:underline"
                     >
-                      Stop Auto-Renewal (non-Alipay only)
+                      {copy.stopAutoRenewal}
                     </button>
                   )}
 
@@ -437,7 +524,7 @@ export default function NavBar() {
                       onClick={() => void handleSignOut()}
                       className="w-full text-left text-sm font-semibold text-red-600 hover:underline"
                     >
-                      Sign out
+                      {copy.signOut}
                     </button>
                   </div>
                 </div>

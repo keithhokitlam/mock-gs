@@ -29,7 +29,7 @@ export default function LanguageSwitcher() {
         href={withQuery(chinesePath, query)}
         className={isChinese ? "text-[#2B6B4A]" : "hover:text-[#2B6B4A]"}
       >
-        Chinese
+        中文
       </Link>
     </div>
   );
