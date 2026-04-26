@@ -9,7 +9,67 @@ import ForgotPasswordModal from "../components/forgot-password-modal";
 import NavBar from "../components/navbar";
 import DoorSplash from "../door-splash";
 
-function LoginForm() {
+type HomeLocale = "en" | "zh";
+
+const HOME_COPY = {
+  en: {
+    subscriptionInactive:
+      "Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services",
+    accessDenied: "Access denied. Please contact support.",
+    loginGenericError: "An error occurred. Please try again.",
+    loginFallbackError: "Incorrect email or password.",
+    welcomeLine1: "Welcome to",
+    welcomeLine2: "Grocery-Share.com!",
+    intro: "Sign in to unlock your grocery adventures.",
+    email: "Email",
+    emailPlaceholder: "you@example.com",
+    password: "Password",
+    passwordPlaceholder: "••••••••",
+    forgotPassword: "Forgot password?",
+    hidePassword: "Hide password",
+    showPassword: "Show password",
+    signingIn: "Signing in...",
+    signIn: "Sign in",
+    signupPrompt: "Don't have an account? Sign up",
+    continuing: "By continuing, you agree to the",
+    privacyPolicy: "privacy policy",
+    termsOfService: "terms of service",
+    consumerDisclaimer: "disclaimer for the consumer section",
+    commercialDisclaimer: "disclaimer for the commercial section",
+    ifApplicable: "(if applicable).",
+    loading: "Loading...",
+  },
+  zh: {
+    subscriptionInactive:
+      "您的账户可能：\n1）尚未使用此电子邮箱创建账户，请先注册；或\n2）账户已过期，请重新注册以恢复服务。",
+    accessDenied: "无法访问。请联系支持团队。",
+    loginGenericError: "发生错误，请再试一次。",
+    loginFallbackError: "电子邮箱或密码不正确。",
+    welcomeLine1: "欢迎来到",
+    welcomeLine2: "Grocery-Share.com！",
+    intro: "登录后即可开启您的食品探索之旅。",
+    email: "电子邮箱",
+    emailPlaceholder: "you@example.com",
+    password: "密码",
+    passwordPlaceholder: "••••••••",
+    forgotPassword: "忘记密码？",
+    hidePassword: "隐藏密码",
+    showPassword: "显示密码",
+    signingIn: "正在登录...",
+    signIn: "登录",
+    signupPrompt: "还没有账户？立即注册",
+    continuing: "继续即表示您同意",
+    privacyPolicy: "隐私政策",
+    termsOfService: "服务条款",
+    consumerDisclaimer: "Essential Membership 免责声明",
+    commercialDisclaimer: "Premium Membership 免责声明",
+    ifApplicable: "（如适用）。",
+    loading: "加载中...",
+  },
+} as const;
+
+function LoginForm({ locale = "en" }: { locale?: HomeLocale }) {
+  const copy = HOME_COPY[locale];
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState("");
@@ -32,19 +92,19 @@ function LoginForm() {
     if (errorParam) {
       switch (errorParam) {
         case "subscription_inactive":
-          setError("Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services");
+          setError(copy.subscriptionInactive);
           break;
         case "subscription_expired":
-          setError("Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services");
+          setError(copy.subscriptionInactive);
           break;
         case "no_subscription":
-          setError("Your account either:\n1) does not exist with the email provided and you must create a new account or\n2) your account has expired and you must sign up again to resume services");
+          setError(copy.subscriptionInactive);
           break;
         default:
-          setError("Access denied. Please contact support.");
+          setError(copy.accessDenied);
       }
     }
-  }, [searchParams]);
+  }, [copy.accessDenied, copy.subscriptionInactive, searchParams]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -98,7 +158,7 @@ function LoginForm() {
         console.log("Login error response:", data);
         const errorMessage = data.details
           ? `${data.error}\n\nDetails: ${data.details}${data.code ? ` (Code: ${data.code})` : ""}`
-          : data.error || "Incorrect email or password.";
+          : data.error || copy.loginFallbackError;
         setError(errorMessage);
         setLoading(false);
         return;
@@ -107,7 +167,7 @@ function LoginForm() {
       // Login successful — land on food category (consumer entry)
       router.push("/foodcategory");
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError(copy.loginGenericError);
       setLoading(false);
     }
   };
@@ -129,23 +189,23 @@ function LoginForm() {
               />
             </div>
             <h1 className="text-3xl font-semibold leading-tight">
-              <span className="block">Welcome to</span>
-              <span className="block">Grocery-Share.com!</span>
+              <span className="block">{copy.welcomeLine1}</span>
+              <span className="block">{copy.welcomeLine2}</span>
             </h1>
             <p className="text-sm text-zinc-500">
-              Sign in to unlock your grocery adventures.
+              {copy.intro}
             </p>
           </div>
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-700" htmlFor="username">
-                Email
+                {copy.email}
               </label>
               <input
                 id="username"
                 name="username"
                 type="text"
-                placeholder="you@example.com"
+                placeholder={copy.emailPlaceholder}
                 autoComplete="username"
                 required
                 className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
@@ -154,14 +214,14 @@ function LoginForm() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium text-zinc-700" htmlFor="password">
-                  Password
+                  {copy.password}
                 </label>
                 <button
                   type="button"
                   onClick={() => setShowForgotPassword(true)}
                   className="text-xs text-[#2B6B4A] hover:underline"
                 >
-                  Forgot password?
+                  {copy.forgotPassword}
                 </button>
               </div>
               <div className="relative">
@@ -169,7 +229,7 @@ function LoginForm() {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={copy.passwordPlaceholder}
                   autoComplete="current-password"
                   required
                   className="w-full rounded-lg border border-zinc-300 px-4 py-2 pr-10 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
@@ -178,7 +238,7 @@ function LoginForm() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-700"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-label={showPassword ? copy.hidePassword : copy.showPassword}
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -203,7 +263,7 @@ function LoginForm() {
               disabled={loading}
               className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300 disabled:opacity-50"
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? copy.signingIn : copy.signIn}
             </button>
           </form>
           <div className="mt-4 text-center">
@@ -212,33 +272,33 @@ function LoginForm() {
               onClick={() => setShowSignup(true)}
               className="text-sm text-[#2B6B4A] hover:underline"
             >
-              Don&apos;t have an account? Sign up
+              {copy.signupPrompt}
             </button>
           </div>
           <p className="mt-6 text-center text-xs leading-relaxed text-zinc-500">
-            By continuing, you agree to the{" "}
+            {copy.continuing}{" "}
             <Link href="/legal#privacy-policy" className="text-[#2B6B4A] underline hover:no-underline">
-              privacy policy
+              {copy.privacyPolicy}
             </Link>
             ,{" "}
             <Link href="/legal#terms-of-service" className="text-[#2B6B4A] underline hover:no-underline">
-              terms of service
+              {copy.termsOfService}
             </Link>
             ,{" "}
             <Link
               href="/legal#disclaimer-consumer"
               className="text-[#2B6B4A] underline hover:no-underline"
             >
-              disclaimer for the consumer section
+              {copy.consumerDisclaimer}
             </Link>
             , and{" "}
             <Link
               href="/legal#disclaimer-commercial"
               className="text-[#2B6B4A] underline hover:no-underline"
             >
-              disclaimer for the commercial section
+              {copy.commercialDisclaimer}
             </Link>{" "}
-            (if applicable).
+            {copy.ifApplicable}
           </p>
         </div>
       </main>
@@ -255,7 +315,8 @@ function LoginForm() {
   );
 }
 
-export default function HomeLoginPage() {
+export function HomeLoginPageContent({ locale = "en" }: { locale?: HomeLocale }) {
+  const copy = HOME_COPY[locale];
   return (
     <>
       <DoorSplash />
@@ -263,13 +324,17 @@ export default function HomeLoginPage() {
         fallback={
           <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center">
             <div className="text-center">
-              <p className="text-zinc-600">Loading...</p>
+              <p className="text-zinc-600">{copy.loading}</p>
             </div>
           </div>
         }
       >
-        <LoginForm />
+        <LoginForm locale={locale} />
       </Suspense>
     </>
   );
+}
+
+export default function HomeLoginPage() {
+  return <HomeLoginPageContent />;
 }
