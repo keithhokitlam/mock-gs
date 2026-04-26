@@ -41,14 +41,14 @@ const HOME_COPY = {
   },
   zh: {
     subscriptionInactive:
-      "您的账户可能：\n1）尚未使用此电子邮箱创建账户，请先注册；或\n2）账户已过期，请重新注册以恢复服务。",
+      "您的账户可能：\n1）尚未使用此电邮创建账户，请先注册；或\n2）账户已过期，请重新注册以恢复服务。",
     accessDenied: "无法访问。请联系支持团队。",
     loginGenericError: "发生错误，请再试一次。",
-    loginFallbackError: "电子邮箱或密码不正确。",
+    loginFallbackError: "电邮或密码不正确。",
     welcomeLine1: "欢迎来到",
     welcomeLine2: "Grocery-Share.com！",
     intro: "登录后即可开启您的食品探索之旅。",
-    email: "电子邮箱",
+    email: "电邮",
     emailPlaceholder: "you@example.com",
     password: "密码",
     passwordPlaceholder: "••••••••",
