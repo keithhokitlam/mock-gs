@@ -168,6 +168,11 @@ function FoodCategoryPageContent({
   );
 }
 
-export default function FoodCategoryPage() {
-  return <FoodCategoryPageContent />;
+type FoodCategoryPageProps = Record<string, never>;
+
+export default function FoodCategoryPage(props: FoodCategoryPageProps) {
+  const locale =
+    (props as FoodCategoryPageProps & { locale?: FoodCategoryLocale }).locale ?? "en";
+
+  return <FoodCategoryPageContent locale={locale} />;
 }
