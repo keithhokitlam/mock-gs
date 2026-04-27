@@ -566,6 +566,12 @@ export default function SignupModal({
               </p>
             )}
 
+            {!loading && !canSubmit && (
+              <p className="text-sm font-medium text-red-600" role="alert">
+                All required fields have not been filled.
+              </p>
+            )}
+
             <button
               type="submit"
               disabled={loading || !canSubmit}
