@@ -9,7 +9,15 @@ type FAQItem = {
   answer: ReactNode;
 };
 
-const faqData: FAQItem[] = [
+type FAQLocale = "en" | "zh";
+
+const FAQ_COPY = {
+  en: { title: "FAQ" },
+  zh: { title: "常见问题" },
+} as const;
+
+const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
+  en: [
   {
     question: "How do I change my password?",
     answer: "Easy! Two ways:\n1) Click the 'Forgot Password' button on the sign-in page to receive a password reset link via email, or\n2) After logging in, click your email in the top right corner, then select 'Change Password' from the dropdown. We've got you covered!",
@@ -104,10 +112,88 @@ const faqData: FAQItem[] = [
       </div>
     ),
   },
-];
+  ],
+  zh: [
+    {
+      question: "如何修改密码？",
+      answer:
+        "很简单！有两种方式：\n1) 在登录页点击“忘记密码”按钮，通过邮箱接收重置链接；或\n2) 登录后点击右上角的邮箱，在下拉菜单中选择“修改密码”。我们帮你安排好！",
+    },
+    {
+      question: "购买会员后可以退款吗？",
+      answer:
+        "很抱歉，会员购买后无法退款。提醒一下：会员会自动续费（Alipay 除外）。如需停止未来续费：\n1) 登录\n2) 点击右上角邮箱\n3) 在下拉菜单中选择“停止自动续费（不含 Alipay）”\n\n这样就不会触发下一个账单周期。",
+    },
+    {
+      question: "为什么我无法登录账号？",
+      answer:
+        "可以先检查这几件事：\na) 邮箱验证链接是否已经点击？也请看看垃圾邮件箱。\nb) 如果会员已过期，需要重新注册才能继续使用。\nc) 密码不对？别担心，请在登录页点击“忘记密码”来重置。",
+    },
+    {
+      question: "没有收到邮箱验证链接怎么办？",
+      answer:
+        "请先检查垃圾邮件或广告邮件文件夹，验证邮件有时会跑到那里。还是没有？请联系 support@grocery-share.com，我们会尽快帮你处理！",
+    },
+    {
+      question: "会员过期后会怎样？",
+      answer:
+        "会员过期后将无法继续访问，但不用担心！你可以随时重新注册，回来继续探索。我们很欢迎你回来！",
+    },
+    {
+      question: "会员有效期多久？",
+      answer:
+        "每个会员方案提供 12 个月访问权限。使用银行卡支付会在到期时自动续费；Alipay 支付则需要到期后手动续费。",
+    },
+    {
+      question: "支持哪些付款方式？",
+      answer: "我们支持 Visa、Mastercard、American Express 和 Alipay。选择最适合你的方式即可！",
+    },
+    {
+      question: "停止自动续费后会怎样？",
+      answer:
+        "不用担心，你仍可使用到当前会员周期结束。到期后不会再续费，控制权在你手里！",
+    },
+    {
+      question: "会员包含哪些内容？",
+      answer:
+        "你可以完整访问 Grocery-Share 分类清单：你的数字化美食智友！它一半是百科全书，一半是喜剧秀，100% 是健康饮食啦啦队。学习食物知识应该和享用美食一样有趣！",
+    },
+    {
+      question: "在哪里可以找到隐私政策、服务条款、消费者专区免责声明和商业专区免责声明？",
+      answer: (
+        <div className="space-y-4">
+          <p>
+            这些内容都可以在我们的{" "}
+            <Link href="/zh/legal" className="font-semibold text-[#2B6B4A] underline hover:no-underline">
+              法律条款
+            </Link>{" "}
+            页面找到，和注册及网站其他位置使用的内容一致。如需 PDF，也可以随时下载{" "}
+            <Link
+              href="/legal/Legal%20Perspectives%2020260415.docx.pdf"
+              className="font-semibold text-[#2B6B4A] underline hover:no-underline"
+            >
+              Legal Perspectives (PDF)
+            </Link>
+            。
+          </p>
+          <p className="font-medium text-zinc-800">快速跳转：</p>
+          <ul className="list-disc space-y-2 pl-5 marker:text-zinc-400">
+            <li>
+              <Link href="/zh/legal#legal-zh-cn" className="font-semibold text-[#2B6B4A] underline hover:no-underline">
+                简体中文法律条款
+              </Link>
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+  ],
+};
 
-export default function FAQPage() {
+function FAQPageContent({ locale = "en" }: { locale?: FAQLocale }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqData = faqDataByLocale[locale];
+  const copy = FAQ_COPY[locale];
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -119,7 +205,7 @@ export default function FAQPage() {
       <main className="mx-auto w-full max-w-3xl px-4 py-12">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
           <h1 className="mb-8 text-center text-3xl font-semibold text-zinc-900 font-beckman">
-            FAQ
+            {copy.title}
           </h1>
           
           <div className="space-y-4">
@@ -167,4 +253,8 @@ export default function FAQPage() {
       </main>
     </div>
   );
+}
+
+export default function FAQPage() {
+  return <FAQPageContent />;
 }

@@ -103,7 +103,30 @@ function parseFilterValue(value: string): FilterValue {
   return value;
 }
 
-export default async function AdminPage({ searchParams }: AdminPageProps) {
+const MASTER_COPY = {
+  en: {
+    title: "FMCG Industry Page",
+    upgrade:
+      "Full FMCG industry details are available with a Premium membership account. Upgrade anytime to unlock the complete page, including deeper market and category insights.",
+    signup: "Sign for Premium Membership here!",
+    watermark: "TEST DATA ONLY",
+    subscriptions: "Subscriptions",
+  },
+  zh: {
+    title: "快消品行业页面",
+    upgrade:
+      "完整的快消品行业详情仅向 Premium 高级会员开放。你可以随时升级，解锁完整页面，包括更深入的市场与分类洞察。",
+    signup: "在这里注册 Premium 高级会员！",
+    watermark: "仅测试数据",
+    subscriptions: "会员订阅",
+  },
+} as const;
+
+async function AdminPageContent({
+  searchParams,
+  locale = "en",
+}: AdminPageProps & { locale?: "en" | "zh" }) {
+  const copy = MASTER_COPY[locale];
   // Check authentication
   const user = await getCurrentUser();
   
@@ -199,18 +222,16 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <main className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-3xl items-center px-6 py-16">
           <section className="w-full rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
             <h1 className="font-beckman text-3xl font-semibold text-zinc-900">
-              FMCG Industry Page
+              {copy.title}
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-zinc-700">
-              Full FMCG industry details are available with a Premium membership account.
-              Upgrade anytime to unlock the complete page, including deeper market and
-              category insights.
+              {copy.upgrade}
             </p>
             <Link
-              href="/pricing"
+              href={locale === "zh" ? "/zh/pricing" : "/pricing"}
               className="mt-6 inline-flex rounded-md bg-[#2B6B4A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#225a3d]"
             >
-              Sign for Premium Membership here!
+              {copy.signup}
             </Link>
           </section>
         </main>
@@ -296,7 +317,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           className="text-8xl font-bold text-red-500/20"
           style={{ transform: "rotate(-45deg)" }}
         >
-          TEST DATA ONLY
+          {copy.watermark}
         </span>
       </div>
       <MastertableStickyLayout
@@ -305,7 +326,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <NavBar />
             <div className="w-full px-4 pt-4">
               <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
-                FMCG Industry Page
+                {copy.title}
               </h1>
               {isAdmin && (
                 <div className="p-4 bg-white rounded-lg shadow mb-4">
@@ -330,10 +351,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       </svg>
                     </span>
                     <Link
-                      href="/subscriptions"
+                      href={locale === "zh" ? "/zh/subscriptions" : "/subscriptions"}
                       className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold inline-block"
                     >
-                      Subscriptions
+                      {copy.subscriptions}
                     </Link>
                   </div>
                 </div>
@@ -341,7 +362,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               <ActionsBar
                 columns={columns.map((column) => column.label)}
                 rows={visibleRows}
-                clearFiltersHref="/fmcgindustrypage"
+                clearFiltersHref={locale === "zh" ? "/zh/fmcgindustrypage" : "/fmcgindustrypage"}
               />
             </div>
           </>
@@ -356,7 +377,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           sortDirection={sortDirection === "desc" ? "desc" : "asc"}
         />
       </MastertableStickyLayout>
-      <GoToTopButton paths={["/fmcgindustrypage", "/mastertable"]} matchNested />
+      <GoToTopButton paths={["/fmcgindustrypage", "/mastertable", "/zh/fmcgindustrypage", "/zh/mastertable"]} matchNested />
     </div>
   );
+}
+
+export default async function AdminPage({ searchParams }: AdminPageProps) {
+  return <AdminPageContent searchParams={searchParams} />;
 }

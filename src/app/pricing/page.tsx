@@ -2,6 +2,7 @@ import Link from "next/link";
 import { supabaseServer } from "@/lib/supabase-server";
 import NavBar from "../components/navbar";
 import PricingPlanCards from "./pricing-plan-cards";
+import type { SubscriptionContentLocale } from "../components/subscription-plan-content";
 
 type SubscriptionPlan = {
   id: string;
@@ -13,7 +14,39 @@ type SubscriptionPlan = {
   duration_months: number;
 };
 
-export default async function PricingPage() {
+const PRICING_COPY = {
+  en: {
+    fallbackTitle: "Premium Membership",
+    fallbackDescription:
+      "Our standard annual subscription plan with full access to all Grocery-Share category lists.",
+    noPlans: "No subscription plans available.",
+    heading: "PRICING",
+    noteLabel: "Note:",
+    note:
+      "All subscriptions will automatically renew at the subscription end date, with the exception of payments made through Alipay. Alipay subscriptions require manual renewal.",
+    questions: "Questions? We'd love to chat—",
+    contact: "reach out anytime",
+  },
+  zh: {
+    fallbackTitle: "Premium 高级会员",
+    fallbackDescription:
+      "标准年度会员方案，可完整访问所有 Grocery-Share 分类清单。",
+    noPlans: "暂无可用会员方案。",
+    heading: "价格方案",
+    noteLabel: "提示：",
+    note:
+      "所有会员都会在到期日自动续费；通过 Alipay 支付的会员除外，Alipay 会员需要手动续费。",
+    questions: "有问题？我们很乐意聊聊——",
+    contact: "随时联系我们",
+  },
+} as const;
+
+async function PricingPageContent({
+  locale = "en",
+}: {
+  locale?: SubscriptionContentLocale;
+}) {
+  const copy = PRICING_COPY[locale];
   // Fetch all yearly subscriptions (1 year = 12 months)
   // For now, we'll fetch from subscriptions table and group by plan_type
   // You can later add a dedicated plans/pricing table if needed
@@ -57,8 +90,8 @@ export default async function PricingPage() {
         id: "plan-standard",
         plan_type: "standard",
         category: "default",
-        title: "Premium Membership",
-        description: "Our standard annual subscription plan with full access to all Grocery-Share category lists.",
+        title: copy.fallbackTitle,
+        description: copy.fallbackDescription,
         duration_months: 12,
       },
     ];
@@ -73,7 +106,7 @@ export default async function PricingPage() {
       <div className="min-h-screen bg-zinc-50 text-zinc-900">
         <NavBar />
         <main className="mx-auto w-full max-w-6xl px-4 py-10">
-          <p className="text-center text-zinc-600">No subscription plans available.</p>
+          <p className="text-center text-zinc-600">{copy.noPlans}</p>
         </main>
       </div>
     );
@@ -85,18 +118,17 @@ export default async function PricingPage() {
       
       <main className="mx-auto w-full max-w-6xl px-4 py-10">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 font-beckman">PRICING</h1>
+          <h1 className="text-4xl font-bold mb-4 font-beckman">{copy.heading}</h1>
         </div>
 
-        <PricingPlanCards />
+        <PricingPlanCards locale={locale} />
 
         {/* Auto-renewal Notice */}
         <div className="flex justify-center mt-8">
           <div className="max-w-md w-full">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-800">
-                <strong>Note:</strong> All subscriptions will automatically renew at the subscription end date, 
-                with the exception of payments made through Alipay. Alipay subscriptions require manual renewal.
+                <strong>{copy.noteLabel}</strong> {copy.note}
               </p>
             </div>
           </div>
@@ -105,9 +137,9 @@ export default async function PricingPage() {
         {/* Additional Info */}
         <div className="mt-12 text-center text-zinc-600">
           <p>
-            Questions? We&apos;d love to chat—{" "}
-            <Link href="/contact" className="text-[#2B6B4A] underline hover:no-underline">
-              reach out anytime
+            {copy.questions}{" "}
+            <Link href={locale === "zh" ? "/zh/contact" : "/contact"} className="text-[#2B6B4A] underline hover:no-underline">
+              {copy.contact}
             </Link>
             .
           </p>
@@ -115,4 +147,8 @@ export default async function PricingPage() {
       </main>
     </div>
   );
+}
+
+export default async function PricingPage() {
+  return <PricingPageContent />;
 }

@@ -306,6 +306,7 @@ function LoginForm({ locale = "en" }: { locale?: HomeLocale }) {
         isOpen={showSignup}
         onClose={() => setShowSignup(false)}
         defaultSelectedPlan={defaultSelectedPlan}
+        locale={locale}
       />
       <ForgotPasswordModal
         isOpen={showForgotPassword}

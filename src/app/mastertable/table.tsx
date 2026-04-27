@@ -66,6 +66,7 @@ export default function AdminTable({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const isZh = pathname === "/zh" || pathname?.startsWith("/zh/");
   const stickyHeader = useMastertableStickyHeader();
   const mastertableStickyStackPx =
     stickyHeader.mode === "mastertable" ? stickyHeader.stackPx : undefined;
@@ -324,7 +325,7 @@ export default function AdminTable({
           {displayRows.length === 0 ? (
             <tr>
               <td className="px-4 py-6 text-center text-sm text-zinc-500" colSpan={columns.length}>
-                No matching rows found.
+                {isZh ? "没有找到匹配的行。" : "No matching rows found."}
               </td>
             </tr>
           ) : (
@@ -348,7 +349,7 @@ export default function AdminTable({
         >
           <div className="space-y-2">
             <label className="block text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
-              Search values
+              {isZh ? "搜索值" : "Search values"}
             </label>
             <input
               type="text"
@@ -359,7 +360,7 @@ export default function AdminTable({
                   [openMenu]: event.target.value,
                 }))
               }
-              placeholder={`Search ${
+              placeholder={`${isZh ? "搜索" : "Search"} ${
                 columns.find((column) => column.index === openMenu)?.label ?? ""
               }`}
               className="w-full rounded-md border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
@@ -377,7 +378,7 @@ export default function AdminTable({
 
                 if (filteredValues.length === 0) {
                   return (
-                    <p className="text-zinc-500">No matches</p>
+                    <p className="text-zinc-500">{isZh ? "没有匹配项" : "No matches"}</p>
                   );
                 }
 
@@ -403,7 +404,7 @@ export default function AdminTable({
                         })
                       }
                     />
-                    <span className="truncate">{value || "(blank)"}</span>
+                    <span className="truncate">{value || (isZh ? "（空白）" : "(blank)")}</span>
                   </label>
                 ));
               })()}
@@ -420,21 +421,21 @@ export default function AdminTable({
                 }}
                 className="rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-zinc-700"
               >
-                Select all
+                {isZh ? "全选" : "Select all"}
               </button>
               <button
                 type="button"
                 onClick={() => applyFilter(openMenu)}
                 className="rounded-md bg-zinc-900 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-white"
               >
-                Apply
+                {isZh ? "应用" : "Apply"}
               </button>
               <button
                 type="button"
                 onClick={() => clearFilter(openMenu)}
                 className="rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-zinc-700"
               >
-                Clear
+                {isZh ? "清除" : "Clear"}
               </button>
             </div>
           </div>
@@ -444,14 +445,14 @@ export default function AdminTable({
               onClick={() => setSort(openMenu, "asc")}
               className="block w-full rounded-md px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-wide text-zinc-700 hover:bg-zinc-100"
             >
-              Sort A → Z
+              {isZh ? "按 A → Z 排序" : "Sort A → Z"}
             </button>
             <button
               type="button"
               onClick={() => setSort(openMenu, "desc")}
               className="mt-1 block w-full rounded-md px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-wide text-zinc-700 hover:bg-zinc-100"
             >
-              Sort Z → A
+              {isZh ? "按 Z → A 排序" : "Sort Z → A"}
             </button>
             {effectiveSortIndex === openMenu ? (
               <button
@@ -459,7 +460,7 @@ export default function AdminTable({
                 onClick={clearSort}
                 className="mt-2 block w-full rounded-md px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-wide text-zinc-500 hover:bg-zinc-100"
               >
-                Clear sort
+                {isZh ? "清除排序" : "Clear sort"}
               </button>
             ) : null}
           </div>
@@ -468,7 +469,7 @@ export default function AdminTable({
             onClick={closeDropdown}
             className="mt-3 w-full rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-zinc-500 hover:bg-zinc-100"
           >
-            Close
+            {isZh ? "关闭" : "Close"}
           </button>
         </div>
       ) : null}

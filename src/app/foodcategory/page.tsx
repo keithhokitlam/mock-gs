@@ -33,7 +33,40 @@ function getSectionSlideImages(sectionDirName: string): string[] {
     .map((file) => `/foodcategory/${sectionDirName}/${file}`);
 }
 
-export default function FoodCategoryPage() {
+type FoodCategoryLocale = "en" | "zh";
+
+const FOOD_CATEGORY_COPY = {
+  en: {
+    heading: "FOOD CATEGORY",
+    seafood: "FISH & SEAFOOD",
+    fruitsVegetables: "FRUITS & VEGETABLES",
+    fruits: "FRUITS",
+    completeListPrefix: "for complete list,",
+    clickHere: "click here",
+    seafoodAlt: "Seafood slide",
+    fruitsAlt: "Fruits and vegetables slide",
+    collageAlt:
+      "Food category collage - fruits and vegetables with English and Chinese names including Orange, Passion Fruit, Pineapple, Jackfruit, Durian, Strawberry, Cherimoya, Tomato, Bay Berry, Mandarin, Cantaloupe, and Pitaya",
+  },
+  zh: {
+    heading: "食品分类",
+    seafood: "鱼类与海鲜",
+    fruitsVegetables: "水果与蔬菜",
+    fruits: "水果",
+    completeListPrefix: "查看完整清单，",
+    clickHere: "点击这里",
+    seafoodAlt: "海鲜幻灯片",
+    fruitsAlt: "水果与蔬菜幻灯片",
+    collageAlt: "食品分类拼图，包含带中英文名称的水果和蔬菜",
+  },
+} as const;
+
+function FoodCategoryPageContent({
+  locale = "en",
+}: {
+  locale?: FoodCategoryLocale;
+}) {
+  const copy = FOOD_CATEGORY_COPY[locale];
   const seafoodSlides = getSectionSlideImages("Seafood");
   const fruitsAndVegetablesSlides = getSectionSlideImages("Fruits&Vegetables");
 
@@ -45,9 +78,9 @@ export default function FoodCategoryPage() {
         <div className="border-b border-dotted border-zinc-300/80 bg-zinc-50 shadow-[0_6px_16px_-8px_rgba(0,0,0,0.12)]">
           <div className="mx-auto w-full max-w-[67rem] px-4 pb-4 pt-8">
             <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">
-              FOOD CATEGORY
+              {copy.heading}
             </h1>
-            <SectionNav />
+            <SectionNav locale={locale} />
           </div>
         </div>
       </header>
@@ -59,14 +92,14 @@ export default function FoodCategoryPage() {
               id="section-seafood"
               className="mb-4 scroll-mt-52 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide"
             >
-              FISH & SEAFOOD
+              {copy.seafood}
             </h2>
             <div className="mb-10 space-y-6">
               {seafoodSlides.map((src, i) => (
                 <div key={src} className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
                   <Image
                     src={src}
-                    alt={`Seafood slide ${i + 1}`}
+                    alt={`${copy.seafoodAlt} ${i + 1}`}
                     width={1920}
                     height={1080}
                     quality={95}
@@ -80,7 +113,7 @@ export default function FoodCategoryPage() {
         )}
 
         <h2 className="mb-4 scroll-mt-52 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide">
-          FRUITS & VEGETABLES
+          {copy.fruitsVegetables}
         </h2>
 
         {fruitsAndVegetablesSlides.length > 0 ? (
@@ -96,9 +129,9 @@ export default function FoodCategoryPage() {
                     id={fruitsAndVegetablesSlides.length >= 2 ? "section-fruits" : undefined}
                     className="scroll-mt-52 text-lg font-semibold text-zinc-800 font-beckman"
                   >
-                    FRUITS (for complete list,{" "}
-                    <Link href="/fruits" className="text-[#2B6B4A] hover:underline">
-                      click here
+                    {copy.fruits} ({copy.completeListPrefix}{" "}
+                    <Link href={locale === "zh" ? "/zh/fruits" : "/fruits"} className="text-[#2B6B4A] hover:underline">
+                      {copy.clickHere}
                     </Link>
                     )
                   </p>
@@ -106,7 +139,7 @@ export default function FoodCategoryPage() {
                 <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
                   <Image
                     src={src}
-                    alt={`Fruits and vegetables slide ${i + 1}`}
+                    alt={`${copy.fruitsAlt} ${i + 1}`}
                     width={1920}
                     height={1080}
                     quality={95}
@@ -121,7 +154,7 @@ export default function FoodCategoryPage() {
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
             <Image
               src="/foodcategory-collage.png"
-              alt="Food category collage - fruits and vegetables with English and Chinese names including Orange, Passion Fruit, Pineapple, Jackfruit, Durian, Strawberry, Cherimoya, Tomato, Bay Berry, Mandarin, Cantaloupe, and Pitaya"
+              alt={copy.collageAlt}
               width={1200}
               height={900}
               className="w-full h-auto"
@@ -130,7 +163,11 @@ export default function FoodCategoryPage() {
           </div>
         )}
       </main>
-      <GoToTopButton paths={["/foodcategory", "/consumer"]} />
+      <GoToTopButton paths={["/foodcategory", "/consumer", "/zh/foodcategory", "/zh/consumer"]} />
     </div>
   );
+}
+
+export default function FoodCategoryPage() {
+  return <FoodCategoryPageContent />;
 }

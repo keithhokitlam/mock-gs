@@ -25,6 +25,7 @@ export type GoToTopButtonProps = {
 export default function GoToTopButton({ paths, matchNested = false }: GoToTopButtonProps) {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
+  const isZh = pathname === "/zh" || pathname?.startsWith("/zh/");
 
   const showOnThisRoute =
     pathname != null &&
@@ -69,10 +70,10 @@ export default function GoToTopButton({ paths, matchNested = false }: GoToTopBut
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
       className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 rounded-full border border-[#225a3d] bg-[#2B6B4A] px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#225a3d] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50"
-      aria-label="Go to top of page"
+      aria-label={isZh ? "返回页面顶部" : "Go to top of page"}
     >
       <ArrowUp />
-      Go to Top
+      {isZh ? "回到顶部" : "Go to Top"}
     </button>
   );
 }

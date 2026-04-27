@@ -1,7 +1,38 @@
 import Link from "next/link";
 import NavBar from "../components/navbar";
 
-export default function SupportPage() {
+type SupportLocale = "en" | "zh";
+
+const SUPPORT_COPY = {
+  en: {
+    title: "Support",
+    intro:
+      "We've got your back! Got questions about your account, subscription, or access? We're here to help—and we love hearing from you.",
+    emailIntro: "If something's not quite right, reach out to",
+    response: "We typically respond within 24–48 hours (business days).",
+    quickLinks: "Quick links",
+    faqText: "Your go-to answers, served with a smile",
+    contactText: "We'd love to hear from you",
+    forgotPassword: "Forgot password?",
+    forgotText: "Hit the Forgot Password button on the Sign In page",
+  },
+  zh: {
+    title: "支持",
+    intro:
+      "我们在这里支持你！如果你对账号、会员或访问权限有疑问，我们很乐意帮忙，也很期待听到你的声音。",
+    emailIntro: "如果有哪里不太顺利，请联系",
+    response: "我们通常会在 24–48 小时内回复（工作日）。",
+    quickLinks: "快捷链接",
+    faqText: "常见问题答案，轻松查找",
+    contactText: "我们很期待收到你的消息",
+    forgotPassword: "忘记密码？",
+    forgotText: "请在登录页点击“忘记密码”按钮",
+  },
+} as const;
+
+function SupportPageContent({ locale = "en" }: { locale?: SupportLocale }) {
+  const copy = SUPPORT_COPY[locale];
+
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
@@ -10,17 +41,15 @@ export default function SupportPage() {
           <h1
             className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman"
           >
-            Support
+            {copy.title}
           </h1>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-700">
-            We&apos;ve got your back! Got questions about your account,
-            subscription, or access? We&apos;re here to help—and we love hearing
-            from you.
+            {copy.intro}
           </p>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-700">
-            If something&apos;s not quite right, reach out to{" "}
+            {copy.emailIntro}{" "}
             <a
               href="mailto:support@grocery-share.com"
               className="text-[#2B6B4A] underline hover:text-[#1f4d35]"
@@ -30,29 +59,29 @@ export default function SupportPage() {
           </p>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-700">
-            We typically respond within 24–48 hours (business days).
+            {copy.response}
           </p>
 
           <div className="text-base leading-relaxed text-zinc-700">
-            <p className="mb-2 font-semibold text-zinc-900">Quick links</p>
+            <p className="mb-2 font-semibold text-zinc-900">{copy.quickLinks}</p>
             <ul className="list-disc list-inside space-y-2">
               <li>
-                <Link href="/faq" className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
+                <Link href={locale === "zh" ? "/zh/faq" : "/faq"} className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
                   FAQ
                 </Link>
-                — Your go-to answers, served with a smile
+                — {copy.faqText}
               </li>
               <li>
-                <Link href="/contact" className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
-                  Contact
+                <Link href={locale === "zh" ? "/zh/contact" : "/contact"} className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
+                  {locale === "zh" ? "联系我们" : "Contact"}
                 </Link>
-                — We&apos;d love to hear from you
+                — {copy.contactText}
               </li>
               <li>
-                <Link href="/" className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
-                  Forgot password?
+                <Link href={locale === "zh" ? "/zh/home" : "/"} className="text-[#2B6B4A] underline hover:text-[#1f4d35]">
+                  {copy.forgotPassword}
                 </Link>
-                — Hit the Forgot Password button on the Sign In page
+                — {copy.forgotText}
               </li>
             </ul>
           </div>
@@ -60,4 +89,8 @@ export default function SupportPage() {
       </main>
     </div>
   );
+}
+
+export default function SupportPage() {
+  return <SupportPageContent />;
 }

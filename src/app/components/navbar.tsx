@@ -307,10 +307,16 @@ export default function NavBar() {
 
   /** Logged-out: consumer vs commercial landing; signed-in: always use full Food Category page. */
   const foodCategoryHref = userEmail
-    ? "/foodcategory"
+    ? locale === "zh"
+      ? "/zh/foodcategory"
+      : "/foodcategory"
     : isConsumerPage
-      ? "/consumer"
-      : "/foodcategory";
+      ? locale === "zh"
+        ? "/zh/consumer"
+        : "/consumer"
+      : locale === "zh"
+        ? "/zh/foodcategory"
+        : "/foodcategory";
 
   return (
     <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
@@ -327,16 +333,16 @@ export default function NavBar() {
             />
           </Link>
           <div className="flex items-center gap-12 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-            <Link href="/about" className="font-beckman hover:opacity-80">
+            <Link href={locale === "zh" ? "/zh/about" : "/about"} className="font-beckman hover:opacity-80">
               {copy.about}
             </Link>
             {isCommercialPage && (
-              <Link href="/pricing" className="font-beckman hover:opacity-80">
+              <Link href={locale === "zh" ? "/zh/pricing" : "/pricing"} className="font-beckman hover:opacity-80">
                 {copy.pricing}
               </Link>
             )}
             {showFmcgIndustryNav && (
-              <Link href="/fmcgindustrypage" className="font-beckman hover:opacity-80">
+              <Link href={locale === "zh" ? "/zh/fmcgindustrypage" : "/fmcgindustrypage"} className="font-beckman hover:opacity-80">
                 {copy.fmcgIndustryPage}
               </Link>
             )}
@@ -351,13 +357,13 @@ export default function NavBar() {
                 <span className="font-beckman cursor-default">{copy.quizzes}</span>
               </>
             )}
-            <Link href="/support" className="font-beckman hover:opacity-80">
+            <Link href={locale === "zh" ? "/zh/support" : "/support"} className="font-beckman hover:opacity-80">
               {copy.support}
             </Link>
-            <Link href="/contact" className="font-beckman hover:opacity-80">
+            <Link href={locale === "zh" ? "/zh/contact" : "/contact"} className="font-beckman hover:opacity-80">
               {copy.contact}
             </Link>
-            <Link href="/faq" className="font-beckman hover:opacity-80">
+            <Link href={locale === "zh" ? "/zh/faq" : "/faq"} className="font-beckman hover:opacity-80">
               {copy.faq}
             </Link>
           </div>

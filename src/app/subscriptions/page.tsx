@@ -41,6 +41,17 @@ export default async function SubscriptionsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  return <SubscriptionsPageContent searchParams={searchParams} />;
+}
+
+async function SubscriptionsPageContent({
+  searchParams,
+  locale = "en",
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+  locale?: "en" | "zh";
+}) {
+  const isZh = locale === "zh";
   // Check authentication
   const user = await getCurrentUser();
   
@@ -184,12 +195,12 @@ export default async function SubscriptionsPage({
     today.setHours(0, 0, 0, 0);
     
     // If subscription_end_date is null, subscription is indefinite - show "Unlimited"
-    let daysRemainingStr = "Unlimited";
+    let daysRemainingStr = isZh ? "不限期" : "Unlimited";
     if (sub.subscription_end_date) {
       const endDate = new Date(sub.subscription_end_date);
       endDate.setHours(0, 0, 0, 0);
       const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : "Expired";
+      daysRemainingStr = daysRemaining >= 0 ? daysRemaining.toString() : isZh ? "已过期" : "Expired";
     }
 
     const userId = sub.user_id || sub.id || "";
@@ -237,19 +248,19 @@ export default async function SubscriptionsPage({
   });
 
   const headers = [
-    "User ID",
+    isZh ? "用户 ID" : "User ID",
     "ESSENTIAL / PREMIUM",
-    "Email",
-    "Start Date",
-    "End Date",
-    "Renewal Date",
-    "Status",
-    "Plan Type",
-    "Days Remaining",
-    "Check-Ins",
-    "Monthly Avg Check-Ins",
-    "Created At",
-    "Updated At",
+    isZh ? "邮箱" : "Email",
+    isZh ? "开始日期" : "Start Date",
+    isZh ? "结束日期" : "End Date",
+    isZh ? "续费日期" : "Renewal Date",
+    isZh ? "状态" : "Status",
+    isZh ? "方案类型" : "Plan Type",
+    isZh ? "剩余天数" : "Days Remaining",
+    isZh ? "签到次数" : "Check-Ins",
+    isZh ? "月均签到次数" : "Monthly Avg Check-Ins",
+    isZh ? "创建时间" : "Created At",
+    isZh ? "更新时间" : "Updated At",
   ];
 
   const resolvedSearchParams = await Promise.resolve(searchParams);
@@ -323,13 +334,13 @@ export default async function SubscriptionsPage({
 
       <div className="w-full px-4 pt-4 pb-10 overflow-x-visible">
         {/* Title */}
-        <h1 className="text-2xl font-bold mb-2">Subscriptions</h1>
+        <h1 className="text-2xl font-bold mb-2">{isZh ? "会员订阅" : "Subscriptions"}</h1>
 
         {/* Summary - below title */}
         <div className="mb-4 text-sm text-zinc-600">
-          Total subscriptions: {totalSubscriptions}
+          {isZh ? "会员总数：" : "Total subscriptions: "} {totalSubscriptions}
           <br />
-          Total active subscriptions: {activeSubscriptionsCount}
+          {isZh ? "有效会员总数：" : "Total active subscriptions: "} {activeSubscriptionsCount}
         </div>
 
         <ActionsBar

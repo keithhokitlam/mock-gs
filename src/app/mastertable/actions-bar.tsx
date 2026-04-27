@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type ActionsBarProps = {
@@ -55,6 +56,8 @@ function downloadFile(contents: string, filename: string, mimeType: string) {
 }
 
 export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastertable" }: ActionsBarProps) {
+  const pathname = usePathname();
+  const isZh = pathname === "/zh" || pathname?.startsWith("/zh/");
   const [isOpen, setIsOpen] = useState(false);
   const exportMenuRef = useRef<HTMLDivElement | null>(null);
   const safeColumns = useMemo(
@@ -115,7 +118,7 @@ export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastert
           aria-haspopup="menu"
           aria-expanded={isOpen}
         >
-          Export
+          {isZh ? "导出" : "Export"}
         </button>
         {isOpen ? (
           <div className="absolute right-0 top-full z-20 mt-2 w-40 rounded-md border border-zinc-200 bg-white text-xs text-zinc-900 shadow-lg">
@@ -138,7 +141,7 @@ export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastert
               onClick={() => handleExport("txt")}
               className="block w-full px-3 py-2 text-left font-semibold uppercase tracking-wide hover:bg-zinc-100"
             >
-              Plain Text
+              {isZh ? "纯文本" : "Plain Text"}
             </button>
           </div>
         ) : null}
@@ -148,13 +151,13 @@ export default function ActionsBar({ columns, rows, clearFiltersHref = "/mastert
         onClick={() => window.print()}
         className="rounded-md bg-zinc-400 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
       >
-        Print
+        {isZh ? "打印" : "Print"}
       </button>
       <Link
         href={clearFiltersHref}
         className="rounded-md bg-zinc-400 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white"
       >
-        Clear All Filters
+        {isZh ? "清除所有筛选" : "Clear All Filters"}
       </Link>
     </div>
   );

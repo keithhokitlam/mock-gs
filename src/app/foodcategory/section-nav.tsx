@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 function scrollToAnchor(id: string) {
   requestAnimationFrame(() => {
@@ -33,7 +34,44 @@ const dropdownItemUnlinked =
 
 const standaloneUnlinkedClass = triggerClassMuted;
 
-export default function SectionNav() {
+type SectionNavLocale = "en" | "zh";
+
+const SECTION_NAV_COPY = {
+  en: {
+    fruitsVegetables: "FRUITS & VEGETABLES",
+    fruits: "Fruits",
+    vegetable: "Vegetable",
+    vegan: "Vegan",
+    fishSeafood: "FISH & SEAFOOD",
+    fish: "Fish",
+    shellfish: "Shellfish",
+    other: "Other",
+    meat: "MEAT",
+    mammals: "Mammals",
+    foodAdditives: "FOOD ADDICTIVES",
+    processedFood: "PROCESSED FOOD",
+  },
+  zh: {
+    fruitsVegetables: "水果与蔬菜",
+    fruits: "水果",
+    vegetable: "蔬菜",
+    vegan: "纯素",
+    fishSeafood: "鱼类与海鲜",
+    fish: "鱼类",
+    shellfish: "贝类",
+    other: "其他",
+    meat: "肉类",
+    mammals: "哺乳类",
+    foodAdditives: "食品添加剂",
+    processedFood: "加工食品",
+  },
+} as const;
+
+export default function SectionNav({ locale = "en" }: { locale?: SectionNavLocale }) {
+  const pathname = usePathname();
+  const actualLocale =
+    locale === "zh" || pathname === "/zh" || pathname?.startsWith("/zh/") ? "zh" : "en";
+  const copy = SECTION_NAV_COPY[actualLocale];
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +100,7 @@ export default function SectionNav() {
           onClick={() => setOpenDropdown(openDropdown === "fruits" ? null : "fruits")}
           className={fruitsHasLink ? triggerClassActive : triggerClassMuted}
         >
-          FRUITS & VEGETABLES
+          {copy.fruitsVegetables}
           <ChevronDown open={openDropdown === "fruits"} muted={!fruitsHasLink} />
         </button>
         {openDropdown === "fruits" && (
@@ -76,13 +114,13 @@ export default function SectionNav() {
                 scrollToAnchor("section-fruits");
               }}
             >
-              Fruits
+              {copy.fruits}
             </a>
             <button type="button" className={dropdownItemUnlinked}>
-              Vegetable
+              {copy.vegetable}
             </button>
             <button type="button" className={dropdownItemUnlinked}>
-              Vegan
+              {copy.vegan}
             </button>
           </div>
         )}
@@ -95,7 +133,7 @@ export default function SectionNav() {
           onClick={() => setOpenDropdown(openDropdown === "fish" ? null : "fish")}
           className={fishHasLink ? triggerClassActive : triggerClassMuted}
         >
-          FISH & SEAFOOD
+          {copy.fishSeafood}
           <ChevronDown open={openDropdown === "fish"} muted={!fishHasLink} />
         </button>
         {openDropdown === "fish" && (
@@ -109,13 +147,13 @@ export default function SectionNav() {
                 scrollToAnchor("section-seafood");
               }}
             >
-              Fish
+              {copy.fish}
             </a>
             <button type="button" className={dropdownItemUnlinked}>
-              Shellfish
+              {copy.shellfish}
             </button>
             <button type="button" className={dropdownItemUnlinked}>
-              Other
+              {copy.other}
             </button>
           </div>
         )}
@@ -128,16 +166,16 @@ export default function SectionNav() {
           onClick={() => setOpenDropdown(openDropdown === "meat" ? null : "meat")}
           className={meatHasLink ? triggerClassActive : triggerClassMuted}
         >
-          MEAT
+          {copy.meat}
           <ChevronDown open={openDropdown === "meat"} muted={!meatHasLink} />
         </button>
         {openDropdown === "meat" && (
           <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
             <button type="button" className={dropdownItemUnlinked}>
-              Mammals
+              {copy.mammals}
             </button>
             <button type="button" className={dropdownItemUnlinked}>
-              Other
+              {copy.other}
             </button>
           </div>
         )}
@@ -145,12 +183,12 @@ export default function SectionNav() {
 
       {/* FOOD ADDICTIVES — no links */}
       <button type="button" className={standaloneUnlinkedClass}>
-        FOOD ADDICTIVES
+        {copy.foodAdditives}
       </button>
 
       {/* PROCESSED FOOD — no links */}
       <button type="button" className={standaloneUnlinkedClass}>
-        PROCESSED FOOD
+        {copy.processedFood}
       </button>
     </div>
   );

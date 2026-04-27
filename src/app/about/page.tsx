@@ -1,16 +1,19 @@
 import NavBar from "../components/navbar";
 
-export default function AboutPage() {
+type AboutLocale = "en" | "zh";
+
+function AboutPageContent({ locale = "en" }: { locale?: AboutLocale }) {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
       <main className="mx-auto w-full max-w-3xl px-4 py-12">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm space-y-10">
           <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
-            ABOUT
+            {locale === "zh" ? "关于我们" : "ABOUT"}
           </h1>
 
           {/* English */}
+          {locale === "en" && (
           <section>
             <h2 className="text-xl font-semibold text-zinc-900 mb-4">
               Your Food Curiosity, Welcome Home.
@@ -37,15 +40,18 @@ export default function AboutPage() {
               </p>
             </div>
           </section>
+          )}
 
           {/* Simplified Chinese */}
-          <section className="border-t border-zinc-200 pt-8">
+          <section className={locale === "en" ? "border-t border-zinc-200 pt-8" : ""} lang="zh-CN">
             <h3 className="text-lg font-semibold text-zinc-900 mb-3">
-              简体中文
+              {locale === "en" ? "简体中文" : "欢迎美食好奇者回家"}
             </h3>
-            <h4 className="text-base font-semibold text-zinc-800 mb-3">
-              欢迎美食好奇者回家
-            </h4>
+            {locale === "en" && (
+              <h4 className="text-base font-semibold text-zinc-800 mb-3">
+                欢迎美食好奇者回家
+              </h4>
+            )}
             <div className="space-y-4 text-base leading-relaxed text-zinc-700">
               <p>
                 你是否曾盯着一颗长相奇特的南瓜，心里犯嘀咕……我到底该怎么&quot;处理&quot;你？你是否曾在农产品区纠结过&quot;本地 vs.
@@ -61,6 +67,7 @@ export default function AboutPage() {
           </section>
 
           {/* Traditional Chinese */}
+          {locale === "en" && (
           <section className="border-t border-zinc-200 pt-8">
             <h3 className="text-lg font-semibold text-zinc-900 mb-3">
               繁體中文
@@ -81,9 +88,14 @@ export default function AboutPage() {
               </p>
             </div>
           </section>
+          )}
 
         </div>
       </main>
     </div>
   );
+}
+
+export default function AboutPage() {
+  return <AboutPageContent />;
 }

@@ -6,8 +6,9 @@ import SignupSignaturePad, {
   type SignupSignaturePadHandle,
 } from "./signup-signature-pad";
 import {
-  SUBSCRIPTION_PLAN_CONTENT,
+  getSubscriptionPlanContent,
   type MembershipTier,
+  type SubscriptionContentLocale,
 } from "./subscription-plan-content";
 
 // Gold grocery icon SVG (shopping basket with groceries)
@@ -62,20 +63,99 @@ const GoldResearchIcon = () => (
 
 const CONSUMER_SIGNUP_ENABLED = true;
 
+const SIGNUP_COPY = {
+  en: {
+    close: "X Close",
+    title: "Join the Grocery-Share family!",
+    success:
+      "You're in! Check your email to verify your account—then you're all set to start exploring.",
+    firstName: "First Name",
+    firstNamePlaceholder: "First name",
+    lastName: "Last Name",
+    lastNamePlaceholder: "Last name",
+    company: "Company",
+    email: "Email",
+    password: "Password",
+    passwordHint: "Password must be 6 or more characters",
+    confirmPassword: "Confirm Password",
+    chooseSubscription: "Choose a subscription",
+    selected: "SELECTED",
+    legalIntro:
+      "I will digitally sign to confirm that I have read and agree to the",
+    privacy: "privacy policy",
+    terms: "terms of service",
+    consumerDisclaimer: "disclaimer for the consumer section",
+    commercialDisclaimer: "disclaimer for the commercial section",
+    ifApplicable: "(if applicable).",
+    incomplete: "All required fields have not been filled.",
+    creating: "Creating account...",
+    submit: "Sign up",
+    closeButton: "Close",
+    errors: {
+      required: "All required fields must be filled in",
+      signature: "Please draw your signature in the box below to continue.",
+      passwordMin: "Password must be at least 6 characters",
+      passwordMismatch: "Passwords do not match",
+      plan: "Please select Essential Membership or Premium Membership",
+      createFailed: "Failed to create account",
+      generic: "An error occurred. Please try again.",
+    },
+  },
+  zh: {
+    close: "X 关闭",
+    title: "加入 Grocery-Share 大家庭！",
+    success: "注册成功！请查看邮箱并验证账号，然后就可以开始探索啦。",
+    firstName: "名字",
+    firstNamePlaceholder: "名字",
+    lastName: "姓氏",
+    lastNamePlaceholder: "姓氏",
+    company: "公司",
+    email: "邮箱",
+    password: "密码",
+    passwordHint: "密码至少需要 6 个字符",
+    confirmPassword: "确认密码",
+    chooseSubscription: "选择会员方案",
+    selected: "已选择",
+    legalIntro: "我将通过电子签名确认我已阅读并同意",
+    privacy: "隐私政策",
+    terms: "服务条款",
+    consumerDisclaimer: "消费者专区免责声明",
+    commercialDisclaimer: "商业专区免责声明",
+    ifApplicable: "（如适用）。",
+    incomplete: "所有必填项尚未填写。",
+    creating: "正在创建账号...",
+    submit: "注册",
+    closeButton: "关闭",
+    errors: {
+      required: "请填写所有必填项",
+      signature: "请在下方框内签名后继续。",
+      passwordMin: "密码至少需要 6 个字符",
+      passwordMismatch: "两次输入的密码不一致",
+      plan: "请选择 Essential 基础会员或 Premium 高级会员",
+      createFailed: "创建账号失败",
+      generic: "发生错误，请再试一次。",
+    },
+  },
+} as const;
+
 type SignupModalProps = {
   isOpen: boolean;
   onClose: () => void;
   /** When the modal opens, pre-select this plan (pricing buttons, /home?account=). Null = user chooses. */
   defaultSelectedPlan?: MembershipTier | null;
+  locale?: SubscriptionContentLocale;
 };
 
 export default function SignupModal({
   isOpen,
   onClose,
   defaultSelectedPlan = null,
+  locale = "en",
 }: SignupModalProps) {
-  const essentialPlan = SUBSCRIPTION_PLAN_CONTENT.essential;
-  const premiumPlan = SUBSCRIPTION_PLAN_CONTENT.premium;
+  const copy = SIGNUP_COPY[locale];
+  const planContent = getSubscriptionPlanContent(locale);
+  const essentialPlan = planContent.essential;
+  const premiumPlan = planContent.premium;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -114,28 +194,28 @@ export default function SignupModal({
 
     // Validation
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setError("All required fields must be filled in");
+      setError(copy.errors.required);
       return;
     }
 
     const signatureDataUrl = signaturePadRef.current?.toDataURL();
     if (!signatureDataUrl) {
-      setError("Please draw your signature in the box below to continue.");
+      setError(copy.errors.signature);
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError(copy.errors.passwordMin);
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(copy.errors.passwordMismatch);
       return;
     }
 
     if (!selectedPlan) {
-      setError("Please select Essential Membership or Premium Membership");
+      setError(copy.errors.plan);
       return;
     }
 
@@ -159,7 +239,7 @@ export default function SignupModal({
       const data = await response.json();
 
       if (!response.ok) {
-        const base = data.error || "Failed to create account";
+        const base = data.error || copy.errors.createFailed;
         const detail =
           typeof data.details === "string" && data.details.trim() !== ""
             ? `\n\n${data.details.trim()}`
@@ -179,7 +259,7 @@ export default function SignupModal({
       setHasSignature(false);
       signaturePadRef.current?.clear();
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError(copy.errors.generic);
     } finally {
       setLoading(false);
     }
@@ -204,28 +284,27 @@ export default function SignupModal({
           className="absolute right-4 top-4 rounded-md border border-[#2B6B4A] bg-[#2B6B4A] px-2.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-[#225a3d]"
           aria-label="Close"
         >
-          X Close
+          {copy.close}
         </button>
 
         <h2
           id="signup-modal-title"
           className="mb-6 pr-28 text-xl font-semibold whitespace-nowrap text-zinc-900"
         >
-          Join the Grocery-Share family!
+          {copy.title}
         </h2>
 
         {success ? (
           <div className="space-y-4">
             <p className="text-sm text-green-600">
-              You&apos;re in! Check your email to verify your account—then
-              you&apos;re all set to start exploring.
+              {copy.success}
             </p>
             <button
               type="button"
               onClick={onClose}
               className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
             >
-              Close
+              {copy.closeButton}
             </button>
           </div>
         ) : (
@@ -239,14 +318,14 @@ export default function SignupModal({
                   <span className="text-red-600" aria-hidden>
                     *
                   </span>{" "}
-                  First Name
+                  {copy.firstName}
                 </label>
                 <input
                   id="signup-firstname"
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="First name"
+                  placeholder={copy.firstNamePlaceholder}
                   required
                   className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
                 />
@@ -259,14 +338,14 @@ export default function SignupModal({
                   <span className="text-red-600" aria-hidden>
                     *
                   </span>{" "}
-                  Last Name
+                  {copy.lastName}
                 </label>
                 <input
                   id="signup-lastname"
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Last name"
+                  placeholder={copy.lastNamePlaceholder}
                   required
                   className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
                 />
@@ -278,14 +357,14 @@ export default function SignupModal({
                 className="text-sm font-medium text-zinc-700"
                 htmlFor="signup-company"
               >
-                Company
+                {copy.company}
               </label>
               <input
                 id="signup-company"
                 type="text"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
-                placeholder="Company"
+                placeholder={copy.company}
                 className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
               />
             </div>
@@ -298,7 +377,7 @@ export default function SignupModal({
                 <span className="text-red-600" aria-hidden>
                   *
                 </span>{" "}
-                Email
+                {copy.email}
               </label>
               <input
                 id="signup-email"
@@ -319,10 +398,10 @@ export default function SignupModal({
                 <span className="text-red-600" aria-hidden>
                   *
                 </span>{" "}
-                Password
+                {copy.password}
               </label>
               <p className="text-xs text-zinc-500">
-                Password must be 6 or more characters
+                {copy.passwordHint}
               </p>
               <div className="relative">
                 <input
@@ -363,7 +442,7 @@ export default function SignupModal({
                 <span className="text-red-600" aria-hidden>
                   *
                 </span>{" "}
-                Confirm Password
+                {copy.confirmPassword}
               </label>
               <div className="relative">
                 <input
@@ -401,7 +480,7 @@ export default function SignupModal({
                 <span className="text-red-600" aria-hidden>
                   *
                 </span>{" "}
-                Choose a subscription
+                {copy.chooseSubscription}
               </p>
               {CONSUMER_SIGNUP_ENABLED ? (
                 <button
@@ -415,7 +494,7 @@ export default function SignupModal({
                 >
                   {selectedPlan === "essential" && (
                     <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-5xl font-black tracking-[0.2em] text-white/35 [transform:rotate(-24deg)]">
-                      SELECTED
+                      {copy.selected}
                     </span>
                   )}
                   <div className="relative z-10">
@@ -471,7 +550,7 @@ export default function SignupModal({
               >
                 {selectedPlan === "premium" && (
                   <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-5xl font-black tracking-[0.2em] text-white/35 [transform:rotate(-24deg)]">
-                    SELECTED
+                    {copy.selected}
                   </span>
                 )}
                 <div className="relative z-10">
@@ -516,14 +595,14 @@ export default function SignupModal({
 
             <div className="space-y-2">
               <p className="text-xs leading-relaxed text-zinc-700">
-                I will digitally sign to confirm that I have read and agree to the{" "}
+                {copy.legalIntro}{" "}
                 <Link
                   href="/legal#privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-[#2B6B4A] underline hover:no-underline"
                 >
-                  privacy policy
+                  {copy.privacy}
                 </Link>
                 ,{" "}
                 <Link
@@ -532,7 +611,7 @@ export default function SignupModal({
                   rel="noopener noreferrer"
                   className="font-semibold text-[#2B6B4A] underline hover:no-underline"
                 >
-                  terms of service
+                  {copy.terms}
                 </Link>
                 ,{" "}
                 <Link
@@ -541,7 +620,7 @@ export default function SignupModal({
                   rel="noopener noreferrer"
                   className="font-semibold text-[#2B6B4A] underline hover:no-underline"
                 >
-                  disclaimer for the consumer section
+                  {copy.consumerDisclaimer}
                 </Link>
                 , and{" "}
                 <Link
@@ -550,9 +629,9 @@ export default function SignupModal({
                   rel="noopener noreferrer"
                   className="font-semibold text-[#2B6B4A] underline hover:no-underline"
                 >
-                  disclaimer for the commercial section
+                  {copy.commercialDisclaimer}
                 </Link>{" "}
-                (if applicable).
+                {copy.ifApplicable}
               </p>
               <SignupSignaturePad
                 ref={signaturePadRef}
@@ -568,7 +647,7 @@ export default function SignupModal({
 
             {!loading && !canSubmit && (
               <p className="text-sm font-medium text-red-600" role="alert">
-                All required fields have not been filled.
+                {copy.incomplete}
               </p>
             )}
 
@@ -577,7 +656,7 @@ export default function SignupModal({
               disabled={loading || !canSubmit}
               className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300 disabled:cursor-not-allowed disabled:bg-zinc-400 disabled:text-zinc-100 disabled:hover:bg-zinc-400"
             >
-              {loading ? "Creating account..." : "Sign up"}
+              {loading ? copy.creating : copy.submit}
             </button>
           </form>
         )}

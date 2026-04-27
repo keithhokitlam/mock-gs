@@ -26,8 +26,11 @@ function LegalBlock({
   );
 }
 
-export default function LegalPage() {
+type LegalLocale = "en" | "zh";
+
+function LegalPageContent({ locale = "en" }: { locale?: LegalLocale }) {
   const s = getLegalSections();
+  const isZh = locale === "zh";
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
@@ -35,14 +38,18 @@ export default function LegalPage() {
       <main className="mx-auto w-full max-w-3xl px-4 py-12">
         <div className="w-full rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm space-y-8">
           <div>
-            <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">LEGAL</h1>
+            <h1 className="mb-4 text-3xl font-semibold text-zinc-900 font-beckman">
+              {isZh ? "法律条款" : "LEGAL"}
+            </h1>
             <p className="text-base leading-relaxed text-zinc-700">
-              The English version of these documents is the controlling version. Summaries or
-              translations in other languages are provided for convenience only.
+              {isZh
+                ? "英文版本为这些文件的正式版本。其他语言的摘要或翻译仅供参考。"
+                : "The English version of these documents is the controlling version. Summaries or translations in other languages are provided for convenience only."}
             </p>
           </div>
 
-          <nav
+          {!isZh && (
+            <nav
             className="rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-4 text-sm leading-relaxed text-zinc-800"
             aria-label="On this page"
           >
@@ -95,7 +102,15 @@ export default function LegalPage() {
               </Link>
             </p>
           </nav>
+          )}
 
+          {isZh ? (
+            <section id="legal-zh-cn" className="scroll-mt-28 border-t border-zinc-200 pt-10" lang="zh-CN">
+              <h2 className="text-xl font-semibold text-zinc-900 mb-4">简体中文</h2>
+              <div className="text-base leading-relaxed text-zinc-700 whitespace-pre-line">{s.zhCn}</div>
+            </section>
+          ) : (
+            <>
           <div className="divide-y divide-zinc-200">
             <LegalBlock id="privacy-policy" title="Privacy policy" body={s.privacy} />
             <LegalBlock id="terms-of-service" title="Terms of service" body={s.terms} />
@@ -120,8 +135,14 @@ export default function LegalPage() {
             <h2 className="text-xl font-semibold text-zinc-900 mb-4">繁體中文</h2>
             <div className="text-base leading-relaxed text-zinc-700 whitespace-pre-line">{s.zhTw}</div>
           </section>
+            </>
+          )}
         </div>
       </main>
     </div>
   );
+}
+
+export default function LegalPage() {
+  return <LegalPageContent />;
 }

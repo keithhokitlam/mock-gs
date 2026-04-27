@@ -3,8 +3,9 @@
 import { useState } from "react";
 import SignupModal from "../components/signup-modal";
 import {
-  SUBSCRIPTION_PLAN_CONTENT,
+  getSubscriptionPlanContent,
   type MembershipTier,
+  type SubscriptionContentLocale,
 } from "../components/subscription-plan-content";
 
 // Gold grocery icon SVG (shopping basket with groceries)
@@ -55,11 +56,26 @@ const GoldResearchIcon = () => (
   </svg>
 );
 
-export default function PricingPlanCards() {
+const PRICING_CARDS_COPY = {
+  en: {
+    signup: "Sign Up Here!",
+  },
+  zh: {
+    signup: "在这里注册！",
+  },
+} as const;
+
+export default function PricingPlanCards({
+  locale = "en",
+}: {
+  locale?: SubscriptionContentLocale;
+}) {
   const [signupOpen, setSignupOpen] = useState(false);
   const [defaultSelectedPlan, setDefaultSelectedPlan] = useState<MembershipTier | null>(null);
-  const essentialPlan = SUBSCRIPTION_PLAN_CONTENT.essential;
-  const premiumPlan = SUBSCRIPTION_PLAN_CONTENT.premium;
+  const copy = PRICING_CARDS_COPY[locale];
+  const planContent = getSubscriptionPlanContent(locale);
+  const essentialPlan = planContent.essential;
+  const premiumPlan = planContent.premium;
 
   const openSignup = (plan: MembershipTier) => {
     setDefaultSelectedPlan(plan);
@@ -90,7 +106,7 @@ export default function PricingPlanCards() {
             onClick={() => openSignup("essential")}
             className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
           >
-            Sign Up Here!
+            {copy.signup}
           </button>
         </div>
 
@@ -127,7 +143,7 @@ export default function PricingPlanCards() {
             onClick={() => openSignup("premium")}
             className="block w-full text-center px-4 py-2 bg-[#2B6B4A] text-white rounded hover:bg-[#225a3d] transition-colors font-semibold"
           >
-            Sign Up Here!
+            {copy.signup}
           </button>
         </div>
       </div>
@@ -136,6 +152,7 @@ export default function PricingPlanCards() {
         isOpen={signupOpen}
         onClose={() => setSignupOpen(false)}
         defaultSelectedPlan={defaultSelectedPlan}
+        locale={locale}
       />
     </>
   );

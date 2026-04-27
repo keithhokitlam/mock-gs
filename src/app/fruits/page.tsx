@@ -38,6 +38,16 @@ export default async function FruitsPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  return <FruitsPageContent searchParams={searchParams} />;
+}
+
+async function FruitsPageContent({
+  searchParams,
+  locale = "en",
+}: {
+  searchParams: Promise<SearchParams>;
+  locale?: "en" | "zh";
+}) {
   const user = await getCurrentUser();
   if (
     user?.essential_vs_premium === "essential" ||
@@ -107,19 +117,19 @@ export default async function FruitsPage({
       <main className="mx-auto w-full max-w-[67rem] px-4 py-12">
         <div className="mb-4 flex items-center gap-4">
           <Link
-            href="/foodcategory#section-fruits"
+            href={locale === "zh" ? "/zh/foodcategory#section-fruits" : "/foodcategory#section-fruits"}
             className="text-[#2B6B4A] hover:underline text-sm font-medium"
           >
-            ← Back to Food Category
+            {locale === "zh" ? "← 返回食品分类" : "← Back to Food Category"}
           </Link>
         </div>
         <h1 className="mb-6 text-3xl font-semibold text-zinc-900 font-beckman">
-          FRUITS
+          {locale === "zh" ? "水果" : "FRUITS"}
         </h1>
         <ActionsBar
           columns={columns.map((c) => c.label)}
           rows={visibleRows}
-          clearFiltersHref="/fruits"
+          clearFiltersHref={locale === "zh" ? "/zh/fruits" : "/fruits"}
         />
         <AdminTable
           columns={columns}
