@@ -382,6 +382,9 @@ async function AdminPageContent({
   );
 }
 
-export default async function AdminPage({ searchParams }: AdminPageProps) {
-  return <AdminPageContent searchParams={searchParams} />;
+export default async function AdminPage(props: AdminPageProps) {
+  const { searchParams } = props;
+  const locale = (props as AdminPageProps & { locale?: "en" | "zh" }).locale ?? "en";
+
+  return <AdminPageContent searchParams={searchParams} locale={locale} />;
 }
