@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Suspense } from "react";
-import LanguageSwitcher from "./components/language-switcher";
 import SiteLegalFooter from "./components/site-legal-footer";
 import "./globals.css";
 
@@ -35,9 +33,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
       >
-        <Suspense fallback={null}>
-          <LanguageSwitcher />
-        </Suspense>
         <div className="flex min-h-0 flex-1 flex-col">{children}</div>
         <SiteLegalFooter />
       </body>

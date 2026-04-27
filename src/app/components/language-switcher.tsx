@@ -3,11 +3,17 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
+type LanguageSwitcherProps = {
+  className?: string;
+};
+
 function withQuery(path: string, query: string) {
   return query ? `${path}?${query}` : path;
 }
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({
+  className = "fixed right-4 top-3 z-[300] rounded-full border border-white/70 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-700 shadow-sm backdrop-blur",
+}: LanguageSwitcherProps) {
   const pathname = usePathname() || "/";
   const searchParams = useSearchParams();
   const query = searchParams.toString();
@@ -17,7 +23,7 @@ export default function LanguageSwitcher() {
   const chinesePath = isChinese ? pathname : `/zh${pathname === "/" ? "/home" : pathname}`;
 
   return (
-    <div className="fixed right-4 top-3 z-[300] rounded-full border border-white/70 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-700 shadow-sm backdrop-blur">
+    <div className={className}>
       <Link
         href={withQuery(englishPath, query)}
         className={isChinese ? "hover:text-[#2B6B4A]" : "text-[#2B6B4A]"}

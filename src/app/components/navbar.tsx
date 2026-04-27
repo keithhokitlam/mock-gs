@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import LanguageSwitcher from "./language-switcher";
 
 type NavLocale = "en" | "zh";
 
@@ -361,16 +362,20 @@ export default function NavBar() {
             </Link>
           </div>
         </div>
-        {userEmail && (
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setShowDropdown(!showDropdown)}
-              className="text-white font-beckman text-xs hover:opacity-80 cursor-pointer"
-            >
-              {userEmail}
-            </button>
-            {showDropdown && (
-              <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border border-zinc-200 p-4 z-50">
+        <div className="flex shrink-0 items-center gap-3">
+          <Suspense fallback={null}>
+            <LanguageSwitcher className="whitespace-nowrap rounded-full border border-white/70 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-700 shadow-sm backdrop-blur" />
+          </Suspense>
+          {userEmail && (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="cursor-pointer whitespace-nowrap text-xs text-white hover:opacity-80 font-beckman"
+              >
+                {userEmail}
+              </button>
+              {showDropdown && (
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border border-zinc-200 p-4 z-50">
                 <div className="space-y-4">
                   {/* Account Details */}
                   <div>
@@ -529,9 +534,10 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );
