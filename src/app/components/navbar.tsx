@@ -39,7 +39,7 @@ const NAV_COPY = {
     cancelSubscription: "Cancel Subscription",
     cancellingSubscription: "Cancelling...",
     cancelSubscriptionConfirm:
-      "Are you sure you want to cancel your subscription? Continuing will terminate your Essential or Premium account. Reactivation will require signing up again.",
+      "Are you sure you want to cancel your subscription? Continuing will terminate your account. Reactivation will require signing up again.",
     keepSubscription: "Keep Subscription",
     confirmCancelSubscription: "Yes, Cancel Subscription",
     cancelSubscriptionSuccess:
