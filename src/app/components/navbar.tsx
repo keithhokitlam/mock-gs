@@ -36,9 +36,15 @@ const NAV_COPY = {
     show: "Show",
     changing: "Changing...",
     cancel: "Cancel",
-    stopAutoRenewal: "Stop Auto-Renewal (non-Alipay only)",
-    stopAutoRenewalAlert:
-      "Stop Auto-Renewal feature will be available after Stripe integration",
+    cancelSubscription: "Cancel Subscription",
+    cancellingSubscription: "Cancelling...",
+    cancelSubscriptionConfirm:
+      "Are you sure you want to cancel your subscription? Continuing will terminate your Essential or Premium account. Reactivation will require signing up again.",
+    keepSubscription: "Keep Subscription",
+    confirmCancelSubscription: "Yes, Cancel Subscription",
+    cancelSubscriptionSuccess:
+      "Your subscription has been cancelled. You will be signed out now.",
+    cancelSubscriptionFailed: "Failed to cancel subscription",
     signOut: "Sign out",
     allFieldsRequired: "All fields are required",
     passwordMin: "New password must be at least 6 characters",
@@ -74,8 +80,14 @@ const NAV_COPY = {
     show: "显示",
     changing: "正在修改...",
     cancel: "取消",
-    stopAutoRenewal: "停止自动续费（不含 Alipay）",
-    stopAutoRenewalAlert: "停止自动续费功能将在 Stripe 集成后开放",
+    cancelSubscription: "取消会员",
+    cancellingSubscription: "正在取消...",
+    cancelSubscriptionConfirm:
+      "确定要取消会员吗？继续操作将终止你的 Essential 或 Premium 账户。如需重新启用，需要重新注册。",
+    keepSubscription: "保留会员",
+    confirmCancelSubscription: "确认取消会员",
+    cancelSubscriptionSuccess: "你的会员已取消。现在将退出登录。",
+    cancelSubscriptionFailed: "取消会员失败",
     signOut: "退出登录",
     allFieldsRequired: "请填写所有字段",
     passwordMin: "新密码至少需要 6 个字符",
@@ -106,6 +118,8 @@ function formatSubscriptionEndDate(
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [accountType, setAccountType] = useState<"essential" | "premium" | "admin" | null>(null);
+  const [subscriptionId, setSubscriptionId] = useState<string | null>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
   const [subscriptionEndDate, setSubscriptionEndDate] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -115,6 +129,9 @@ export default function NavBar() {
   const [passwordError, setPasswordError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState("");
   const [passwordLoading, setPasswordLoading] = useState(false);
+  const [showCancelSubscriptionConfirm, setShowCancelSubscriptionConfirm] = useState(false);
+  const [cancelSubscriptionError, setCancelSubscriptionError] = useState("");
+  const [cancelSubscriptionLoading, setCancelSubscriptionLoading] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -187,6 +204,10 @@ export default function NavBar() {
         if (data.email) {
           setUserEmail(data.email);
           setAccountType(data.accountType ?? null);
+          setSubscriptionId(typeof data.subscriptionId === "string" ? data.subscriptionId : null);
+          setSubscriptionStatus(
+            typeof data.subscriptionStatus === "string" ? data.subscriptionStatus : null
+          );
           const end =
             typeof data.subscriptionEndDate === "string"
               ? data.subscriptionEndDate
@@ -200,6 +221,8 @@ export default function NavBar() {
             pathname === "/subscriptions";
           setUserEmail(isAdminPage ? "ADMIN" : null);
           setAccountType(isAdminPage ? "admin" : null);
+          setSubscriptionId(null);
+          setSubscriptionStatus(null);
           setSubscriptionEndDate(null);
         }
       })
@@ -212,6 +235,8 @@ export default function NavBar() {
           pathname === "/subscriptions";
         setUserEmail(isAdminPage ? "ADMIN" : null);
         setAccountType(isAdminPage ? "admin" : null);
+        setSubscriptionId(null);
+        setSubscriptionStatus(null);
         setSubscriptionEndDate(null);
       });
   }, [pathname]);
@@ -241,9 +266,12 @@ export default function NavBar() {
     }
     setUserEmail(null);
     setAccountType(null);
+    setSubscriptionId(null);
+    setSubscriptionStatus(null);
     setSubscriptionEndDate(null);
     setShowDropdown(false);
     setShowChangePassword(false);
+    setShowCancelSubscriptionConfirm(false);
     router.push("/home");
   };
 
@@ -295,9 +323,47 @@ export default function NavBar() {
         setShowChangePassword(false);
         setPasswordSuccess("");
       }, 2000);
-    } catch (err) {
+    } catch {
       setPasswordError(copy.genericError);
       setPasswordLoading(false);
+    }
+  };
+
+  const handleCancelSubscription = async () => {
+    setCancelSubscriptionError("");
+
+    if (!subscriptionId) {
+      setCancelSubscriptionError(copy.cancelSubscriptionFailed);
+      return;
+    }
+
+    setCancelSubscriptionLoading(true);
+
+    try {
+      const response = await fetch("/api/subscriptions/update-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          subscription_id: subscriptionId,
+          status: "cancelled",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || copy.cancelSubscriptionFailed);
+      }
+
+      alert(copy.cancelSubscriptionSuccess);
+      await handleSignOut();
+    } catch (err) {
+      setCancelSubscriptionError(
+        err instanceof Error ? err.message : copy.cancelSubscriptionFailed
+      );
+    } finally {
+      setCancelSubscriptionLoading(false);
     }
   };
 
@@ -515,18 +581,55 @@ export default function NavBar() {
                     </>
                   )}
 
-                  {/* Stop Auto-Renewal (non-Alipay only) */}
-                  {!isAdmin && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        // Placeholder - will be implemented with Stripe integration
-                        alert(copy.stopAutoRenewalAlert);
-                      }}
-                      className="w-full text-left text-sm text-[#2B6B4A] hover:underline"
-                    >
-                      {copy.stopAutoRenewal}
-                    </button>
+                  {!isAdmin && subscriptionStatus !== "cancelled" && (
+                    <div className="space-y-2">
+                      {!showCancelSubscriptionConfirm ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCancelSubscriptionError("");
+                            setShowCancelSubscriptionConfirm(true);
+                          }}
+                          className="w-full text-left text-sm text-[#2B6B4A] hover:underline"
+                        >
+                          {copy.cancelSubscription}
+                        </button>
+                      ) : (
+                        <div className="rounded border border-red-200 bg-red-50 p-3">
+                          <p className="text-sm text-red-800">
+                            {copy.cancelSubscriptionConfirm}
+                          </p>
+                          {cancelSubscriptionError && (
+                            <p className="mt-2 text-xs text-red-700">
+                              {cancelSubscriptionError}
+                            </p>
+                          )}
+                          <div className="mt-3 flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowCancelSubscriptionConfirm(false);
+                                setCancelSubscriptionError("");
+                              }}
+                              disabled={cancelSubscriptionLoading}
+                              className="rounded border border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-700 hover:bg-white disabled:opacity-50"
+                            >
+                              {copy.keepSubscription}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => void handleCancelSubscription()}
+                              disabled={cancelSubscriptionLoading}
+                              className="rounded bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-50"
+                            >
+                              {cancelSubscriptionLoading
+                                ? copy.cancellingSubscription
+                                : copy.confirmCancelSubscription}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
 
                   <div className="border-t border-zinc-200 pt-3">

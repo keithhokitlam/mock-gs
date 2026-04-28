@@ -24,7 +24,11 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
   },
   {
     question: "Once I purchase a subscription, can it be refunded?",
-    answer: "Unfortunately, we can't offer refunds once a subscription is purchased. Heads up: subscriptions auto-renew (except Alipay). To stop future renewals:\n1) Log in\n2) Click your email in the top right\n3) Select 'Stop Auto-Renewal (non-Alipay only)' from the dropdown\n\nThat'll prevent the next billing cycle from triggering.",
+    answer: "Unfortunately, we can't offer refunds once a subscription is purchased. If you no longer wish to continue, you can cancel your subscription from your account menu.",
+  },
+  {
+    question: "How do I cancel my subscription?",
+    answer: "To cancel your subscription:\n1) Log in to your account\n2) Click your email address in the top-right corner\n3) Select 'Cancel Subscription' from the dropdown menu\n4) Review the confirmation message and confirm only if you want to proceed\n\nCancelling will terminate your Essential or Premium account. If you want to use Grocery-Share again later, you'll need to sign up for a new subscription.",
   },
   {
     question: "Why can't I log into my account?",
@@ -47,8 +51,8 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
     answer: "We take Visa, Mastercard, American Express, and Alipay. Pick what works for you!",
   },
   {
-    question: "What happens if I stop the auto-renewal process?",
-    answer: "No stress—you'll keep full access until your current period ends. After that date, no renewal will happen. You're in control!",
+    question: "What happens if I cancel my subscription?",
+    answer: "Your subscription will be terminated, and access to paid Grocery-Share features will end. To return later, you can sign up again with a new subscription.",
   },
   {
     question: "What do I get with my subscription?",
@@ -122,7 +126,12 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
     {
       question: "购买会员后可以退款吗？",
       answer:
-        "很抱歉，会员购买后无法退款。提醒一下：会员会自动续费（Alipay 除外）。如需停止未来续费：\n1) 登录\n2) 点击右上角邮箱\n3) 在下拉菜单中选择“停止自动续费（不含 Alipay）”\n\n这样就不会触发下一个账单周期。",
+        "很抱歉，会员购买后无法退款。如果你不想继续使用，可以在账户菜单中取消会员。",
+    },
+    {
+      question: "如何取消会员？",
+      answer:
+        "取消会员步骤：\n1) 登录你的账户\n2) 点击右上角的邮箱地址\n3) 在下拉菜单中选择“取消会员”\n4) 阅读确认提示，并仅在确定要继续时确认\n\n取消后，你的 Essential 或 Premium 账户将被终止。如果之后想继续使用 Grocery-Share，需要重新注册新的会员。",
     },
     {
       question: "为什么我无法登录账号？",
@@ -149,9 +158,9 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
       answer: "我们支持 Visa、Mastercard、American Express 和 Alipay。选择最适合你的方式即可！",
     },
     {
-      question: "停止自动续费后会怎样？",
+      question: "取消会员后会怎样？",
       answer:
-        "不用担心，你仍可使用到当前会员周期结束。到期后不会再续费，控制权在你手里！",
+        "你的会员将被终止，并且无法继续访问付费的 Grocery-Share 功能。如需之后继续使用，可以重新注册新的会员。",
     },
     {
       question: "会员包含哪些内容？",
