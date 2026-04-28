@@ -52,7 +52,7 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
   },
   {
     question: "What happens if I cancel my subscription?",
-    answer: "Your subscription will be terminated, and access to paid Grocery-Share features will end. If it is a Premium (paid) account, the unused amount cannot be refunded. To return later, you can sign up again with a new subscription.",
+    answer: "Your subscription will be terminated, and access to Grocery-Share features will end. If it is a Premium (paid) account, the unused amount cannot be refunded. To return later, you can sign up again with a new subscription. Any unused amount cannot be applied, each sign up will trigger a new paid cycle (only applicable to Premium accounts).",
   },
   {
     question: "What do I get with my subscription?",
