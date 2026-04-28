@@ -24,11 +24,11 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
   },
   {
     question: "Once I purchase a subscription, can it be refunded?",
-    answer: "Unfortunately, we can't offer refunds once a subscription is purchased. If you no longer wish to continue, you can cancel your subscription from your account menu.",
+    answer: "Unfortunately, we can't offer refunds once a subscription is purchased. If you cancel a Premium (paid) account, the unused amount cannot be refunded. If you no longer wish to continue, you can cancel your subscription from your account menu.",
   },
   {
     question: "How do I cancel my subscription?",
-    answer: "To cancel your subscription:\n1) Log in to your account\n2) Click your email address in the top-right corner\n3) Select 'Cancel Subscription' from the dropdown menu\n4) Review the confirmation message and confirm only if you want to proceed\n\nCancelling will terminate your Essential or Premium account. If you want to use Grocery-Share again later, you'll need to sign up for a new subscription.",
+    answer: "To cancel your subscription:\n1) Log in to your account\n2) Click your email address in the top-right corner\n3) Select 'Cancel Subscription' from the dropdown menu\n4) Review the confirmation message and confirm only if you want to proceed\n\nCancelling will terminate your account. If it is a Premium (paid) account, the unused amount cannot be refunded. If you want to use Grocery-Share again later, you'll need to sign up for a new subscription.",
   },
   {
     question: "Why can't I log into my account?",
@@ -52,7 +52,7 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
   },
   {
     question: "What happens if I cancel my subscription?",
-    answer: "Your subscription will be terminated, and access to paid Grocery-Share features will end. To return later, you can sign up again with a new subscription.",
+    answer: "Your subscription will be terminated, and access to paid Grocery-Share features will end. If it is a Premium (paid) account, the unused amount cannot be refunded. To return later, you can sign up again with a new subscription.",
   },
   {
     question: "What do I get with my subscription?",
@@ -126,12 +126,12 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
     {
       question: "购买会员后可以退款吗？",
       answer:
-        "很抱歉，会员购买后无法退款。如果你不想继续使用，可以在账户菜单中取消会员。",
+        "很抱歉，会员购买后无法退款。如果你取消 Premium（付费）账户，未使用金额无法退款。如果你不想继续使用，可以在账户菜单中取消会员。",
     },
     {
       question: "如何取消会员？",
       answer:
-        "取消会员步骤：\n1) 登录你的账户\n2) 点击右上角的邮箱地址\n3) 在下拉菜单中选择“取消会员”\n4) 阅读确认提示，并仅在确定要继续时确认\n\n取消后，你的 Essential 或 Premium 账户将被终止。如果之后想继续使用 Grocery-Share，需要重新注册新的会员。",
+        "取消会员步骤：\n1) 登录你的账户\n2) 点击右上角的邮箱地址\n3) 在下拉菜单中选择“取消会员”\n4) 阅读确认提示，并仅在确定要继续时确认\n\n取消后，你的账户将被终止。如果是 Premium（付费）账户，未使用金额无法退款。如果之后想继续使用 Grocery-Share，需要重新注册新的会员。",
     },
     {
       question: "为什么我无法登录账号？",
@@ -160,7 +160,7 @@ const faqDataByLocale: Record<FAQLocale, FAQItem[]> = {
     {
       question: "取消会员后会怎样？",
       answer:
-        "你的会员将被终止，并且无法继续访问付费的 Grocery-Share 功能。如需之后继续使用，可以重新注册新的会员。",
+        "你的会员将被终止，并且无法继续访问付费的 Grocery-Share 功能。如果是 Premium（付费）账户，未使用金额无法退款。如需之后继续使用，可以重新注册新的会员。",
     },
     {
       question: "会员包含哪些内容？",

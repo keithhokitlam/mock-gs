@@ -39,7 +39,7 @@ const NAV_COPY = {
     cancelSubscription: "Cancel Subscription",
     cancellingSubscription: "Cancelling...",
     cancelSubscriptionConfirm:
-      "Are you sure you want to cancel your subscription? Continuing will terminate your account. Reactivation will require signing up again.",
+      "Are you sure you want to cancel your subscription? Continuing will terminate your account. If it is a Premium (paid) account, the unused amount cannot be refunded. Reactivation will require signing up again.",
     keepSubscription: "Keep Subscription",
     confirmCancelSubscription: "Yes, Cancel Subscription",
     cancelSubscriptionSuccess:
@@ -83,7 +83,7 @@ const NAV_COPY = {
     cancelSubscription: "取消会员",
     cancellingSubscription: "正在取消...",
     cancelSubscriptionConfirm:
-      "确定要取消会员吗？继续操作将终止你的 Essential 或 Premium 账户。如需重新启用，需要重新注册。",
+      "确定要取消会员吗？继续操作将终止你的账户。如果是 Premium（付费）账户，未使用金额无法退款。如需重新启用，需要重新注册。",
     keepSubscription: "保留会员",
     confirmCancelSubscription: "确认取消会员",
     cancelSubscriptionSuccess: "你的会员已取消。现在将退出登录。",
