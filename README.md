@@ -37,3 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Updated remotely via Jarvis
 This change was made from my phone using Telegram.
+
+## Remote Control
+
+This project can be managed remotely via Telegram using Jarvis. From Telegram, Keith can ask Jarvis to inspect files, run commands, edit code, commit changes, and push updates to GitHub from the connected Mac.
