@@ -385,7 +385,7 @@ export default function NavBar() {
         : "/foodcategory";
 
   return (
-    <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#2B6B4A] via-[20%] to-[#2B6B4A]">
+    <nav className="w-full bg-gradient-to-r from-white from-[0%] via-[#EC4899] via-[20%] to-[#BE185D]">
       <div className="flex w-full items-center justify-between gap-4 px-2 py-0">
         <div className="flex items-center gap-4">
           <Link href={locale === "zh" ? "/zh/home" : "/"} aria-label={copy.homeLabel}>
