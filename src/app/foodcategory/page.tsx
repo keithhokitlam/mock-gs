@@ -21,6 +21,11 @@ function getSectionSlideImages(sectionDirName: string): string[] {
   const slidesDir = path.join(process.cwd(), "public", "foodcategory", sectionDirName);
   if (!fs.existsSync(slidesDir)) return [];
 
+  const publicDirPath = sectionDirName
+    .split("/")
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+
   return fs
     .readdirSync(slidesDir)
     .filter((file) => /\.(png|jpg|jpeg|webp)$/i.test(file))
@@ -30,7 +35,7 @@ function getSectionSlideImages(sectionDirName: string): string[] {
       if (aSort !== bSort) return aSort - bSort;
       return a.localeCompare(b);
     })
-    .map((file) => `/foodcategory/${sectionDirName}/${file}`);
+    .map((file) => `/foodcategory/${publicDirPath}/${encodeURIComponent(file)}`);
 }
 
 type FoodCategoryLocale = "en" | "zh";
@@ -38,24 +43,26 @@ type FoodCategoryLocale = "en" | "zh";
 const FOOD_CATEGORY_COPY = {
   en: {
     heading: "FOOD CATEGORY",
-    seafood: "FISH & SEAFOOD",
+    aquatics: "AQUATICS",
     fruitsVegetables: "FRUITS & VEGETABLES",
     fruits: "FRUITS",
     completeListPrefix: "for complete list,",
     clickHere: "click here",
-    seafoodAlt: "Seafood slide",
+    aquaticsAlt: "Aquatic species slide",
     fruitsAlt: "Fruits and vegetables slide",
     collageAlt:
       "Food category collage - fruits and vegetables with English and Chinese names including Orange, Passion Fruit, Pineapple, Jackfruit, Durian, Strawberry, Cherimoya, Tomato, Bay Berry, Mandarin, Cantaloupe, and Pitaya",
   },
   zh: {
     heading: "食品分类",
+    aquatics: "水产",
     seafood: "鱼类与海鲜",
     fruitsVegetables: "水果与蔬菜",
     fruits: "水果",
     completeListPrefix: "查看完整清单，",
     clickHere: "点击这里",
     seafoodAlt: "海鲜幻灯片",
+    aquaticsAlt: "水产幻灯片",
     fruitsAlt: "水果与蔬菜幻灯片",
     collageAlt: "食品分类拼图，包含带中英文名称的水果和蔬菜",
   },
@@ -67,7 +74,10 @@ function FoodCategoryPageContent({
   locale?: FoodCategoryLocale;
 }) {
   const copy = FOOD_CATEGORY_COPY[locale];
-  const seafoodSlides = getSectionSlideImages("Seafood");
+  const aquaticSlides =
+    locale === "en"
+      ? getSectionSlideImages("Seafood/Aquatic/Consumer - Aquatic Species - Edition 202605")
+      : [];
   const fruitsAndVegetablesSlides = getSectionSlideImages("Fruits&Vegetables");
 
   return (
@@ -86,20 +96,20 @@ function FoodCategoryPageContent({
       </header>
 
       <main className="mx-auto w-full max-w-[67rem] px-4 pb-12 pt-8">
-        {seafoodSlides.length > 0 && (
+        {locale === "en" && aquaticSlides.length > 0 && (
           <>
             <h2
-              id="section-seafood"
+              id="section-aquatics"
               className="mb-4 scroll-mt-52 text-xl font-semibold text-zinc-900 font-beckman uppercase tracking-wide"
             >
-              {copy.seafood}
+              {copy.aquatics}
             </h2>
             <div className="mb-10 space-y-6">
-              {seafoodSlides.map((src, i) => (
+              {aquaticSlides.map((src, i) => (
                 <div key={src} className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm overflow-hidden">
                   <Image
                     src={src}
-                    alt={`${copy.seafoodAlt} ${i + 1}`}
+                    alt={`${copy.aquaticsAlt} ${i + 1}`}
                     width={1920}
                     height={1080}
                     quality={95}

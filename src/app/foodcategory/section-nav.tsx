@@ -42,7 +42,7 @@ const SECTION_NAV_COPY = {
     fruits: "Fruits",
     vegetable: "Vegetable",
     vegan: "Vegan",
-    fishSeafood: "FISH & SEAFOOD",
+    fishSeafood: "AQUATICS",
     fish: "Fish",
     shellfish: "Shellfish",
     other: "Other",
@@ -88,7 +88,7 @@ export default function SectionNav({ locale = "en" }: { locale?: SectionNavLocal
   }, [openDropdown]);
 
   const fruitsHasLink = true; // Fruits
-  const fishHasLink = true; // Fish → seafood
+  const fishHasLink = true; // Aquatics
   const meatHasLink = false;
 
   return (
@@ -126,36 +126,51 @@ export default function SectionNav({ locale = "en" }: { locale?: SectionNavLocal
         )}
       </div>
 
-      {/* FISH & SEAFOOD */}
+      {/* AQUATICS */}
       <div className="relative">
-        <button
-          type="button"
-          onClick={() => setOpenDropdown(openDropdown === "fish" ? null : "fish")}
-          className={fishHasLink ? triggerClassActive : triggerClassMuted}
-        >
-          {copy.fishSeafood}
-          <ChevronDown open={openDropdown === "fish"} muted={!fishHasLink} />
-        </button>
-        {openDropdown === "fish" && (
-          <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <a
-              href="#section-seafood"
-              className={dropdownItemLinked}
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenDropdown(null);
-                scrollToAnchor("section-seafood");
-              }}
+        {actualLocale === "en" ? (
+          <button
+            type="button"
+            onClick={() => {
+              setOpenDropdown(null);
+              scrollToAnchor("section-aquatics");
+            }}
+            className={triggerClassActive}
+          >
+            {copy.fishSeafood}
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={() => setOpenDropdown(openDropdown === "fish" ? null : "fish")}
+              className={fishHasLink ? triggerClassActive : triggerClassMuted}
             >
-              {copy.fish}
-            </a>
-            <button type="button" className={dropdownItemUnlinked}>
-              {copy.shellfish}
+              {copy.fishSeafood}
+              <ChevronDown open={openDropdown === "fish"} muted={!fishHasLink} />
             </button>
-            <button type="button" className={dropdownItemUnlinked}>
-              {copy.other}
-            </button>
-          </div>
+            {openDropdown === "fish" && (
+              <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
+                <a
+                  href="#section-seafood"
+                  className={dropdownItemLinked}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenDropdown(null);
+                    scrollToAnchor("section-seafood");
+                  }}
+                >
+                  {copy.fish}
+                </a>
+                <button type="button" className={dropdownItemUnlinked}>
+                  {copy.shellfish}
+                </button>
+                <button type="button" className={dropdownItemUnlinked}>
+                  {copy.other}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
 
