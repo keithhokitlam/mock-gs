@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
-import { getGoogleDriveErrorDetail, signupDriveFailureResponse, uploadSignupSignaturePng } from "@/lib/google-drive";
 import bcrypt from "bcryptjs";
 import { Resend } from "resend";
 import crypto from "crypto";
@@ -48,26 +47,6 @@ function parseMembershipTier(value: unknown): "essential" | "premium" {
   if (value === "essential" || value === "consumer") return "essential";
   if (value === "premium" || value === "commercial") return "premium";
   return "premium";
-}
-
-function decodeSignaturePngBase64(
-  raw: unknown
-): { ok: true; buffer: Buffer } | { ok: false; message: string } {
-  if (typeof raw !== "string" || raw.trim() === "") {
-    return { ok: false, message: "A digital signature is required to sign up." };
-  }
-  const trimmed = raw.trim();
-  const payload = trimmed.includes(",") ? trimmed.slice(trimmed.indexOf(",") + 1) : trimmed;
-  let buffer: Buffer;
-  try {
-    buffer = Buffer.from(payload, "base64");
-  } catch {
-    return { ok: false, message: "Invalid signature data." };
-  }
-  if (buffer.length < 1200) {
-    return { ok: false, message: "Please draw your signature in the signature box." };
-  }
-  return { ok: true, buffer };
 }
 
 /** PostgREST: column missing from schema cache (migration not applied yet). */
@@ -161,24 +140,6 @@ export async function POST(request: NextRequest) {
           { status: 409 }
         );
       }
-    }
-
-    const sigDecoded = decodeSignaturePngBase64(body.signaturePngBase64);
-    if (!sigDecoded.ok) {
-      return NextResponse.json({ error: sigDecoded.message }, { status: 400 });
-    }
-
-    try {
-      await uploadSignupSignaturePng(sigDecoded.buffer, String(email).toLowerCase());
-    } catch (driveErr: unknown) {
-      const detail = getGoogleDriveErrorDetail(driveErr);
-      const full =
-        driveErr instanceof Error && driveErr.message
-          ? driveErr.message
-          : detail;
-      console.error("Signup: Google Drive signature upload failed:", full, driveErr);
-      const body = signupDriveFailureResponse(full, detail);
-      return NextResponse.json(body, { status: 503 });
     }
 
     if (existingUser) {

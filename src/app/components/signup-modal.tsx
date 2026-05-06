@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import SignupSignaturePad, {
-  type SignupSignaturePadHandle,
-} from "./signup-signature-pad";
 import {
   getSubscriptionPlanContent,
   type MembershipTier,
@@ -80,8 +77,7 @@ const SIGNUP_COPY = {
     confirmPassword: "Confirm Password",
     chooseSubscription: "Choose a subscription",
     selected: "SELECTED",
-    legalIntro:
-      "I will digitally sign to confirm that I have read and agree to the",
+    legalIntro: "Please review and agree to the",
     privacy: "privacy policy",
     terms: "terms of service",
     consumerDisclaimer: "disclaimer for the consumer section",
@@ -95,7 +91,6 @@ const SIGNUP_COPY = {
     closeButton: "Close",
     errors: {
       required: "All required fields must be filled in",
-      signature: "Please draw your signature in the box below to continue.",
       passwordMin: "Password must be at least 6 characters",
       passwordMismatch: "Passwords do not match",
       plan: "Please select Essential Membership or Premium Membership",
@@ -119,7 +114,7 @@ const SIGNUP_COPY = {
     confirmPassword: "确认密码",
     chooseSubscription: "选择会员方案",
     selected: "已选择",
-    legalIntro: "我将通过电子签名确认我已阅读并同意",
+    legalIntro: "请查看并同意",
     privacy: "隐私政策",
     terms: "服务条款",
     consumerDisclaimer: "消费者专区免责声明",
@@ -132,7 +127,6 @@ const SIGNUP_COPY = {
     closeButton: "关闭",
     errors: {
       required: "请填写所有必填项",
-      signature: "请在下方框内签名后继续。",
       passwordMin: "密码至少需要 6 个字符",
       passwordMismatch: "两次输入的密码不一致",
       plan: "请选择 Essential 基础会员或 Premium 高级会员",
@@ -167,8 +161,6 @@ export default function SignupModal({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [hasSignature, setHasSignature] = useState(false);
-  const signaturePadRef = useRef<SignupSignaturePadHandle>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -187,9 +179,9 @@ export default function SignupModal({
       return false;
     }
     if (password.length < 6 || password !== confirmPassword) return false;
-    if (!selectedPlan || !hasSignature || !acceptedLegal) return false;
+    if (!selectedPlan || !acceptedLegal) return false;
     return true;
-  }, [firstName, lastName, email, password, confirmPassword, selectedPlan, hasSignature, acceptedLegal]);
+  }, [firstName, lastName, email, password, confirmPassword, selectedPlan, acceptedLegal]);
 
   if (!isOpen) return null;
 
@@ -201,12 +193,6 @@ export default function SignupModal({
     // Validation
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       setError(copy.errors.required);
-      return;
-    }
-
-    const signatureDataUrl = signaturePadRef.current?.toDataURL();
-    if (!signatureDataUrl) {
-      setError(copy.errors.signature);
       return;
     }
 
@@ -243,7 +229,6 @@ export default function SignupModal({
           email,
           password,
           essential_vs_premium: selectedPlan,
-          signaturePngBase64: signatureDataUrl,
           acceptedLegal,
           locale,
         }),
@@ -269,9 +254,7 @@ export default function SignupModal({
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      setHasSignature(false);
       setAcceptedLegal(false);
-      signaturePadRef.current?.clear();
     } catch {
       setError(copy.errors.generic);
     } finally {
@@ -666,10 +649,6 @@ export default function SignupModal({
                   {copy.legalCheckbox}
                 </span>
               </label>
-              <SignupSignaturePad
-                ref={signaturePadRef}
-                onHasDrawingChange={setHasSignature}
-              />
             </div>
 
             {error && (
