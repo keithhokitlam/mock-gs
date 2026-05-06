@@ -69,10 +69,11 @@ async function FoodCategoryPageContent({
   }
 
   const copy = FOOD_CATEGORY_COPY[locale];
-  const aquaticSlides =
-    locale === "en"
-      ? getSectionSlideImages("Seafood/Aquatic/Consumer - Aquatic Species - Edition 202605")
-      : [];
+  const aquaticSlides = getSectionSlideImages(
+    locale === "zh"
+      ? "Seafood/Aquatic/Consumer - Aquatic Species - Edition 202605 Chinese"
+      : "Seafood/Aquatic/Consumer - Aquatic Species - Edition 202605"
+  );
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
@@ -90,7 +91,7 @@ async function FoodCategoryPageContent({
       </header>
 
       <main className="mx-auto w-full max-w-[67rem] px-4 pb-12 pt-8">
-        {locale === "en" && aquaticSlides.length > 0 && (
+        {aquaticSlides.length > 0 && (
           <>
             <h2
               id="section-aquatics"
