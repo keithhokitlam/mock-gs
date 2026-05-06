@@ -87,6 +87,8 @@ const SIGNUP_COPY = {
     consumerDisclaimer: "disclaimer for the consumer section",
     commercialDisclaimer: "disclaimer for the commercial section",
     ifApplicable: "(if applicable).",
+    legalCheckbox:
+      "I have read and agree to the Privacy Policy, Terms of Service, Consumer Disclaimer, and Commercial Disclaimer, if applicable.",
     incomplete: "All required fields have not been filled.",
     creating: "Creating account...",
     submit: "Sign up",
@@ -97,6 +99,7 @@ const SIGNUP_COPY = {
       passwordMin: "Password must be at least 6 characters",
       passwordMismatch: "Passwords do not match",
       plan: "Please select Essential Membership or Premium Membership",
+      legal: "Please agree to the legal terms before continuing.",
       createFailed: "Failed to create account",
       generic: "An error occurred. Please try again.",
     },
@@ -122,6 +125,7 @@ const SIGNUP_COPY = {
     consumerDisclaimer: "消费者专区免责声明",
     commercialDisclaimer: "商业专区免责声明",
     ifApplicable: "（如适用）。",
+    legalCheckbox: "我已阅读并同意隐私政策、服务条款、消费者专区免责声明以及商业专区免责声明（如适用）。",
     incomplete: "所有必填项尚未填写。",
     creating: "正在创建账号...",
     submit: "注册",
@@ -132,6 +136,7 @@ const SIGNUP_COPY = {
       passwordMin: "密码至少需要 6 个字符",
       passwordMismatch: "两次输入的密码不一致",
       plan: "请选择 Essential 基础会员或 Premium 高级会员",
+      legal: "请先同意法律条款后再继续。",
       createFailed: "创建账号失败",
       generic: "发生错误，请再试一次。",
     },
@@ -170,6 +175,7 @@ export default function SignupModal({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<MembershipTier | null>(null);
+  const [acceptedLegal, setAcceptedLegal] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -181,9 +187,9 @@ export default function SignupModal({
       return false;
     }
     if (password.length < 6 || password !== confirmPassword) return false;
-    if (!selectedPlan || !hasSignature) return false;
+    if (!selectedPlan || !hasSignature || !acceptedLegal) return false;
     return true;
-  }, [firstName, lastName, email, password, confirmPassword, selectedPlan, hasSignature]);
+  }, [firstName, lastName, email, password, confirmPassword, selectedPlan, hasSignature, acceptedLegal]);
 
   if (!isOpen) return null;
 
@@ -219,6 +225,11 @@ export default function SignupModal({
       return;
     }
 
+    if (!acceptedLegal) {
+      setError(copy.errors.legal);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -233,6 +244,8 @@ export default function SignupModal({
           password,
           essential_vs_premium: selectedPlan,
           signaturePngBase64: signatureDataUrl,
+          acceptedLegal,
+          locale,
         }),
       });
 
@@ -257,8 +270,9 @@ export default function SignupModal({
       setPassword("");
       setConfirmPassword("");
       setHasSignature(false);
+      setAcceptedLegal(false);
       signaturePadRef.current?.clear();
-    } catch (err) {
+    } catch {
       setError(copy.errors.generic);
     } finally {
       setLoading(false);
@@ -633,6 +647,25 @@ export default function SignupModal({
                 </Link>{" "}
                 {copy.ifApplicable}
               </p>
+              <label
+                htmlFor="signup-legal-acceptance"
+                className="flex items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-xs leading-relaxed text-zinc-700"
+              >
+                <input
+                  id="signup-legal-acceptance"
+                  type="checkbox"
+                  checked={acceptedLegal}
+                  onChange={(e) => setAcceptedLegal(e.target.checked)}
+                  required
+                  className="mt-0.5 h-4 w-4 rounded border-zinc-300 accent-[#2B6B4A]"
+                />
+                <span>
+                  <span className="text-red-600" aria-hidden>
+                    *
+                  </span>{" "}
+                  {copy.legalCheckbox}
+                </span>
+              </label>
               <SignupSignaturePad
                 ref={signaturePadRef}
                 onHasDrawingChange={setHasSignature}

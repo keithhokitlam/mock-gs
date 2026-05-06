@@ -5,12 +5,43 @@ import bcrypt from "bcryptjs";
 import { Resend } from "resend";
 import crypto from "crypto";
 
+const LEGAL_TERMS_VERSION = "2026-05-06";
+const LEGAL_PRIVACY_VERSION = "2026-05-06";
+const LEGAL_ACCEPTANCE_TEXT = {
+  en: "I have read and agree to the Privacy Policy, Terms of Service, Consumer Disclaimer, and Commercial Disclaimer, if applicable.",
+  zh: "我已阅读并同意隐私政策、服务条款、消费者专区免责声明以及商业专区免责声明（如适用）。",
+} as const;
+
 function getResend() {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     throw new Error("RESEND_API_KEY is not set");
   }
   return new Resend(apiKey);
+}
+
+function getClientIp(request: NextRequest): string | null {
+  const cloudflareIp = request.headers.get("cf-connecting-ip")?.trim();
+  if (cloudflareIp) return cloudflareIp;
+
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const forwardedIp = forwardedFor?.split(",")[0]?.trim();
+  if (forwardedIp) return forwardedIp;
+
+  return request.headers.get("x-real-ip")?.trim() || null;
+}
+
+function parseLegalLocale(value: unknown): keyof typeof LEGAL_ACCEPTANCE_TEXT {
+  return value === "zh" ? "zh" : "en";
+}
+
+function getErrorMessage(error: unknown): string | undefined {
+  if (error instanceof Error) return error.message;
+  if (typeof error === "object" && error !== null && "message" in error) {
+    const message = (error as { message?: unknown }).message;
+    return typeof message === "string" ? message : undefined;
+  }
+  return undefined;
 }
 
 function parseMembershipTier(value: unknown): "essential" | "premium" {
@@ -70,6 +101,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { email, password, firstName, lastName, company } = body;
+    const legalLocale = parseLegalLocale(body.locale);
     const membershipTier = parseMembershipTier(
       body.essential_vs_premium ?? body.consumer_vs_commercial
     );
@@ -85,6 +117,13 @@ export async function POST(request: NextRequest) {
     if (password.length < 6) {
       return NextResponse.json(
         { error: "Password must be at least 6 characters" },
+        { status: 400 }
+      );
+    }
+
+    if (body.acceptedLegal !== true) {
+      return NextResponse.json(
+        { error: "Please agree to the legal terms before continuing." },
         { status: 400 }
       );
     }
@@ -247,6 +286,27 @@ export async function POST(request: NextRequest) {
       user = newUser;
     }
 
+    const { error: legalAcceptanceError } = await supabaseServer
+      .from("legal_acceptances")
+      .insert({
+        user_id: user.id,
+        email: String(user.email ?? email).toLowerCase(),
+        ip_address: getClientIp(request),
+        user_agent: request.headers.get("user-agent"),
+        terms_version: LEGAL_TERMS_VERSION,
+        privacy_version: LEGAL_PRIVACY_VERSION,
+        acceptance_text: LEGAL_ACCEPTANCE_TEXT[legalLocale],
+        locale: legalLocale,
+      });
+
+    if (legalAcceptanceError) {
+      console.error("Failed to record legal acceptance:", legalAcceptanceError);
+      return NextResponse.json(
+        { error: "Failed to record legal acceptance. Please try again." },
+        { status: 500 }
+      );
+    }
+
     // Get verification token (already set above for both cases)
     const verificationToken = user.verification_token!;
 
@@ -391,16 +451,17 @@ export async function POST(request: NextRequest) {
       }
       
       console.log("✅ Email sent successfully with ID:", emailResult.data.id);
-    } catch (emailError: any) {
+    } catch (emailError: unknown) {
+      const emailErrorMessage = getErrorMessage(emailError);
       // Log detailed error
       console.error("=== EMAIL SEND FAILED ===");
       console.error("Failed to send verification email:", emailError);
-      console.error("Error message:", emailError?.message);
+      console.error("Error message:", emailErrorMessage);
       console.error("Error type:", typeof emailError);
       console.error("Full error:", JSON.stringify(emailError, null, 2));
       
       // Check if error message contains domain verification error
-      const errorMessage = emailError?.message || "";
+      const errorMessage = emailErrorMessage || "";
       const isDomainErrorInException = errorMessage.includes("domain is not verified");
       
       // If it's a domain error and we haven't tried test domain yet, retry
@@ -434,13 +495,14 @@ export async function POST(request: NextRequest) {
           
           console.log("✅ Email sent successfully with ID (retry):", retryResult.data.id);
           // Success! Continue to return success response
-        } catch (retryError: any) {
+        } catch (retryError: unknown) {
+          const retryErrorMessage = getErrorMessage(retryError);
           console.error("Retry with test domain also failed:", retryError);
           // Return error if retry also fails
           return NextResponse.json(
             { 
               error: "Account created but failed to send verification email. Please contact support.",
-              details: retryError?.message || "Email service error",
+              details: retryErrorMessage || "Email service error",
               verificationToken: verificationToken
             },
             { status: 500 }
@@ -451,7 +513,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           { 
             error: "Account created but failed to send verification email. Please contact support.",
-            details: emailError?.message || "Email service error",
+            details: emailErrorMessage || "Email service error",
             verificationToken: verificationToken
           },
           { status: 500 }
