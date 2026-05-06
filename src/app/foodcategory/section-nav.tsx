@@ -38,10 +38,6 @@ type SectionNavLocale = "en" | "zh";
 
 const SECTION_NAV_COPY = {
   en: {
-    fruitsVegetables: "FRUITS & VEGETABLES",
-    fruits: "Fruits",
-    vegetable: "Vegetable",
-    vegan: "Vegan",
     fishSeafood: "AQUATICS",
     fish: "Fish",
     shellfish: "Shellfish",
@@ -52,10 +48,6 @@ const SECTION_NAV_COPY = {
     processedFood: "PROCESSED FOOD",
   },
   zh: {
-    fruitsVegetables: "水果与蔬菜",
-    fruits: "水果",
-    vegetable: "蔬菜",
-    vegan: "纯素",
     fishSeafood: "鱼类与海鲜",
     fish: "鱼类",
     shellfish: "贝类",
@@ -87,45 +79,11 @@ export default function SectionNav({ locale = "en" }: { locale?: SectionNavLocal
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openDropdown]);
 
-  const fruitsHasLink = true; // Fruits
   const fishHasLink = true; // Aquatics
   const meatHasLink = false;
 
   return (
     <div ref={containerRef} className="flex flex-wrap gap-3">
-      {/* FRUITS & VEGETABLES */}
-      <div className="relative">
-        <button
-          type="button"
-          onClick={() => setOpenDropdown(openDropdown === "fruits" ? null : "fruits")}
-          className={fruitsHasLink ? triggerClassActive : triggerClassMuted}
-        >
-          {copy.fruitsVegetables}
-          <ChevronDown open={openDropdown === "fruits"} muted={!fruitsHasLink} />
-        </button>
-        {openDropdown === "fruits" && (
-          <div className="absolute left-0 top-full z-10 mt-1 min-w-[10rem] rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-            <a
-              href="#section-fruits"
-              className={dropdownItemLinked}
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenDropdown(null);
-                scrollToAnchor("section-fruits");
-              }}
-            >
-              {copy.fruits}
-            </a>
-            <button type="button" className={dropdownItemUnlinked}>
-              {copy.vegetable}
-            </button>
-            <button type="button" className={dropdownItemUnlinked}>
-              {copy.vegan}
-            </button>
-          </div>
-        )}
-      </div>
-
       {/* AQUATICS */}
       <div className="relative">
         {actualLocale === "en" ? (
