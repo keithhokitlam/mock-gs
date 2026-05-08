@@ -31,11 +31,16 @@ export default function DoorSplash() {
   }, [isOpen]);
 
   useEffect(() => {
+    if (isHidden) {
+      document.body.style.overflow = "";
+      return;
+    }
+
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [isHidden]);
 
   if (isHidden) return null;
 
